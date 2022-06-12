@@ -110,6 +110,7 @@ dkms.conf
 *.lin
 *.lnp
 *.orc
+!AIR_Jlink_Keil/AIR32F103x/Target.lin
 # define exception below if needed
 # *.pack
 # define exception below if needed

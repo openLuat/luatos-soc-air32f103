@@ -22,10 +22,10 @@
  * limitations under the License.
  */
  
-#include "..\FlashOS.H"        // FlashOS Structures
+#include "FlashOS.H"        // FlashOS Structures
 
 
-
+#ifdef Air32F103CBT6
 struct FlashDevice const FlashDevice  =  {
    FLASH_DRV_VERS,             // Driver Version, do not modify!
    "Air32F103CBT6", // Device Name (128kB/64kB/32kB)
@@ -42,4 +42,23 @@ struct FlashDevice const FlashDevice  =  {
    0x0400, 0x000000,           // Sector Size 1kB (128 Sectors)
    SECTOR_END
 };
+#endif
+#ifdef Air32F103CCT6
+struct FlashDevice const FlashDevice  =  {
+   FLASH_DRV_VERS,             // Driver Version, do not modify!
+   "Air32F103CCT6",// Device Name (512kB/384kB/256kB)
+   ONCHIP,                     // Device Type
+   0x08000000,                 // Device Start Address
+   0x00080000,                 // Device Size in Bytes (512kB)
+   1024,                       // Programming Page Size
+   0,                          // Reserved, must be 0
+   0xFF,                       // Initial Content of Erased Memory
+   100,                        // Program Page Timeout 100 mSec
+   500,                        // Erase Sector Timeout 500 mSec
+
+// Specify Size and Address of Sectors
+   0x0800, 0x000000,           // Sector Size 2kB (256 Sectors)
+   SECTOR_END
+};
+#endif
 
