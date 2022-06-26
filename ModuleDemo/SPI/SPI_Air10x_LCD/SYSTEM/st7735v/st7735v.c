@@ -1,32 +1,32 @@
 #include "st7735v.h" 
 #include "delay.h"
 
-u8 SPI_WriteByte(u8 TxData) //TxData ¿ÉÒÔÊÇ8Î»»ò16Î»µÄ£¬ÔÚÆôÓÃSPIÖ®Ç°¾ÍÈ·¶¨ºÃÊı¾İÖ¡¸ñÊ½
+u8 SPI_WriteByte(u8 TxData) //TxData å¯ä»¥æ˜¯8ä½æˆ–16ä½çš„ï¼Œåœ¨å¯ç”¨SPIä¹‹å‰å°±ç¡®å®šå¥½æ•°æ®å¸§æ ¼å¼
 {		
 	u8 retry = 0;				 	      
-	while (SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_TXE) == RESET) //0£º·¢ËÍ»º³å·Ç¿Õ  µÈ´ı·¢ËÍ»º³åÆ÷±ä¿Õ
+	while (SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_TXE) == RESET) //0ï¼šå‘é€ç¼“å†²éç©º  ç­‰å¾…å‘é€ç¼“å†²å™¨å˜ç©º
 	{
 		retry++;
 		if(retry>200)return 0;
 	}			  
 	SPI_I2S_SendData(SPI1, TxData);
 	retry=0;
-	while (SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_RXNE) == RESET)//µÈ´ı½ÓÊÕÊı¾İÍê³É
+	while (SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_RXNE) == RESET)//ç­‰å¾…æ¥æ”¶æ•°æ®å®Œæˆ
 	{
 		retry++;
 		if(retry>200)return 0;
 	}	  						    
-	return SPI_I2S_ReceiveData(SPI1); //·µ»Ø×î½ü½ÓÊÕµÄÊı¾İ£¬SPI_DR¼Ä´æÆ÷ÀïÃæµÄ					    
+	return SPI_I2S_ReceiveData(SPI1); //è¿”å›æœ€è¿‘æ¥æ”¶çš„æ•°æ®ï¼ŒSPI_DRå¯„å­˜å™¨é‡Œé¢çš„					    
 }
 
-//ĞèÒªÊÖ¶¯¿ØÖÆcs
+//éœ€è¦æ‰‹åŠ¨æ§åˆ¶cs
 void lcd_write_cmd(const uint8_t cmd)
 {
 	SCREEN_DC_0;
 	SPI_WriteByte(cmd);
 	SCREEN_DC_1;
 }
-//ĞèÒªÊÖ¶¯¿ØÖÆcs
+//éœ€è¦æ‰‹åŠ¨æ§åˆ¶cs
 void lcd_write_data(const uint8_t cmd)
 {
 	SPI_WriteByte(cmd);
@@ -66,35 +66,35 @@ void SPI_InitTest(void)
 	GPIO_InitTypeDef GPIO_InitStructure;
 	SPI_InitTypeDef  SPI_InitStructure;
 	
-	RCC_APB2PeriphClockCmd(	RCC_APB2Periph_GPIOA, ENABLE );//PORTÊ±ÖÓÊ¹ÄÜ 
-	RCC_APB2PeriphClockCmd(	RCC_APB2Periph_SPI1,  ENABLE );//SPIÊ±ÖÓÊ¹ÄÜ 	
+	RCC_APB2PeriphClockCmd(	RCC_APB2Periph_GPIOA, ENABLE );//PORTæ—¶é’Ÿä½¿èƒ½ 
+	RCC_APB2PeriphClockCmd(	RCC_APB2Periph_SPI1,  ENABLE );//SPIæ—¶é’Ÿä½¿èƒ½ 	
 
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5 | GPIO_Pin_7;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;  //¸´ÓÃÍÆÍìÊä³ö 
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;  //å¤ç”¨æ¨æŒ½è¾“å‡º 
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_Init(GPIOA, &GPIO_InitStructure);//³õÊ¼»¯GPIO
+	GPIO_Init(GPIOA, &GPIO_InitStructure);//åˆå§‹åŒ–GPIO
 
 	GPIO_SetBits(GPIOA,GPIO_Pin_5 | GPIO_Pin_7);
 
-	SPI_InitStructure.SPI_Direction = SPI_Direction_1Line_Tx;  //ÉèÖÃSPIµ¥Ïò»òÕßË«ÏòµÄÊı¾İÄ£Ê½:SPIÉèÖÃÎªË«ÏßË«ÏòÈ«Ë«¹¤
-	SPI_InitStructure.SPI_Mode = SPI_Mode_Master;		//ÉèÖÃSPI¹¤×÷Ä£Ê½:ÉèÖÃÎªÖ÷SPI
-	SPI_InitStructure.SPI_DataSize = SPI_DataSize_8b;		//ÉèÖÃSPIµÄÊı¾İ´óĞ¡:SPI·¢ËÍ½ÓÊÕ8Î»Ö¡½á¹¹
-	SPI_InitStructure.SPI_CPOL = SPI_CPOL_Low;		//´®ĞĞÍ¬²½Ê±ÖÓµÄ¿ÕÏĞ×´Ì¬ÎªµÍµçÆ½
-	SPI_InitStructure.SPI_CPHA = SPI_CPHA_1Edge;	//´®ĞĞÍ¬²½Ê±ÖÓµÄµÚÒ»¸öÌø±äÑØ£¨ÉÏÉı»òÏÂ½µ£©Êı¾İ±»²ÉÑù
-	SPI_InitStructure.SPI_NSS = SPI_NSS_Soft;		//NSSĞÅºÅÓÉÓ²¼ş£¨NSS¹Ü½Å£©»¹ÊÇÈí¼ş£¨Ê¹ÓÃSSIÎ»£©¹ÜÀí:ÄÚ²¿NSSĞÅºÅÓĞSSIÎ»¿ØÖÆ
-	SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_256;		//¶¨Òå²¨ÌØÂÊÔ¤·ÖÆµµÄÖµ:²¨ÌØÂÊÔ¤·ÖÆµÖµÎª256
-	SPI_InitStructure.SPI_FirstBit = SPI_FirstBit_MSB;	//Ö¸¶¨Êı¾İ´«Êä´ÓMSBÎ»»¹ÊÇLSBÎ»¿ªÊ¼:Êı¾İ´«Êä´ÓMSBÎ»¿ªÊ¼
+	SPI_InitStructure.SPI_Direction = SPI_Direction_1Line_Tx;  //è®¾ç½®SPIå•å‘æˆ–è€…åŒå‘çš„æ•°æ®æ¨¡å¼:SPIè®¾ç½®ä¸ºåŒçº¿åŒå‘å…¨åŒå·¥
+	SPI_InitStructure.SPI_Mode = SPI_Mode_Master;		//è®¾ç½®SPIå·¥ä½œæ¨¡å¼:è®¾ç½®ä¸ºä¸»SPI
+	SPI_InitStructure.SPI_DataSize = SPI_DataSize_8b;		//è®¾ç½®SPIçš„æ•°æ®å¤§å°:SPIå‘é€æ¥æ”¶8ä½å¸§ç»“æ„
+	SPI_InitStructure.SPI_CPOL = SPI_CPOL_Low;		//ä¸²è¡ŒåŒæ­¥æ—¶é’Ÿçš„ç©ºé—²çŠ¶æ€ä¸ºä½ç”µå¹³
+	SPI_InitStructure.SPI_CPHA = SPI_CPHA_1Edge;	//ä¸²è¡ŒåŒæ­¥æ—¶é’Ÿçš„ç¬¬ä¸€ä¸ªè·³å˜æ²¿ï¼ˆä¸Šå‡æˆ–ä¸‹é™ï¼‰æ•°æ®è¢«é‡‡æ ·
+	SPI_InitStructure.SPI_NSS = SPI_NSS_Soft;		//NSSä¿¡å·ç”±ç¡¬ä»¶ï¼ˆNSSç®¡è„šï¼‰è¿˜æ˜¯è½¯ä»¶ï¼ˆä½¿ç”¨SSIä½ï¼‰ç®¡ç†:å†…éƒ¨NSSä¿¡å·æœ‰SSIä½æ§åˆ¶
+	SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_256;		//å®šä¹‰æ³¢ç‰¹ç‡é¢„åˆ†é¢‘çš„å€¼:æ³¢ç‰¹ç‡é¢„åˆ†é¢‘å€¼ä¸º256
+	SPI_InitStructure.SPI_FirstBit = SPI_FirstBit_MSB;	//æŒ‡å®šæ•°æ®ä¼ è¾“ä»MSBä½è¿˜æ˜¯LSBä½å¼€å§‹:æ•°æ®ä¼ è¾“ä»MSBä½å¼€å§‹
 	SPI_InitStructure.SPI_CRCPolynomial = 0;
-	SPI_Init(SPI1, &SPI_InitStructure);  //¸ù¾İSPI_InitStructÖĞÖ¸¶¨µÄ²ÎÊı³õÊ¼»¯ÍâÉèSPIx¼Ä´æÆ÷
+	SPI_Init(SPI1, &SPI_InitStructure);  //æ ¹æ®SPI_InitStructä¸­æŒ‡å®šçš„å‚æ•°åˆå§‹åŒ–å¤–è®¾SPIxå¯„å­˜å™¨
 
-	SPI_Cmd(SPI1, ENABLE); //Ê¹ÄÜSPIÍâÉè
+	SPI_Cmd(SPI1, ENABLE); //ä½¿èƒ½SPIå¤–è®¾
 }   
-//SPI ËÙ¶ÈÉèÖÃº¯Êı
+//SPI é€Ÿåº¦è®¾ç½®å‡½æ•°
 //SpeedSet:
-//SPI_BaudRatePrescaler_2   2·ÖÆµ   
-//SPI_BaudRatePrescaler_8   8·ÖÆµ   
-//SPI_BaudRatePrescaler_16  16·ÖÆµ  
-//SPI_BaudRatePrescaler_256 256·ÖÆµ 
+//SPI_BaudRatePrescaler_2   2åˆ†é¢‘   
+//SPI_BaudRatePrescaler_8   8åˆ†é¢‘   
+//SPI_BaudRatePrescaler_16  16åˆ†é¢‘  
+//SPI_BaudRatePrescaler_256 256åˆ†é¢‘ 
 void SPI_SetSpeed(u8 SPI_BaudRatePrescaler)
 {
 	assert_param(IS_SPI_BAUDRATE_PRESCALER(SPI_BaudRatePrescaler));
@@ -104,7 +104,7 @@ void SPI_SetSpeed(u8 SPI_BaudRatePrescaler)
 }
 
 
-//ÆÁÄ»³õÊ¼»¯
+//å±å¹•åˆå§‹åŒ–
 void ST7735V_Init(void)
 {	
 	GPIO_InitTypeDef GPIO_InitStructure;
@@ -117,7 +117,7 @@ void ST7735V_Init(void)
 	GPIO_SetBits(GPIOA,GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_6);
 
 	SCREEN_CS_1;
-	SPI_InitTest();		   	//³õÊ¼»¯SPI
+	SPI_InitTest();		   	//åˆå§‹åŒ–SPI
 	SPI_SetSpeed(SPI_BaudRatePrescaler_8);
 
 	SCREEN_BL_0;
@@ -133,7 +133,7 @@ void ST7735V_Init(void)
 
     Delay_Ms(120);//ms
 
-    lcd_write_cmd(0x21);//luat_lcd_inv_off
+    lcd_write_cmd(0x20);//lcd_inv_offå¦‚æœé¢œè‰²é”™äº†å°±ç”¨0x21
 
     lcd_write_cmd(0xB1);
     lcd_write_data(0x05);
