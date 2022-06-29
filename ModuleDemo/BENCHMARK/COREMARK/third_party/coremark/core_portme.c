@@ -60,6 +60,7 @@ __IO uint32_t Tick;
 
 void start_time(void) {
 	Tick = 0;
+	TIM_Cmd(TIM2,ENABLE);
 }
 
 void stop_time(void) {

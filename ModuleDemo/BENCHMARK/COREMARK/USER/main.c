@@ -11,7 +11,7 @@
 /**
 * @brief Air32F103 coremark测试Demo
 * 初始化系统时钟为8*32=256MHz
-* 使用测试串口1 (Tx=PA9, Rx=PA10输出信息)
+* 使用测试串口1 (Tx=PA9, Rx=PA10)输出信息
 */
 
 //如果需要修改系统主频，修改以下两个宏
@@ -45,7 +45,7 @@ void main_original(void)
                (float)clocks.SYSCLK_Frequency / 1000000, (float)clocks.HCLK_Frequency / 1000000,
                (float)clocks.PCLK1_Frequency / 1000000, (float)clocks.PCLK2_Frequency / 1000000, (float)clocks.ADCCLK_Frequency / 1000000);
 
-	TIM2_Init();
+    TIM2_Init();
 }
 
 void TIM2_Init(void)
@@ -67,7 +67,7 @@ void TIM2_Init(void)
     NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority=1;
     NVIC_InitStruct.NVIC_IRQChannelSubPriority=1;
     NVIC_Init(&NVIC_InitStruct);
-    TIM_Cmd(TIM2,ENABLE);
+    
 }
 
 
