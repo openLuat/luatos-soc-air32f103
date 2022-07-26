@@ -30,6 +30,8 @@ int main(void)
 
 	while (1)
 	{
+		Delay_S(1);
+		printf("-1S");
 	}
 }
 

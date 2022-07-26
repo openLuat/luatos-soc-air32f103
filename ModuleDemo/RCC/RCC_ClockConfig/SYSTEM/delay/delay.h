@@ -5,6 +5,6 @@
 void Delay_Init(void);
 void Delay_Ms(uint16_t nms);
 void Delay_Us(uint32_t nus);
-
+void Delay_S(u16 ns);
 #endif
 
