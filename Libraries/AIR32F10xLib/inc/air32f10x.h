@@ -67,7 +67,7 @@
  * @brief Configuration of the Cortex-M3 Processor and Core Peripherals 
  */
 #define __MPU_PRESENT             1 /*!< air32 devices provide an MPU */
-#define __NVIC_PRIO_BITS          4 /*!< air32 uses 4 Bits for the Priority Levels    */
+#define __NVIC_PRIO_BITS          3 /*!< air32 uses 3 Bits for the Priority Levels    */
 #define __Vendor_SysTickConfig    0 /*!< Set to 1 if different SysTick Config is used */
 
 /**
