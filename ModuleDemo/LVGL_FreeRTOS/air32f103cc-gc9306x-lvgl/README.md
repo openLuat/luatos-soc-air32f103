@@ -8,7 +8,7 @@
 
 - FreeRTOS来自[FreeRTOS官网](https://www.freertos.org/a00104.html)中最新的`LTS 202012.04`版本；
 - LVGL来自官网[LVGL官方GitHub仓库](https://github.com/lvgl/lvgl/releases)中最新的`LVGL 8.3.1`版本；
-- 固件库标准库来自本仓库的[STM32F10x, STM32L1xx and STM32F3xx USB Full Speed Device Library](https://img.yuanze.wang/posts/air32-lvgl-freertos/stsw-stm32121.zip)中的`3.6.1`版本（该版本没有独立发布过，单独发布的最新版本是`3.5.0`）。
+- 来自本仓库的标准固件库。
 
 ## 组件库的裁剪与优化
 
@@ -47,6 +47,6 @@ Total ROM Size (Code + RO Data + RW Data)     231496 ( 226.07kB)
 
 若您在使用本工程时遇到了任何问题，欢迎联系作者。
 
-@wangyz1997
+wangyz1997#126.com
 
-https://yuanze.wang
+Blog: https://yuanze.wang
