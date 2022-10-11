@@ -345,6 +345,7 @@ typedef struct
 #define RCC_APB1Periph_BKP               ((uint32_t)0x08000000)
 #define RCC_APB1Periph_PWR               ((uint32_t)0x10000000)
 #define RCC_APB1Periph_DAC               ((uint32_t)0x20000000)
+#define RCC_APB1Periph_CEC               ((uint32_t)0x40000000)
 
 #define IS_RCC_APB1_PERIPH(PERIPH) ((((PERIPH) & 0x81013600) == 0x00) && ((PERIPH) != 0x00))
 
