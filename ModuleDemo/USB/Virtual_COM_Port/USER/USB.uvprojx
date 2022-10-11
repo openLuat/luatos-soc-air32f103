@@ -16,7 +16,7 @@
         <TargetCommonOption>
           <Device>AIR32F103CB</Device>
           <Vendor>Generic</Vendor>
-          <PackID>Keil.AIR32F103_DFP.1.0.4</PackID>
+          <PackID>Keil.AIR32F103_DFP.1.0.6</PackID>
           <PackURL>https://luatos.com/t/air32f103/</PackURL>
           <Cpu>IRAM(0x20000000,0x8000) IROM(0x08000000,0x20000) CPUTYPE("Cortex-M3") CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -186,6 +186,7 @@
             <RvdsVP>0</RvdsVP>
             <RvdsMve>0</RvdsMve>
             <RvdsCdeCp>0</RvdsCdeCp>
+            <nBranchProt>0</nBranchProt>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -488,6 +489,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\..\Libraries\AIR32F10xLib\src\misc.c</FilePath>
             </File>
+            <File>
+              <FileName>air32f10x_rcc_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Libraries\AIR32F10xLib\src\air32f10x_rcc_ex.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -573,15 +579,10 @@
               <FileType>1</FileType>
               <FilePath>..\USB\CONFIG\usb_pwr.c</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>LIB</GroupName>
-          <Files>
             <File>
-              <FileName>air.lib</FileName>
-              <FileType>4</FileType>
-              <FilePath>..\..\..\..\Libraries\AIR32F10xLib\lib\air.lib</FilePath>
+              <FileName>air32f10x_rcc_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Libraries\AIR32F10xLib\src\air32f10x_rcc_ex.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -186,6 +186,7 @@
             <RvdsVP>0</RvdsVP>
             <RvdsMve>0</RvdsMve>
             <RvdsCdeCp>0</RvdsCdeCp>
+            <nBranchProt>0</nBranchProt>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -4494,9 +4495,9 @@
               <FilePath>..\..\..\..\Libraries\AIR32F10xLib\src\misc.c</FilePath>
             </File>
             <File>
-              <FileName>air.lib</FileName>
-              <FileType>4</FileType>
-              <FilePath>..\..\..\..\Libraries\AIR32F10xLib\lib\air.lib</FilePath>
+              <FileName>air32f10x_rcc_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Libraries\AIR32F10xLib\src\air32f10x_rcc_ex.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4727,6 +4728,7 @@
             <RvdsVP>0</RvdsVP>
             <RvdsMve>0</RvdsMve>
             <RvdsCdeCp>0</RvdsCdeCp>
+            <nBranchProt>0</nBranchProt>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -9035,9 +9037,9 @@
               <FilePath>..\..\..\..\Libraries\AIR32F10xLib\src\misc.c</FilePath>
             </File>
             <File>
-              <FileName>air.lib</FileName>
-              <FileType>4</FileType>
-              <FilePath>..\..\..\..\Libraries\AIR32F10xLib\lib\air.lib</FilePath>
+              <FileName>air32f10x_rcc_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Libraries\AIR32F10xLib\src\air32f10x_rcc_ex.c</FilePath>
             </File>
           </Files>
         </Group>

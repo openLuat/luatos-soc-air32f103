@@ -573,15 +573,10 @@
               <FileType>1</FileType>
               <FilePath>..\USB\CONFIG\usb_pwr.c</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>LIB</GroupName>
-          <Files>
             <File>
-              <FileName>air.lib</FileName>
-              <FileType>4</FileType>
-              <FilePath>..\..\..\..\Libraries\AIR32F10xLib\lib\air.lib</FilePath>
+              <FileName>air32f10x_rcc_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Libraries\AIR32F10xLib\src\air32f10x_rcc_ex.c</FilePath>
             </File>
           </Files>
         </Group>

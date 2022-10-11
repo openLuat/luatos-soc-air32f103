@@ -16,7 +16,7 @@
         <TargetCommonOption>
           <Device>AIR32F103CB</Device>
           <Vendor>Generic</Vendor>
-          <PackID>Keil.AIR32F103_DFP.1.0.4</PackID>
+          <PackID>Keil.AIR32F103_DFP.1.0.6</PackID>
           <PackURL>https://luatos.com/t/air32f103/</PackURL>
           <Cpu>IRAM(0x20000000,0x8000) IROM(0x08000000,0x20000) CPUTYPE("Cortex-M3") CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -186,6 +186,7 @@
             <RvdsVP>0</RvdsVP>
             <RvdsMve>0</RvdsMve>
             <RvdsCdeCp>0</RvdsCdeCp>
+            <nBranchProt>0</nBranchProt>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -406,16 +407,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>AirLib</GroupName>
-          <Files>
-            <File>
-              <FileName>air.lib</FileName>
-              <FileType>4</FileType>
-              <FilePath>..\..\..\..\Libraries\AIR32F10xLib\lib\air.lib</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>third_party</GroupName>
           <Files>
             <File>
@@ -573,6 +564,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\..\Libraries\AIR32F10xLib\src\air32f10x_wwdg.c</FilePath>
             </File>
+            <File>
+              <FileName>air32f10x_rcc_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Libraries\AIR32F10xLib\src\air32f10x_rcc_ex.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -605,7 +601,7 @@
       <file attr="config" category="header" name="RTE_Driver\Config\RTE_Device.h" version="1.0.0">
         <instance index="0">RTE\Device\AIR32F103CB\RTE_Device.h</instance>
         <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.0.0" condition="AIR32F1xx CMSIS Device"/>
-        <package name="AIR32F103_DFP" schemaVersion="1.2" url="https://luatos.com/t/air32f103/" vendor="Keil" version="1.0.4"/>
+        <package name="AIR32F103_DFP" schemaVersion="1.2" url="https://luatos.com/t/air32f103/" vendor="Keil" version="1.0.6"/>
         <targetInfos>
           <targetInfo name="coremark"/>
         </targetInfos>
@@ -619,7 +615,7 @@
       <file attr="config" category="source" condition="AIR32F1xx MD" name="Device\Source\ARM\startup_air32f10x.s" version="1.0.0">
         <instance index="0">RTE\Device\AIR32F103CB\startup_air32f10x.s</instance>
         <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.0.0" condition="AIR32F1xx CMSIS Device"/>
-        <package name="AIR32F103_DFP" schemaVersion="1.2" url="https://luatos.com/t/air32f103/" vendor="Keil" version="1.0.4"/>
+        <package name="AIR32F103_DFP" schemaVersion="1.2" url="https://luatos.com/t/air32f103/" vendor="Keil" version="1.0.6"/>
         <targetInfos>
           <targetInfo name="coremark"/>
         </targetInfos>
@@ -627,7 +623,7 @@
       <file attr="config" category="source" name="Device\Source\system_air32f10x.c" version="1.0.0">
         <instance index="0">RTE\Device\AIR32F103CB\system_air32f10x.c</instance>
         <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.0.0" condition="AIR32F1xx CMSIS Device"/>
-        <package name="AIR32F103_DFP" schemaVersion="1.2" url="https://luatos.com/t/air32f103/" vendor="Keil" version="1.0.4"/>
+        <package name="AIR32F103_DFP" schemaVersion="1.2" url="https://luatos.com/t/air32f103/" vendor="Keil" version="1.0.6"/>
         <targetInfos>
           <targetInfo name="coremark"/>
         </targetInfos>

@@ -3,7 +3,6 @@
 #include <stdio.h>
 #include "delay.h"
 #include "air32f10x.h"
-#include "air_rcc.h"
 #include "st7735v.h"
 
 void RCC_ClkConfiguration(void);
