@@ -1,17 +1,3 @@
-/*
- *Copyright (C) 2018-2019,Megahunt Tech.Co,Ltd
- *All rights reserved
- *
- *FileName      :air_sha.h
- *Description   :This file is a header file of sha alogrithm module, including 
- *               defination of secure hash alogrithm and secure hash rand copy alogrithm.
- *               and enum of SHA_ModeDef,return value macro of SHA.
- *            
- *Version       :1.1
- *Author        :Mick
- *Date          :2019.01.11
- *Modify        :none
- */
 
 #ifndef __AIR_SHA_H
 #define __AIR_SHA_H

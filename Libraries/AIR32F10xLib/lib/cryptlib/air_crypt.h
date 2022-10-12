@@ -8,7 +8,7 @@
 #include <stdint.h>
 #include <string.h>
 #include "air32f10x.h"
-// #include "mh32f10x.h"
+
 void AIRCRYPT_SYMCITClear(void);
 
 void AIRCRYPT_ASYMCITClear(void);
