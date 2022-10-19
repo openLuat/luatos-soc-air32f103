@@ -6,7 +6,6 @@
 #include "usb_lib.h"
 #include "hw_config.h"
 #include "usb_pwr.h"
-#include "air_rcc.h"
 
 USART_TypeDef* USART_TEST = USART1;
 void UART_Configuration(uint32_t bound);

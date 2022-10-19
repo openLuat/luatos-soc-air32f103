@@ -4,7 +4,6 @@
 #include "lvgl_task.h"
 #include "led_task.h"
 
-#include "air_rcc.h"
 
 uint32_t SystemCoreClock = 256000000;
 
