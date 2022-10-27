@@ -79,58 +79,58 @@
 /* ---------------------- RCC registers bit mask ------------------------ */
 
 /* CR register bit mask */
-#define CR_HSEBYP_Reset           ((uint32_t)0xFFFBFFFF)
-#define CR_HSEBYP_Set             ((uint32_t)0x00040000)
-#define CR_HSEON_Reset            ((uint32_t)0xFFFEFFFF)
-#define CR_HSEON_Set              ((uint32_t)0x00010000)
-#define CR_HSITRIM_Mask           ((uint32_t)0xFFFFFF07)
+#define CR_HSEBYP_Reset           ((volatile uint32_t)0xFFFBFFFF)
+#define CR_HSEBYP_Set             ((volatile uint32_t)0x00040000)
+#define CR_HSEON_Reset            ((volatile uint32_t)0xFFFEFFFF)
+#define CR_HSEON_Set              ((volatile uint32_t)0x00010000)
+#define CR_HSITRIM_Mask           ((volatile uint32_t)0xFFFFFF07)
 
 /* CFGR register bit mask */
 #if defined (air32F10X_LD_VL) || defined (air32F10X_MD_VL) || defined (air32F10X_HD_VL) || defined (air32F10X_CL) 
- #define CFGR_PLL_Mask            ((uint32_t)0xFFC2FFFF)
+ #define CFGR_PLL_Mask            ((volatile uint32_t)0xFFC2FFFF)
 #else
- #define CFGR_PLL_Mask            ((uint32_t)0xFFC0FFFF)
+ #define CFGR_PLL_Mask            ((volatile uint32_t)0xFFC0FFFF)
 #endif /* air32F10X_CL */ 
 
-#define CFGR_PLLMull_Mask         ((uint32_t)0x003C0000)
-#define CFGR_PLLSRC_Mask          ((uint32_t)0x00010000)
-#define CFGR_PLLXTPRE_Mask        ((uint32_t)0x00020000)
-#define CFGR_SWS_Mask             ((uint32_t)0x0000000C)
-#define CFGR_SW_Mask              ((uint32_t)0xFFFFFFFC)
-#define CFGR_HPRE_Reset_Mask      ((uint32_t)0xFFFFFF0F)
-#define CFGR_HPRE_Set_Mask        ((uint32_t)0x000000F0)
-#define CFGR_PPRE1_Reset_Mask     ((uint32_t)0xFFFFF8FF)
-#define CFGR_PPRE1_Set_Mask       ((uint32_t)0x00000700)
-#define CFGR_PPRE2_Reset_Mask     ((uint32_t)0xFFFFC7FF)
-#define CFGR_PPRE2_Set_Mask       ((uint32_t)0x00003800)
-#define CFGR_ADCPRE_Reset_Mask    ((uint32_t)0x9FFF3FFF)
-#define CFGR_ADCPRE_Set_Mask      ((uint32_t)0x0000C000)
+#define CFGR_PLLMull_Mask         ((volatile uint32_t)0x003C0000)
+#define CFGR_PLLSRC_Mask          ((volatile uint32_t)0x00010000)
+#define CFGR_PLLXTPRE_Mask        ((volatile uint32_t)0x00020000)
+#define CFGR_SWS_Mask             ((volatile uint32_t)0x0000000C)
+#define CFGR_SW_Mask              ((volatile uint32_t)0xFFFFFFFC)
+#define CFGR_HPRE_Reset_Mask      ((volatile uint32_t)0xFFFFFF0F)
+#define CFGR_HPRE_Set_Mask        ((volatile uint32_t)0x000000F0)
+#define CFGR_PPRE1_Reset_Mask     ((volatile uint32_t)0xFFFFF8FF)
+#define CFGR_PPRE1_Set_Mask       ((volatile uint32_t)0x00000700)
+#define CFGR_PPRE2_Reset_Mask     ((volatile uint32_t)0xFFFFC7FF)
+#define CFGR_PPRE2_Set_Mask       ((volatile uint32_t)0x00003800)
+#define CFGR_ADCPRE_Reset_Mask    ((volatile uint32_t)0x9FFF3FFF)
+#define CFGR_ADCPRE_Set_Mask      ((volatile uint32_t)0x0000C000)
 
 /* CSR register bit mask */
-#define CSR_RMVF_Set              ((uint32_t)0x01000000)
+#define CSR_RMVF_Set              ((volatile uint32_t)0x01000000)
 
 #if defined (air32F10X_LD_VL) || defined (air32F10X_MD_VL) || defined (air32F10X_HD_VL) || defined (air32F10X_CL) 
 /* CFGR2 register bit mask */
- #define CFGR2_PREDIV1SRC         ((uint32_t)0x00010000)
- #define CFGR2_PREDIV1            ((uint32_t)0x0000000F)
+ #define CFGR2_PREDIV1SRC         ((volatile uint32_t)0x00010000)
+ #define CFGR2_PREDIV1            ((volatile uint32_t)0x0000000F)
 #endif
 #ifdef air32F10X_CL
- #define CFGR2_PREDIV2            ((uint32_t)0x000000F0)
- #define CFGR2_PLL2MUL            ((uint32_t)0x00000F00)
- #define CFGR2_PLL3MUL            ((uint32_t)0x0000F000)
+ #define CFGR2_PREDIV2            ((volatile uint32_t)0x000000F0)
+ #define CFGR2_PLL2MUL            ((volatile uint32_t)0x00000F00)
+ #define CFGR2_PLL3MUL            ((volatile uint32_t)0x0000F000)
 #endif /* air32F10X_CL */ 
 
 /* RCC Flag Mask */
-#define FLAG_Mask                 ((uint8_t)0x1F)
+#define FLAG_Mask                 ((volatile uint8_t)0x1F)
 
 /* CIR register byte 2 (Bits[15:8]) base address */
-#define CIR_BYTE2_ADDRESS         ((uint32_t)0x40021009)
+#define CIR_BYTE2_ADDRESS         ((volatile uint32_t)0x40021009)
 
 /* CIR register byte 3 (Bits[23:16]) base address */
-#define CIR_BYTE3_ADDRESS         ((uint32_t)0x4002100A)
+#define CIR_BYTE3_ADDRESS         ((volatile uint32_t)0x4002100A)
 
 /* CFGR register byte 4 (Bits[31:24]) base address */
-#define CFGR_BYTE4_ADDRESS        ((uint32_t)0x40021007)
+#define CFGR_BYTE4_ADDRESS        ((volatile uint32_t)0x40021007)
 
 /* BDCR register base address */
 #define BDCR_ADDRESS              (PERIPH_BASE + BDCR_OFFSET)
@@ -168,31 +168,31 @@ typedef enum
 
 uint32_t AIR_RCC_PLLConfig(uint32_t RCC_PLLSource, uint32_t RCC_PLLMul, uint8_t Latency)
 {	
-	uint32_t sramsize = 0;
+	volatile uint32_t sramsize = 0;
 	uint32_t pllmul = 0;
 	FunctionalState pwr_gating_state = 0;
 	/* Check the parameters */
 	assert_param(IS_RCC_PLL_SOURCE(RCC_PLLSource));
 	assert_param(IS_RCC_PLL_MUL(RCC_PLLMul));
 	
-	*(uint32_t *)(0x400210F0) = BIT(0);//¿ªÆôsys_cfgÃÅ¿Ø
-	*(uint32_t *)(0x40016C00) = 0xa7d93a86;//½âÒ»¡¢¶þ¡¢Èý¼¶Ëø
-	*(uint32_t *)(0x40016C00) = 0xab12dfcd;
-	*(uint32_t *)(0x40016C00) = 0xcded3526;
-	sramsize = *(uint32_t *)(0x40016C18);
-	*(uint32_t *)(0x40016C18) = 0x200183FF;//ÅäÖÃsram´óÐ¡, ½«BOOTÊ¹ÓÃ¶Ôsram´ò¿ª	
-	*(uint32_t *)(0x4002228C) = 0xa5a5a5a5;//QSPI½âËø
+	*(volatile uint32_t *)(0x400210F0) = BIT(0);//ï¿½ï¿½ï¿½ï¿½sys_cfgï¿½Å¿ï¿½
+	*(volatile uint32_t *)(0x40016C00) = 0xa7d93a86;//ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	*(volatile uint32_t *)(0x40016C00) = 0xab12dfcd;
+	*(volatile uint32_t *)(0x40016C00) = 0xcded3526;
+	sramsize = *(volatile uint32_t *)(0x40016C18);
+	*(volatile uint32_t *)(0x40016C18) = 0x200183FF;//ï¿½ï¿½ï¿½ï¿½sramï¿½ï¿½Ð¡, ï¿½ï¿½BOOTÊ¹ï¿½Ã¶ï¿½sramï¿½ï¿½	
+	*(volatile uint32_t *)(0x4002228C) = 0xa5a5a5a5;//QSPIï¿½ï¿½ï¿½ï¿½
 	
 	SysFreq_Set(RCC_PLLMul,Latency ,0,1);
 	RCC->CFGR = (RCC->CFGR & ~0x00030000) | RCC_PLLSource;
 	
-	//»Ö¸´ÅäÖÃÇ°×´Ì¬
-	*(uint32_t *)(0x40016C18) = sramsize;
-	*(uint32_t *)(0x400210F0) = 0;//¿ªÆôsys_cfgÃÅ¿Ø
-	*(uint32_t *)(0x40016C00) = ~0xa7d93a86;//¼ÓÒ»¡¢¶þ¡¢Èý¼¶Ëø
-	*(uint32_t *)(0x40016C00) = ~0xab12dfcd;
-	*(uint32_t *)(0x40016C00) = ~0xcded3526;
-	*(uint32_t *)(0x4002228C) = ~0xa5a5a5a5;//QSPI½âËø
+	//ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½Ç°×´Ì¬
+	*(volatile uint32_t *)(0x40016C18) = sramsize;
+	*(volatile uint32_t *)(0x400210F0) = 0;//ï¿½ï¿½ï¿½ï¿½sys_cfgï¿½Å¿ï¿½
+	*(volatile uint32_t *)(0x40016C00) = ~0xa7d93a86;//ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	*(volatile uint32_t *)(0x40016C00) = ~0xab12dfcd;
+	*(volatile uint32_t *)(0x40016C00) = ~0xcded3526;
+	*(volatile uint32_t *)(0x4002228C) = ~0xa5a5a5a5;//QSPIï¿½ï¿½ï¿½ï¿½
 	
 	
 	return 1;
