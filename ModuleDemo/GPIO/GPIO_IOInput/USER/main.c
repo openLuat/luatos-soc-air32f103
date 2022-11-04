@@ -9,7 +9,7 @@
 #define GPIO_GROUP_TEST GPIOA
 #define GPIO_MODE_TEST GPIO_Mode_IPU
 #define GPIO_SPEED_TEST GPIO_Speed_50MHz
-#define GPIO_PIN1_TEST GPIO_Pin_2
+#define GPIO_PIN1_TEST GPIO_Pin_1
 
 USART_TypeDef *USART_TEST = USART1;
 
@@ -100,7 +100,7 @@ void EXTI1_IRQHandler(void)
 	if (EXTI_GetITStatus(EXTI_Line1) == SET) //检测EXTI1上的中断
 	{
 		Delay_Ms(10);
-		if (GPIO_ReadOutputDataBit(GPIOA, GPIO_Pin_2) == Bit_SET) //检测GPIOA上的GPIO_Pin_2引脚的电平
+		if (GPIO_ReadOutputDataBit(GPIOA, GPIO_PIN1_TEST) == Bit_SET) //检测GPIOA上的GPIO_Pin_1引脚的电平
 		{
 			PRINTF_LOG("The key is pressed\n");
 		}
