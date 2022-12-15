@@ -7117,9 +7117,9 @@ typedef struct
   * @}
   */ 
 
-#ifdef USE_STDPERIPH_DRIVER
+// #ifdef USE_STDPERIPH_DRIVER
   #include "air32f10x_conf.h"
-#endif
+// #endif
 
 /** @addtogroup Exported_macro
   * @{
