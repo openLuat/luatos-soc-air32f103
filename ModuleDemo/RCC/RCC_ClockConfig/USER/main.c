@@ -43,7 +43,7 @@ void RCC_ClkConfiguration(void)
 		; //等待HSE就绪
 
 	RCC_PLLCmd(DISABLE);										 //关闭PLL
-	AIR_RCC_PLLConfig(RCC_PLLSource_HSE_Div1, RCC_PLLMul_27, 1); //配置PLL,8*27=216MHz
+	AIR_RCC_PLLConfig(RCC_PLLSource_HSE_Div1, RCC_PLLMul_27, FLASH_Div_2); //配置PLL,8*27=216MHz
 
 	RCC_PLLCmd(ENABLE); //使能PLL
 	while (RCC_GetFlagStatus(RCC_FLAG_PLLRDY) == RESET)

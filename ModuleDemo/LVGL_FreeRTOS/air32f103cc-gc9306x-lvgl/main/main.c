@@ -15,7 +15,7 @@ void SystemInit(void)
 	while (RCC_GetFlagStatus(RCC_FLAG_HSERDY) == RESET); //等待HSE就绪
 
 	RCC_PLLCmd(DISABLE);										 //关闭PLL
-	AIR_RCC_PLLConfig(RCC_PLLSource_HSE_Div1, RCC_PLLMul_32, 1); //配置PLL, 8*32=256MHz
+	AIR_RCC_PLLConfig(RCC_PLLSource_HSE_Div1, RCC_PLLMul_32, FLASH_Div_2); //配置PLL, 8*32=256MHz
 
 	RCC_PLLCmd(ENABLE); //使能PLL
 	while (RCC_GetFlagStatus(RCC_FLAG_PLLRDY) == RESET); //等待PLL就绪

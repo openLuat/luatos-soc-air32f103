@@ -107,7 +107,7 @@ void RCC_ClkConfiguration(void)
 	while(RCC_GetFlagStatus(RCC_FLAG_HSERDY) == RESET);
 	
 	RCC_PLLCmd(DISABLE);
-	AIR_RCC_PLLConfig(RCC_PLLSource_HSE_Div1,RCC_PLLMul_27,1);
+	AIR_RCC_PLLConfig(RCC_PLLSource_HSE_Div1,RCC_PLLMul_27,FLASH_Div_2);
 	
 	RCC_PLLCmd(ENABLE);
 	while(RCC_GetFlagStatus(RCC_FLAG_PLLRDY) == RESET);
