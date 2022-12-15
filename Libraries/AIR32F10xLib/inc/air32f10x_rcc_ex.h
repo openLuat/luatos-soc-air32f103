@@ -9,7 +9,17 @@
 /* Includes ------------------------------------------------------------------*/
 #include "air32f10x.h"
 
-uint32_t AIR_RCC_PLLConfig(uint32_t RCC_PLLSource, uint32_t RCC_PLLMul, uint8_t Latency);
+typedef enum 
+{
+	FLASH_Div_0 = 0,
+	FLASH_Div_2 = 1,
+	FLASH_Div_4 = 2,
+	FLASH_Div_6 = 3,
+	FLASH_Div_8 = 4,
+	FLASH_Div_16 = 5,
+}FlashClkDiv;
+
+uint32_t AIR_RCC_PLLConfig(uint32_t RCC_PLLSource, uint32_t RCC_PLLMul, FlashClkDiv Latency);
 
 #ifdef __cplusplus
 }

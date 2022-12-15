@@ -154,23 +154,13 @@
 static __I uint8_t APBAHBPrescTable[16] = {0, 0, 0, 0, 1, 2, 3, 4, 1, 2, 3, 4, 6, 7, 8, 9};
 static __I uint8_t ADCPrescTable[4] = {2, 4, 6, 8};
 
-typedef enum 
-{
-	FLASH_Div_0 = 0,
-	FLASH_Div_2 = 1,
-	FLASH_Div_4 = 2,
-	FLASH_Div_6 = 3,
-	FLASH_Div_8 = 4,
-	FLASH_Div_16 = 5,
-}FlashClkDiv;
-
 #define SysFreq_Set		(*((void (*)(uint32_t, FlashClkDiv , uint8_t, uint8_t))(*(uint32_t *)0x1FFFD00C)))
 
-uint32_t AIR_RCC_PLLConfig(uint32_t RCC_PLLSource, uint32_t RCC_PLLMul, uint8_t Latency)
+uint32_t AIR_RCC_PLLConfig(uint32_t RCC_PLLSource, uint32_t RCC_PLLMul, FlashClkDiv Latency)
 {	
 	volatile uint32_t sramsize = 0;
-	uint32_t pllmul = 0;
-	FunctionalState pwr_gating_state = 0;
+	// uint32_t pllmul = 0;
+	// FunctionalState pwr_gating_state = 0;
 	/* Check the parameters */
 	assert_param(IS_RCC_PLL_SOURCE(RCC_PLLSource));
 	assert_param(IS_RCC_PLL_MUL(RCC_PLLMul));
