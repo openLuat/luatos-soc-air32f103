@@ -16,7 +16,7 @@
         <TargetCommonOption>
           <Device>AIR32F103CB</Device>
           <Vendor>Generic</Vendor>
-          <PackID>Keil.AIR32F103_DFP.1.0.6</PackID>
+          <PackID>Keil.AIR32F103_DFP.1.1.0</PackID>
           <PackURL>https://luatos.com/t/air32f103/</PackURL>
           <Cpu>IRAM(0x20000000,0x10000) IROM(0x08000000,0x20000) CPUTYPE("Cortex-M3") CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -137,8 +137,8 @@
             <DriverSelection>4099</DriverSelection>
           </Flash1>
           <bUseTDR>1</bUseTDR>
-          <Flash2>BIN\UL2CM3.DLL</Flash2>
-          <Flash3></Flash3>
+          <Flash2>BIN\CMSIS_AGDI.dll</Flash2>
+          <Flash3>"" ()</Flash3>
           <Flash4></Flash4>
           <pFcarmOut></pFcarmOut>
           <pFcarmGrp></pFcarmGrp>
@@ -338,9 +338,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>USE_STDPERIPH_DRIVER</Define>
+              <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\SYSTEM\delay;..\USER;..\..\..\..\Libraries\AIR32F10xLib\inc;..\..\..\..\Libraries\CMSIS\Include;..\..\..\..\Libraries\CORE;..\..\..\..\Libraries\CMSIS\Lib\ARM;..\..\..\..\Libraries\AIR32F10xLib\lib</IncludePath>
+              <IncludePath>..\SYSTEM\delay;..\USER;..\..\..\..\Libraries\AIR32F10xLib\inc;..\..\..\..\Libraries\CMSIS\Include;..\..\..\..\Libraries\CORE;..\..\..\..\Libraries\CMSIS\Include;..\..\..\..\Libraries\AIR32F10xLib\lib</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -415,14 +415,9 @@
           <GroupName>CORE</GroupName>
           <Files>
             <File>
-              <FileName>core_cm3.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Libraries\CORE\core_cm3.c</FilePath>
-            </File>
-            <File>
               <FileName>startup_air32f10x.s</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\..\Libraries\CORE\startup_air32f10x.s</FilePath>
+              <FilePath>..\..\..\..\Libraries\STARTUP\arm\startup_air32f10x.s</FilePath>
             </File>
           </Files>
         </Group>
@@ -456,13 +451,23 @@
             </File>
           </Files>
         </Group>
+        <Group>
+          <GroupName>::CMSIS</GroupName>
+        </Group>
       </Groups>
     </Target>
   </Targets>
 
   <RTE>
     <apis/>
-    <components/>
+    <components>
+      <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="5.6.0" condition="ARMv6_7_8-M Device">
+        <package name="CMSIS" schemaVersion="1.7.7" url="http://www.keil.com/pack/" vendor="ARM" version="5.9.0"/>
+        <targetInfos>
+          <targetInfo name="RCC"/>
+        </targetInfos>
+      </component>
+    </components>
     <files/>
   </RTE>
 

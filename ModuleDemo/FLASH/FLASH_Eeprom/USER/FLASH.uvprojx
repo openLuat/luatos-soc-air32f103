@@ -339,7 +339,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\SYSTEM\delay;..\USER;..\..\..\..\Libraries\AIR32F10xLib\inc;..\..\..\..\Libraries\CMSIS\Include;..\..\..\..\Libraries\CORE;..\..\..\..\Libraries\CMSIS\Lib\ARM;..\SYSTEM\eeprom</IncludePath>
+              <IncludePath>..\SYSTEM\delay;..\USER;..\..\..\..\Libraries\AIR32F10xLib\inc;..\..\..\..\Libraries\CMSIS\Include;..\SYSTEM\eeprom</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -419,14 +419,10 @@
           <GroupName>CORE</GroupName>
           <Files>
             <File>
-              <FileName>core_cm3.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Libraries\CORE\core_cm3.c</FilePath>
-            </File>
-            <File>
+
               <FileName>startup_air32f10x.s</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\..\Libraries\CORE\startup_air32f10x.s</FilePath>
+              <FilePath>..\..\..\..\Libraries\STARTUP\arm\startup_air32f10x.s</FilePath>
             </File>
           </Files>
         </Group>

@@ -406,7 +406,7 @@
             <File>
               <FileName>startup_air32f10x.s</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\Libraries\CORE\startup_air32f10x.s</FilePath>
+              <FilePath>..\..\Libraries\STARTUP\arm\startup_air32f10x.s</FilePath>
             </File>
             <File>
               <FileName>core_cm3.c</FileName>

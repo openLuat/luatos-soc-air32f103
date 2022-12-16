@@ -3493,11 +3493,7 @@
           <GroupName>core</GroupName>
           <Files>
             <File>
-              <FileName>core_cm3.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Libraries\CORE\core_cm3.c</FilePath>
-            </File>
-            <File>
+
               <FileName>startup_air32f10x.s</FileName>
               <FileType>2</FileType>
               <FilePath>..\main\startup_air32f10x.s</FilePath>
@@ -8035,11 +8031,7 @@
           <GroupName>core</GroupName>
           <Files>
             <File>
-              <FileName>core_cm3.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Libraries\CORE\core_cm3.c</FilePath>
-            </File>
-            <File>
+
               <FileName>startup_air32f10x.s</FileName>
               <FileType>2</FileType>
               <FilePath>..\main\startup_air32f10x.s</FilePath>
