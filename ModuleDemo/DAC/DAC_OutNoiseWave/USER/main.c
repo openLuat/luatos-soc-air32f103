@@ -33,8 +33,8 @@ int main(void)
 	
 	while(1)
 	{
-		DAC_SoftwareTriggerCmd(DAC_Channel_1, ENABLE);
-		DAC_SoftwareTriggerCmd(DAC_Channel_2, ENABLE);
+		DAC_SoftwareTriggerCmd(DAC_Channel_1, ENABLE);//使能DAC1软件触发
+		DAC_SoftwareTriggerCmd(DAC_Channel_2, ENABLE);//使能DAC2软件触发
 	}
 }
 
@@ -42,32 +42,32 @@ void GPIO_Configuration(void)
 {
 	GPIO_InitTypeDef GPIO_InitStructure;
 
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA,ENABLE);
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA,ENABLE);//使能GPIOA时钟
 	
-	GPIO_InitStructure.GPIO_Pin =  GPIO_Pin_4|GPIO_Pin_5;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_Init(GPIOA, &GPIO_InitStructure);
+	GPIO_InitStructure.GPIO_Pin =  GPIO_Pin_4|GPIO_Pin_5;//PA4,PA5
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;//模拟模式
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;//速度50MHz
+	GPIO_Init(GPIOA, &GPIO_InitStructure);//初始化GPIOA4,GPIOA5
 }
 
 void DAC_Configuration(void)
 {
 	DAC_InitTypeDef	DAC_InitStructure;
 
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_DAC,ENABLE);
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_DAC,ENABLE);//使能DAC时钟
 	
-	DAC_InitStructure.DAC_Trigger = DAC_Trigger_Software;
-	DAC_InitStructure.DAC_WaveGeneration = DAC_WaveGeneration_Noise;
-	DAC_InitStructure.DAC_LFSRUnmask_TriangleAmplitude = DAC_TriangleAmplitude_4095;
-	DAC_InitStructure.DAC_OutputBuffer = DAC_OutputBuffer_Enable;
-	DAC_Init(DAC_Channel_1, &DAC_InitStructure);
-	DAC_Init(DAC_Channel_2, &DAC_InitStructure);
+	DAC_InitStructure.DAC_Trigger = DAC_Trigger_Software;//软件触发
+	DAC_InitStructure.DAC_WaveGeneration = DAC_WaveGeneration_Noise;//噪声波形
+	DAC_InitStructure.DAC_LFSRUnmask_TriangleAmplitude = DAC_TriangleAmplitude_4095;//三角波幅值
+	DAC_InitStructure.DAC_OutputBuffer = DAC_OutputBuffer_Enable;//输出缓冲使能
+	DAC_Init(DAC_Channel_1, &DAC_InitStructure);//初始化DAC通道1
+	DAC_Init(DAC_Channel_2, &DAC_InitStructure);//初始化DAC通道2
 	
-	DAC_Cmd(DAC_Channel_1, ENABLE);
-	DAC_Cmd(DAC_Channel_2, ENABLE);
+	DAC_Cmd(DAC_Channel_1, ENABLE);//使能DAC通道1
+	DAC_Cmd(DAC_Channel_2, ENABLE);//使能DAC通道2
 	
-	DAC_SetChannel1Data(DAC_Align_12b_L, 0x7FF0);
-	DAC_SetChannel2Data(DAC_Align_12b_L, 0x7FF0);
+	DAC_SetChannel1Data(DAC_Align_12b_L, 0x7FF0);//设置DAC通道1数据
+	DAC_SetChannel2Data(DAC_Align_12b_L, 0x7FF0);//设置DAC通道2数据
 }
 
  void UART_Configuration(uint32_t bound)

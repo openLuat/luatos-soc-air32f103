@@ -33,8 +33,8 @@ int main(void)
 	
 	while(1)
 	{
-		DAC_SoftwareTriggerCmd(DAC_Channel_1, ENABLE);
-		DAC_SoftwareTriggerCmd(DAC_Channel_2, ENABLE);
+		DAC_SoftwareTriggerCmd(DAC_Channel_1, ENABLE);//触发DAC1
+		DAC_SoftwareTriggerCmd(DAC_Channel_2, ENABLE);//触发DAC2
 	}
 }
 
@@ -54,20 +54,20 @@ void DAC_Configuration(void)
 {
 	DAC_InitTypeDef	DAC_InitStructure;
 
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_DAC,ENABLE);
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_DAC,ENABLE);//使能DAC时钟
 	
-	DAC_InitStructure.DAC_Trigger = DAC_Trigger_Software;
-	DAC_InitStructure.DAC_WaveGeneration = DAC_WaveGeneration_Triangle;
-	DAC_InitStructure.DAC_LFSRUnmask_TriangleAmplitude = DAC_TriangleAmplitude_2047;
-	DAC_InitStructure.DAC_OutputBuffer = DAC_OutputBuffer_Enable;
-	DAC_Init(DAC_Channel_1, &DAC_InitStructure);
-	DAC_Init(DAC_Channel_2, &DAC_InitStructure);
+	DAC_InitStructure.DAC_Trigger = DAC_Trigger_Software;//软件触发
+	DAC_InitStructure.DAC_WaveGeneration = DAC_WaveGeneration_Triangle;//三角波
+	DAC_InitStructure.DAC_LFSRUnmask_TriangleAmplitude = DAC_TriangleAmplitude_2047;//三角波幅值
+	DAC_InitStructure.DAC_OutputBuffer = DAC_OutputBuffer_Enable;//DAC输出缓冲使能
+	DAC_Init(DAC_Channel_1, &DAC_InitStructure);//初始化DAC1
+	DAC_Init(DAC_Channel_2, &DAC_InitStructure);//初始化DAC2
 	
-	DAC_Cmd(DAC_Channel_1, ENABLE);
-	DAC_Cmd(DAC_Channel_2, ENABLE);
+	DAC_Cmd(DAC_Channel_1, ENABLE);//使能DAC1
+	DAC_Cmd(DAC_Channel_2, ENABLE);//使能DAC2
 	
-	DAC_SetChannel1Data(DAC_Align_12b_L, 0);
-	DAC_SetChannel2Data(DAC_Align_12b_L, 0);
+	DAC_SetChannel1Data(DAC_Align_12b_L, 0);//设置DAC1数据
+	DAC_SetChannel2Data(DAC_Align_12b_L, 0);//设置DAC2数据
 }
 
  void UART_Configuration(uint32_t bound)
