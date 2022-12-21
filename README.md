@@ -73,6 +73,7 @@ ModuleDemo目录里有各种外设使用示例，结构如下
 ├─TIM
 │  ├─TIM_Basic  		TIM基本定时器
 │  └─TIM_Touch  		TIM触摸屏
+|  └─TIM_PWM_DMA  		TIM PWM with DMA输出
 ├─TRNG
 │  ├─TRNG_IntTest   	TRNG中断测试
 │  └─TRNG_PollingTest   TRNG轮询测试
