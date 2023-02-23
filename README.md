@@ -33,12 +33,17 @@ ModuleDemo目录里有各种外设使用示例，结构如下
 │  ├─DAC_OutDMASineWave DAC的DMA模式
 │  ├─DAC_OutNoiseWave  	DAC白噪声输出
 │  └─DAC_OutTriangleWave DAC输出三角波
+├─FreeRTOS
+│  ├─FreeRTOS       FreeRTOS移植工程
 ├─FLASH
 │  ├─FLASH_Eeprom       EEPROM模拟
 │  └─FLASH_EraseProgram FLASH擦写
 ├─GPIO
 │  ├─GPIO_IOInput       GPIO输入
 │  └─GPIO_IOOut         GPIO输出
+├─IAP
+│  ├─APP                IAP升级用户代码
+│  └─BootLoader           IAP升级Bootloader
 ├─IIC
 │  └─IIC_IntTransmit    IIC中断发送
 ├─IIS
