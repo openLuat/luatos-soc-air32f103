@@ -3,23 +3,23 @@
 #include "air32f10x.h"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-//锟矫伙拷锟斤拷锟斤拷锟皆硷拷锟斤拷锟斤拷要锟斤拷锟斤拷
-#define air_FLASH_SIZE 512 	 		//锟斤拷选STM32锟斤拷FLASH锟斤拷锟斤拷锟斤拷小(锟斤拷位为K)
-#define air_FLASH_WREN 1              //使锟斤拷FLASH写锟斤拷(0锟斤拷锟斤拷锟斤拷锟斤拷;1锟斤拷使锟斤拷)
+//用户根据自己的需要设置
+#define air_FLASH_SIZE 512 	 		//所选mh的FLASH容量大小(单位为K)
+#define air_FLASH_WREN 1              //使能FLASH写入(0，不是能;1，使能)
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//FLASH锟斤拷始锟斤拷址
-#define air_FLASH_BASE 0x08000000 	//STM32 FLASH锟斤拷锟斤拷始锟斤拷址
-//FLASH锟斤拷锟斤拷锟斤拷值
+//FLASH起始地址
+#define air_FLASH_BASE 0x08000000 	//mh FLASH的起始地址
+//FLASH解锁键值
  
 
-u16 AIRFLASH_ReadHalfWord(u32 faddr);		  //锟斤拷锟斤拷锟斤拷锟斤拷  
-void AIRFLASH_WriteLenByte(u32 WriteAddr,u32 DataToWrite,u16 Len);	//指锟斤拷锟斤拷址锟斤拷始写锟斤拷指锟斤拷锟斤拷锟饺碉拷锟斤拷锟斤拷
-u32 AIRFLASH_ReadLenByte(u32 ReadAddr,u16 Len);						//指锟斤拷锟斤拷址锟斤拷始锟斤拷取指锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷
-void AIRFLASH_Write(u32 WriteAddr,u16 *pBuffer,u16 NumToWrite);		//锟斤拷指锟斤拷锟斤拷址锟斤拷始写锟斤拷指锟斤拷锟斤拷锟饺碉拷锟斤拷锟斤拷
-void AIRFLASH_Read(u32 ReadAddr,u16 *pBuffer,u16 NumToRead);   		//锟斤拷指锟斤拷锟斤拷址锟斤拷始锟斤拷锟斤拷指锟斤拷锟斤拷锟饺碉拷锟斤拷锟斤拷
+u16 AIRFLASH_ReadHalfWord(u32 faddr);		  //读出半字  
+void AIRFLASH_WriteLenByte(u32 WriteAddr,u32 DataToWrite,u16 Len);	//指定地址开始写入指定长度的数据
+u32 AIRFLASH_ReadLenByte(u32 ReadAddr,u16 Len);						//指定地址开始读取指定长度数据
+void AIRFLASH_Write(u32 WriteAddr,u16 *pBuffer,u16 NumToWrite);		//从指定地址开始写入指定长度的数据
+void AIRFLASH_Read(u32 ReadAddr,u16 *pBuffer,u16 NumToRead);   		//从指定地址开始读出指定长度的数据
 
-//锟斤拷锟斤拷写锟斤拷
+//测试写入
 void Test_Write(u32 WriteAddr,u16 WriteData);								   
 #endif
 
