@@ -158,7 +158,6 @@ static __I uint8_t ADCPrescTable[4] = {2, 4, 6, 8};
 
 uint32_t AIR_RCC_PLLConfig(uint32_t RCC_PLLSource, uint32_t RCC_PLLMul, FlashClkDiv Latency)
 {	
-	volatile uint32_t sramsize = 0;
 	// uint32_t pllmul = 0;
 	// FunctionalState pwr_gating_state = 0;
 	/* Check the parameters */
@@ -169,15 +168,12 @@ uint32_t AIR_RCC_PLLConfig(uint32_t RCC_PLLSource, uint32_t RCC_PLLMul, FlashClk
 	*(volatile uint32_t *)(0x40016C00) = 0xa7d93a86;//解一、二、三级锁
 	*(volatile uint32_t *)(0x40016C00) = 0xab12dfcd;
 	*(volatile uint32_t *)(0x40016C00) = 0xcded3526;
-	sramsize = *(volatile uint32_t *)(0x40016C18);
-	*(volatile uint32_t *)(0x40016C18) = 0x200183FF;//配置sram大小, 将BOOT使用对sram打开
 	*(volatile uint32_t *)(0x4002228C) = 0xa5a5a5a5;//QSPI解锁
 	
 	SysFreq_Set(RCC_PLLMul,Latency ,0,1);
 	RCC->CFGR = (RCC->CFGR & ~0x00030000) | RCC_PLLSource;
 	
 	//恢复配置前状态
-	*(volatile uint32_t *)(0x40016C18) = sramsize;
 	*(volatile uint32_t *)(0x400210F0) = 0;//开启sys_cfg门控
 	*(volatile uint32_t *)(0x40016C00) = ~0xa7d93a86;//加一、二、三级锁
 	*(volatile uint32_t *)(0x40016C00) = ~0xab12dfcd;
