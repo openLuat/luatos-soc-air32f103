@@ -340,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\SYSTEM\delay;..\..\..\..\Libraries\AIR32F10xLib\lib;..\third_party\coremark;..\..\..\..\Libraries\AIR32F10xLib\inc</IncludePath>
+              <IncludePath>..\SYSTEM\delay;..\..\..\..\Libraries\AIR32F10xLib\lib;..\third_party\coremark;..\..\..\..\Libraries\AIR32F10xLib\inc;..\USER;..\..\..\..\Libraries\CMSIS\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -564,13 +564,22 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\..\Libraries\AIR32F10xLib\src\air32f10x_rcc_ex.c</FilePath>
             </File>
+            <File>
+              <FileName>system_air32f10x.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Libraries\AIR32F10xLib\src\system_air32f10x.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>::CMSIS</GroupName>
-        </Group>
-        <Group>
-          <GroupName>::Device</GroupName>
+          <GroupName>STARTUP</GroupName>
+          <Files>
+            <File>
+              <FileName>startup_air32f10x.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\startup_air32f10x.s</FilePath>
+            </File>
+          </Files>
         </Group>
       </Groups>
     </Target>
@@ -578,28 +587,13 @@
 
   <RTE>
     <apis/>
-    <components>
-      <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="5.6.0" condition="ARMv6_7_8-M Device">
-        <package name="CMSIS" schemaVersion="1.7.7" url="http://www.keil.com/pack/" vendor="ARM" version="5.9.0"/>
-        <targetInfos>
-          <targetInfo name="coremark"/>
-        </targetInfos>
-      </component>
-      <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.0.0" condition="AIR32F1xx CMSIS Device">
-        <package name="AIR32F103_DFP" schemaVersion="1.2" url="https://luatos.com/t/air32f103/" vendor="Keil" version="1.0.4"/>
-        <targetInfos>
-          <targetInfo name="coremark"/>
-        </targetInfos>
-      </component>
-    </components>
+    <components/>
     <files>
       <file attr="config" category="header" name="RTE_Driver\Config\RTE_Device.h" version="1.0.0">
-        <instance index="0">RTE\Device\AIR32F103CB\RTE_Device.h</instance>
+        <instance index="0" removed="1">RTE\Device\AIR32F103CB\RTE_Device.h</instance>
         <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.0.0" condition="AIR32F1xx CMSIS Device"/>
         <package name="AIR32F103_DFP" schemaVersion="1.2" url="https://luatos.com/t/air32f103/" vendor="Keil" version="1.1.2"/>
-        <targetInfos>
-          <targetInfo name="coremark"/>
-        </targetInfos>
+        <targetInfos/>
       </file>
       <file attr="config" category="source" name="Device\StdPeriph_Driver\templates\air32f10x_conf.h" version="1.0.0">
         <instance index="0" removed="1">RTE\Device\AIR32F103CB\air32f10x_conf.h</instance>
@@ -608,20 +602,16 @@
         <targetInfos/>
       </file>
       <file attr="config" category="source" condition="AIR32F1xx MD" name="Device\Source\ARM\startup_air32f10x.s" version="1.0.0">
-        <instance index="0">RTE\Device\AIR32F103CB\startup_air32f10x.s</instance>
+        <instance index="0" removed="1">RTE\Device\AIR32F103CB\startup_air32f10x.s</instance>
         <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.0.0" condition="AIR32F1xx CMSIS Device"/>
         <package name="AIR32F103_DFP" schemaVersion="1.2" url="https://luatos.com/t/air32f103/" vendor="Keil" version="1.1.2"/>
-        <targetInfos>
-          <targetInfo name="coremark"/>
-        </targetInfos>
+        <targetInfos/>
       </file>
       <file attr="config" category="source" name="Device\Source\system_air32f10x.c" version="1.0.0">
-        <instance index="0">RTE\Device\AIR32F103CB\system_air32f10x.c</instance>
+        <instance index="0" removed="1">RTE\Device\AIR32F103CB\system_air32f10x.c</instance>
         <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.0.0" condition="AIR32F1xx CMSIS Device"/>
         <package name="AIR32F103_DFP" schemaVersion="1.2" url="https://luatos.com/t/air32f103/" vendor="Keil" version="1.1.2"/>
-        <targetInfos>
-          <targetInfo name="coremark"/>
-        </targetInfos>
+        <targetInfos/>
       </file>
     </files>
   </RTE>
