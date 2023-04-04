@@ -202,6 +202,22 @@ BOOT_RAM  		PROC
 ; Reset handler
 Reset_Handler   PROC
                 EXPORT  Reset_Handler             [WEAK]
+				LDR  R0,=0x400210F0
+                MOV R1,#0x00000001
+                STR R1,[R0]
+                LDR  R2,=0x40016C00
+                LDR R3,=0xa7d93a86
+                STR R3,[R2]
+                LDR R3,=0xab12dfcd
+                STR R3,[R2]
+                LDR R3,=0xcded3526
+                STR R3,[R2]
+                LDR R3,=0x200183FF
+                STR R3,[R2,#0x18]
+                LDR R4,=0x4002228c
+                LDR R5,=0xa5a5a5a5
+                STR R5,[R4]
+                MOV R1,#0x00000000	
                 IMPORT  __main
                 IMPORT  SystemInit
                 LDR     R0, =SystemInit
