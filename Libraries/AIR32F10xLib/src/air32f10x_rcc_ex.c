@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include "air32f10x.h"
+#include "air32f10x_rcc_ex.h"
 
 /* ------------ RCC registers bit address in the alias region ----------- */
 #define RCC_OFFSET                (RCC_BASE - PERIPH_BASE)
