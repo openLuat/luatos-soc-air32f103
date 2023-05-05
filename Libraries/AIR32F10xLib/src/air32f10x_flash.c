@@ -625,7 +625,7 @@ void SetStrt(void)
           "BX 		lr");
 }
 #elif defined(__clang__)
-void SetStrt(void)
+__STATIC_INLINE void SetStrt(void)
 {
     __ASM("MOV     	R0, PC");
     __ASM("LDR 		R1, [R0,#16]");
@@ -639,12 +639,12 @@ void SetStrt(void)
     __ASM("NOP");
     __ASM("NOP");
     __ASM("NOP");
-    __ASM("1:");
+    __ASM("FLAGLABLE:");
     __ASM("LDR		R1, =0x4002200C");
     __ASM("LDR		R2, [R1]");
     __ASM("AND 		R2,	#0x01");
     __ASM("CMP		R2,	#0x00");
-    __ASM("BNE		1b");
+    __ASM("BNE		FLAGLABLE");
     __ASM("BX 		lr");	
 }
 #elif defined(__GNUC__)
@@ -705,7 +705,8 @@ FLASH_Status FLASH_EraseOptionBytes(void)
     // FLASH->CR |= CR_STRT_Set;
     // /* Wait for last operation to be completed */
     // status = FLASH_WaitForLastOperation(EraseTimeout);
-    SetStrt();
+    FLASH->CR = 0x60;
+    while(FLASH->SR & 0x01) {;}
     if(status == FLASH_COMPLETE)
     {
       /* if the erase operation is completed, disable the OPTER Bit */
