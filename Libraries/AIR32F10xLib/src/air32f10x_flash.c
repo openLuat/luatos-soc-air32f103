@@ -639,12 +639,12 @@ void SetStrt(void)
     __ASM("NOP");
     __ASM("NOP");
     __ASM("NOP");
-    __ASM("FLAGLABLE:");
+    __ASM("1:");
     __ASM("LDR		R1, =0x4002200C");
     __ASM("LDR		R2, [R1]");
     __ASM("AND 		R2,	#0x01");
     __ASM("CMP		R2,	#0x00");
-    __ASM("BNE		FLAGLABLE");
+    __ASM("BNE		1b");
     __ASM("BX 		lr");	
 }
 #elif defined(__GNUC__)
@@ -662,12 +662,12 @@ void SetStrt(void)
     asm("NOP");
     asm("NOP");
     asm("NOP");
-    asm("FLAGLABLE");
+    asm("1");
     asm("LDR		R1, =0x4002200C");
     asm("LDR		R2, [R1]");
     asm("AND 		R2,	#0x01");
     asm("CMP		R2,	#0x00");
-    asm("BNE		FLAGLABLE");
+    asm("BNE		1b");
     asm("BX 		lr");	
 }
 
