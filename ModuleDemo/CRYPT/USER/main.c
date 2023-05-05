@@ -18,18 +18,6 @@ extern void ECC_Test(void);
 extern void RSA_Test(void);
 
 extern uint32_t air_crypt_version(void);
-extern void mh_sha_time_test(void);
-extern void AES_Time_Test(void);
-extern void mh_des_time_test(void);
-extern void mh_tdes_time_test(void);
-extern void RSA_Time_Test(void);
-extern void SM2_Time_Test(void);
-extern void ECC_Time_Test(void);
-extern void mh_sm3_time_test(void);
-extern void mh_sm4_time_test(void);
-extern void mh_sm1_time_test(void);
-extern void mh_sm7_time_test(void);
-
 
 USART_TypeDef *USART_TEST = USART1;
 
