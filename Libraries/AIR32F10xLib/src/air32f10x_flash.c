@@ -662,12 +662,12 @@ void SetStrt(void)
     asm("NOP");
     asm("NOP");
     asm("NOP");
-    asm("1");
+    asm("FLAGLABLE");
     asm("LDR		R1, =0x4002200C");
     asm("LDR		R2, [R1]");
     asm("AND 		R2,	#0x01");
     asm("CMP		R2,	#0x00");
-    asm("BNE		1b");
+    asm("BNE		FLAGLABLE");
     asm("BX 		lr");	
 }
 
@@ -705,8 +705,7 @@ FLASH_Status FLASH_EraseOptionBytes(void)
     // FLASH->CR |= CR_STRT_Set;
     // /* Wait for last operation to be completed */
     // status = FLASH_WaitForLastOperation(EraseTimeout);
-    FLASH->CR = 0x60;
-    while(FLASH->SR & 0x01) {;}
+    SetStrt();
     if(status == FLASH_COMPLETE)
     {
       /* if the erase operation is completed, disable the OPTER Bit */
