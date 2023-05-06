@@ -581,7 +581,7 @@ FLASH_Status FLASH_EraseAllBank2Pages(void)
 #if defined(__CC_ARM) 
 __ASM void SetStrt(void)
 {
-	LDR 	R0, [PC,#0]
+	MOV 	R0, PC
 	LDR 	R1, [R0,#16]
 	LDR 	R1, [R0,#32]
 	LDR		R0, =0x40022010
