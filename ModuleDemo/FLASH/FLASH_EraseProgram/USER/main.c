@@ -50,10 +50,10 @@ void SYSTICK_Reset(void)
 	SysTick->VAL = 0;													  //清空计数器
 	SysTick->CTRL = SysTick_CTRL_ENABLE_Msk | SysTick_CTRL_CLKSOURCE_Msk; //使能SYSTICK
 }
-
+uint8_t buff[1024] = {0};
 void FLASH_EraseProgram(uint32_t number)
 {
-	uint8_t buff[1024] = {0};
+	
 	uint32_t status = 0, value, i;
 
 	FLASH_Unlock(); //解锁FLASH

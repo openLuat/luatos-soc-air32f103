@@ -3,7 +3,7 @@
 
 #include "nes.h"
 
-main(void){
+int main(void){
     //不提供游戏本体
 	// nes_t* nes = nes_load_rom(super_mario_rom);
 	// if (!nes){
@@ -15,6 +15,7 @@ main(void){
 		rt_thread_mdelay(1000);
 		rt_kprintf("rt-thread nano\n");
 	}
+	return 0;
 }
 
 

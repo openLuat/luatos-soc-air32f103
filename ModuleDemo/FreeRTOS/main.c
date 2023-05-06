@@ -76,6 +76,7 @@ void SystemInit(void)
 	while (RCC_GetFlagStatus(RCC_FLAG_HSIRDY) == RESET); //等待HSI就绪
 }
 
+void xPortSysTickHandler( void );
 void SysTick_Handler( void )
 {
     if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED)

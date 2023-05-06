@@ -10,13 +10,13 @@
       <TargetName>DAC</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>5060750::V5.06 update 6 (build 750)::ARMCC</pCCUsed>
+      <pCCUsed>5060960::V5.06 update 7 (build 960)::.\ARMCC</pCCUsed>
       <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>AIR32F103CB</Device>
           <Vendor>Generic</Vendor>
-          <PackID>Keil.AIR32F103_DFP.1.0.4</PackID>
+          <PackID>Keil.AIR32F103_DFP.1.1.4</PackID>
           <PackURL>https://luatos.com/t/air32f103/</PackURL>
           <Cpu>IRAM(0x20000000,0x8000) IROM(0x08000000,0x20000) CPUTYPE("Cortex-M3") CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -186,6 +186,7 @@
             <RvdsVP>0</RvdsVP>
             <RvdsMve>0</RvdsMve>
             <RvdsCdeCp>0</RvdsCdeCp>
+            <nBranchProt>0</nBranchProt>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -414,7 +415,6 @@
           <GroupName>CORE</GroupName>
           <Files>
             <File>
-
               <FileName>startup_air32f10x.s</FileName>
               <FileType>2</FileType>
               <FilePath>..\..\..\..\Libraries\STARTUP\arm\startup_air32f10x.s</FilePath>

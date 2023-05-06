@@ -13,5 +13,5 @@ void vApplicationGetIdleTaskMemory(StaticTask_t **ppxIdleTaskTCBBuffer, StackTyp
 
 void vApplicationIdleHook(void)
 {
-    __wfi();
+    __WFI();
 }

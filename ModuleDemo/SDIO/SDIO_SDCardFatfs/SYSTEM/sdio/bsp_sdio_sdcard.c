@@ -2720,7 +2720,7 @@ uint8_t convert_from_bytes_to_power_of_two(uint16_t NumberOfBytes)
 
 //SD_ReadDisk/SD_WriteDisk函数专用buf,当这两个函数的数据缓存区地址不是4字节对齐的时候,
 //需要用到该数组,确保数据缓存区地址是4字节对齐的.
-__align(4) u8 SDIO_DATA_BUFFER[512];	
+__ALIGNED(4) u8 SDIO_DATA_BUFFER[512];	
 //读SD卡
 //buf:读数据缓存区
 //sector:扇区地址

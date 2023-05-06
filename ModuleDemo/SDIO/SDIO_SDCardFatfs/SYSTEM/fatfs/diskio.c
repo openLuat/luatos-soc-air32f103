@@ -201,7 +201,7 @@ DRESULT disk_ioctl (
 #endif
 
 							 
-__weak DWORD get_fattime(void) {
+__WEAK DWORD get_fattime(void) {
 	/* ���ص�ǰʱ��� */
 	return	  ((DWORD)(2015 - 1980) << 25)	/* Year 2015 */
 			| ((DWORD)1 << 21)				/* Month 1 */
