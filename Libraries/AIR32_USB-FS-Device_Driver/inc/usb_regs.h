@@ -39,9 +39,12 @@ enum EP_BUF_NUM
 #define DADDR   ((__IO unsigned *)(RegBase + 0x4C))
 /* Buffer Table address register */
 #define BTABLE  ((__IO unsigned *)(RegBase + 0x50))
+
 #if defined AIR32F303xE || defined AIR32F302x8 
   /* LPM Control and Status register */
 #define LPMCSR    (( __IO unsigned *)(RegBase + 0x54))
+#else
+#define DP_PUUP  *((__IO unsigned *)(RegBase + 0x54))
 #endif
 /******************************************************************************/
 /*                         Endpoint registers                                 */
