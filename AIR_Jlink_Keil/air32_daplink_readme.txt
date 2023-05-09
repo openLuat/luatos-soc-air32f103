@@ -7,8 +7,8 @@
      上电前，短接对外输出Reset的引脚与GND，插入USB，即可进入BootLoader升级模式；
      断开短接的连线；
      将【air32_daplink_vx_iap.hex】复制到虚拟的U盘设备中；
-2.  使用ISP烧录：此方法不再赘述，刷入【air32_daplink_vx.hex】文件即可
-3.  使用SWD/JTAG烧录：同上，刷入【air32_daplink_vx.hex】文件即可
+2.  使用ISP烧录，刷入【air32_daplink_vx.hex】
+3.  使用SWD/JTAG烧录，刷入【air32_daplink_vx.hex】
 
 【注意】
 2023年上半年前的出厂固件均为DAPLink V1版本
