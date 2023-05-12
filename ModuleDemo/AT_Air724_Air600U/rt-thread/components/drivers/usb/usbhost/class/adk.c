@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2006-2021, RT-Thread Development Team
+ * Copyright (c) 2006-2023, RT-Thread Development Team
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -149,7 +149,7 @@ static rt_err_t rt_usbh_adk_start(struct uintf* intf)
  *
  * @return the error code, RT_EOK on successfully.
 */
-static rt_size_t rt_usbh_adk_read(rt_device_t device, rt_off_t pos, void* buffer,
+static rt_ssize_t rt_usbh_adk_read(rt_device_t device, rt_off_t pos, void* buffer,
     rt_size_t size)
 {
     uadk_t adk;
@@ -177,7 +177,7 @@ static rt_size_t rt_usbh_adk_read(rt_device_t device, rt_off_t pos, void* buffer
  *
  * @return the error code, RT_EOK on successfully.
 */
-static rt_size_t rt_usbh_adk_write (rt_device_t device, rt_off_t pos, const void* buffer,
+static rt_ssize_t rt_usbh_adk_write (rt_device_t device, rt_off_t pos, const void* buffer,
     rt_size_t size)
 {
     uadk_t adk;

@@ -462,7 +462,7 @@ void rt_hw_hard_fault_exception(struct exception_info *exception_info)
 
     if (exception_info->exc_return & (1 << 2))
     {
-        rt_kprintf("hard fault on thread: %s\r\n\r\n", rt_thread_self()->name);
+        rt_kprintf("hard fault on thread: %s\r\n\r\n", rt_thread_self()->parent.name);
 
 #if defined(RT_USING_FINSH) && defined(MSH_USING_BUILT_IN_COMMANDS)
         list_thread();
@@ -488,7 +488,7 @@ void rt_hw_hard_fault_exception(struct exception_info *exception_info)
 /**
  * shutdown CPU
  */
-RT_WEAK void rt_hw_cpu_shutdown(void)
+rt_weak void rt_hw_cpu_shutdown(void)
 {
     rt_kprintf("shutdown...\n");
 
@@ -498,7 +498,7 @@ RT_WEAK void rt_hw_cpu_shutdown(void)
 /**
  * reset CPU
  */
-RT_WEAK void rt_hw_cpu_reset(void)
+rt_weak void rt_hw_cpu_reset(void)
 {
     SCB_AIRCR = SCB_RESET_VALUE;
 }

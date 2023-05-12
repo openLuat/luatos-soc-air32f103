@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2006-2021, RT-Thread Development Team
+ * Copyright (c) 2006-2023, RT-Thread Development Team
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -80,10 +80,13 @@ rt_err_t rt_completion_wait(struct rt_completion *completion,
             thread->error = RT_EOK;
 
             /* suspend thread */
-            rt_thread_suspend(thread);
+            rt_thread_suspend_with_flag(thread, RT_UNINTERRUPTIBLE);
             /* add to suspended list */
             rt_list_insert_before(&(completion->suspended_list),
                                   &(thread->tlist));
+
+            /* current context checking */
+            RT_DEBUG_NOT_IN_INTERRUPT;
 
             /* start timer */
             if (timeout > 0)

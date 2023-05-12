@@ -18,6 +18,7 @@
  * 2013-07-11     Grissiom     fix the memory block splitting issue.
  * 2013-07-15     Grissiom     optimize rt_memheap_realloc
  * 2021-06-03     Flybreak     Fix the crash problem after opening Oz optimization on ac6.
+ * 2023-03-01     Bernard      Fix the alignment issue for minimal size
  */
 
 #include <rthw.h>
@@ -32,13 +33,13 @@
 #define RT_MEMHEAP_FREED        0x00
 
 #define RT_MEMHEAP_IS_USED(i)   ((i)->magic & RT_MEMHEAP_USED)
-#define RT_MEMHEAP_MINIALLOC    12
+#define RT_MEMHEAP_MINIALLOC    RT_ALIGN(12, RT_ALIGN_SIZE)
 
 #define RT_MEMHEAP_SIZE         RT_ALIGN(sizeof(struct rt_memheap_item), RT_ALIGN_SIZE)
 #define MEMITEM_SIZE(item)      ((rt_ubase_t)item->next - (rt_ubase_t)item - RT_MEMHEAP_SIZE)
 #define MEMITEM(ptr)            (struct rt_memheap_item*)((rt_uint8_t*)ptr - RT_MEMHEAP_SIZE)
 
-static void _remove_next_ptr(struct rt_memheap_item *next_ptr)
+static void _remove_next_ptr(volatile struct rt_memheap_item *next_ptr)
 {
     /* Fix the crash problem after opening Oz optimization on ac6  */
     /* Fix IAR compiler warning  */
@@ -311,7 +312,7 @@ void *rt_memheap_alloc(struct rt_memheap *heap, rt_size_t size)
 
 #ifdef RT_USING_MEMTRACE
             if (rt_thread_self())
-                rt_memcpy(header_ptr->owner_thread_name, rt_thread_self()->name, sizeof(header_ptr->owner_thread_name));
+                rt_memcpy(header_ptr->owner_thread_name, rt_thread_self()->parent.name, sizeof(header_ptr->owner_thread_name));
             else
                 rt_memcpy(header_ptr->owner_thread_name, "NONE", sizeof(header_ptr->owner_thread_name));
 #endif /* RT_USING_MEMTRACE */
@@ -392,7 +393,7 @@ void *rt_memheap_realloc(struct rt_memheap *heap, void *ptr, rt_size_t newsize)
     if (newsize > oldsize)
     {
         void *new_ptr;
-        struct rt_memheap_item *next_ptr;
+        volatile struct rt_memheap_item *next_ptr;
 
         if (heap->locked == RT_FALSE)
         {
@@ -690,7 +691,7 @@ void rt_memheap_free(void *ptr)
     if (insert_header)
     {
         struct rt_memheap_item *n = heap->free_list->next_free;;
-#if defined(RT_MEMHEAP_BSET_MODE)
+#if defined(RT_MEMHEAP_BEST_MODE)
         rt_size_t blk_size = MEMITEM_SIZE(header_ptr);
         for (;n != heap->free_list; n = n->next_free)
         {
@@ -980,6 +981,8 @@ int memheaptrace(int argc, char *argv[])
                 rt_kprintf("%5d", block_size);
             else if (block_size < 1024 * 1024)
                 rt_kprintf("%4dK", block_size / 1024);
+            else if (block_size < 1024 * 1024 * 100)
+                rt_kprintf("%2d.%dM", block_size / (1024 * 1024),  (block_size % (1024 * 1024) * 10) / (1024 * 1024));
             else
                 rt_kprintf("%4dM", block_size / (1024 * 1024));
             /* dump thread name */

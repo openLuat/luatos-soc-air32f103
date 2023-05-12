@@ -26,7 +26,7 @@ int accept(int s, struct sockaddr *addr, socklen_t *addrlen)
     {
         /* this is a new socket, create it in file system fd */
         int fd;
-        struct dfs_fd *d;
+        struct dfs_file *d;
 
         /* allocate a fd */
         fd = fd_new();
@@ -41,20 +41,28 @@ int accept(int s, struct sockaddr *addr, socklen_t *addrlen)
         if(d)
         {
             /* this is a socket fd */
-            d->type = FT_SOCKET;
-            d->path = NULL;
+            d->vnode = (struct dfs_vnode *)rt_malloc(sizeof(struct dfs_vnode));
+            if (!d->vnode)
+            {
+                /* release fd */
+                fd_release(fd);
+                rt_set_errno(-ENOMEM);
+                return -1;
+            }
+            rt_memset(d->vnode, 0, sizeof(struct dfs_vnode));
+            rt_list_init(&d->vnode->list);
 
-            d->fops = dfs_net_get_fops();
-
+            d->vnode->type = FT_SOCKET;
+            d->vnode->path = NULL;
+            d->vnode->fullpath = NULL;
+            d->vnode->ref_count = 1;
+            d->vnode->fops = dfs_net_get_fops();
             d->flags = O_RDWR; /* set flags as read and write */
-            d->size = 0;
+            d->vnode->size = 0;
             d->pos = 0;
 
-            /* set socket to the data of dfs_fd */
-            d->data = (void *) new_socket;
-
-            /* release the ref-count of fd */
-            fd_put(d);
+            /* set socket to the data of dfs_file */
+            d->vnode->data = (void *)(size_t)new_socket;
 
             return fd;
         }
@@ -72,6 +80,17 @@ int bind(int s, const struct sockaddr *name, socklen_t namelen)
 {
     int socket = dfs_net_getsocket(s);
 
+#ifdef SAL_USING_AF_UNIX
+    struct sockaddr_in server_addr = {0};
+    if (name->sa_family == AF_UNIX)
+    {
+        server_addr.sin_family = AF_INET;
+        server_addr.sin_port = htons(514);
+        server_addr.sin_addr.s_addr = inet_addr("127.0.0.1");
+        return sal_bind(socket, (struct sockaddr *)&server_addr, namelen);
+    }
+#endif /* SAL_USING_AF_UNIX */
+
     return sal_bind(socket, name, namelen);
 }
 RTM_EXPORT(bind);
@@ -80,7 +99,7 @@ int shutdown(int s, int how)
 {
     int error = 0;
     int socket = -1;
-    struct dfs_fd *d;
+    struct dfs_file *d;
 
     socket = dfs_net_getsocket(s);
     if (socket < 0)
@@ -105,8 +124,6 @@ int shutdown(int s, int how)
         rt_set_errno(-ENOTSOCK);
         error = -1;
     }
-
-    fd_put(d);
 
     return error;
 }
@@ -147,6 +164,17 @@ RTM_EXPORT(setsockopt);
 int connect(int s, const struct sockaddr *name, socklen_t namelen)
 {
     int socket = dfs_net_getsocket(s);
+
+#ifdef SAL_USING_AF_UNIX
+    struct sockaddr_in server_addr = {0};
+    if (name->sa_family == AF_UNIX)
+    {
+        server_addr.sin_family = AF_INET;
+        server_addr.sin_port = htons(514);
+        server_addr.sin_addr.s_addr = inet_addr("127.0.0.1");
+        return sal_connect(socket, (struct sockaddr *)&server_addr, namelen);
+    }
+#endif /* SAL_USING_AF_UNIX */
 
     return sal_connect(socket, name, namelen);
 }
@@ -199,7 +227,7 @@ int socket(int domain, int type, int protocol)
     /* create a BSD socket */
     int fd;
     int socket;
-    struct dfs_fd *d;
+    struct dfs_file *d;
 
     /* allocate a fd */
     fd = fd_new();
@@ -210,37 +238,50 @@ int socket(int domain, int type, int protocol)
         return -1;
     }
     d = fd_get(fd);
-
-    /* create socket  and then put it to the dfs_fd */
-    socket = sal_socket(domain, type, protocol);
-    if (socket >= 0)
-    {
-        /* this is a socket fd */
-        d->type = FT_SOCKET;
-        d->path = NULL;
-
-        d->fops = dfs_net_get_fops();
-
-        d->flags = O_RDWR; /* set flags as read and write */
-        d->size = 0;
-        d->pos = 0;
-
-        /* set socket to the data of dfs_fd */
-        d->data = (void *) socket;
-    }
-    else
+    d->vnode = (struct dfs_vnode *)rt_malloc(sizeof(struct dfs_vnode));
+    if (!d->vnode)
     {
         /* release fd */
-        fd_put(d);
-        fd_put(d);
-
+        fd_release(fd);
         rt_set_errno(-ENOMEM);
-
         return -1;
     }
 
-    /* release the ref-count of fd */
-    fd_put(d);
+#ifdef SAL_USING_AF_UNIX
+    if (domain == AF_UNIX)
+    {
+        domain = AF_INET;
+    }
+#endif /* SAL_USING_AF_UNIX */
+
+    /* create socket  and then put it to the dfs_file */
+    socket = sal_socket(domain, type, protocol);
+    if (socket >= 0)
+    {
+        rt_memset(d->vnode, 0, sizeof(struct dfs_vnode));
+        rt_list_init(&d->vnode->list);
+        /* this is a socket fd */
+        d->vnode->type = FT_SOCKET;
+        d->vnode->path = NULL;
+        d->vnode->fullpath = NULL;
+        d->vnode->ref_count = 1;
+        d->vnode->fops = dfs_net_get_fops();
+
+        d->flags = O_RDWR; /* set flags as read and write */
+        d->vnode->size = 0;
+        d->pos = 0;
+
+        /* set socket to the data of dfs_file */
+        d->vnode->data = (void *)(size_t)socket;
+    }
+    else
+    {
+        rt_free(d->vnode);
+        /* release fd */
+        fd_release(fd);
+        rt_set_errno(-ENOMEM);
+        return -1;
+    }
 
     return fd;
 }
@@ -250,7 +291,7 @@ int closesocket(int s)
 {
     int error = 0;
     int socket = -1;
-    struct dfs_fd *d;
+    struct dfs_file *d;
 
     socket = dfs_net_getsocket(s);
     if (socket < 0)
@@ -266,6 +307,12 @@ int closesocket(int s)
         return -1;
     }
 
+    if (!d->vnode)
+    {
+        rt_set_errno(-EBADF);
+        return -1;
+    }
+
     if (sal_closesocket(socket) == 0)
     {
         error = 0;
@@ -276,9 +323,9 @@ int closesocket(int s)
         error = -1;
     }
 
+    rt_free(d->vnode);
     /* socket has been closed, delete it from file system fd */
-    fd_put(d);
-    fd_put(d);
+    fd_release(s);
 
     return error;
 }

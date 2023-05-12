@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2006-2019, RT-Thread Development Team
+# Copyright (c) 2006-2022, RT-Thread Development Team
 #
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -21,7 +21,7 @@ from utils import xml_indent
 
 MODULE_VER_NUM = 6
 
-source_pattern = ['*.c', '*.cpp', '*.cxx', '*.s', '*.S', '*.asm']
+source_pattern = ['*.c', '*.cpp', '*.cxx', '*.s', '*.S', '*.asm','*.cmd']
 
 
 def OSPath(path):
@@ -54,6 +54,12 @@ def CollectPaths(paths):
         # path = os.path.abspath(path)
         path = path.replace('\\', '/')
         all_paths = all_paths + [path] + ParentPaths(path)
+
+    cwd = os.getcwd()
+    for path in os.listdir(cwd):
+        temp_path = cwd.replace('\\', '/') + '/' + path
+        if os.path.isdir(temp_path):
+            all_paths = all_paths + [temp_path]
 
     all_paths = list(set(all_paths))
     return sorted(all_paths)

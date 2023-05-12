@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2006-2021, RT-Thread Development Team
+ * Copyright (c) 2006-2022, RT-Thread Development Team
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -91,7 +91,8 @@ struct rt_small_mem
 #define MIN_SIZE 12
 #endif /* ARCH_CPU_64BIT */
 
-#define MEM_MASK             0xfffffffe
+#define MEM_MASK ((~(rt_size_t)0) - 1)
+
 #define MEM_USED()         ((((rt_base_t)(small_mem)) & MEM_MASK) | 0x1)
 #define MEM_FREED()        ((((rt_base_t)(small_mem)) & MEM_MASK) | 0x0)
 #define MEM_ISUSED(_mem)   \
@@ -164,8 +165,6 @@ static void plug_holes(struct rt_small_mem *m, struct rt_small_mem_item *mem)
 
 /**
  * @brief This function will initialize small memory management algorithm.
- *
- * @param m the small memory management object.
  *
  * @param name is the name of the small memory management object.
  *
@@ -290,10 +289,14 @@ void *rt_smem_alloc(rt_smem_t m, rt_size_t size)
     RT_ASSERT(rt_object_is_systemobject(&m->parent));
 
     if (size != RT_ALIGN(size, RT_ALIGN_SIZE))
+    {
         RT_DEBUG_LOG(RT_DEBUG_MEM, ("malloc size %d, but align to %d\n",
                                     size, RT_ALIGN(size, RT_ALIGN_SIZE)));
+    }
     else
+    {
         RT_DEBUG_LOG(RT_DEBUG_MEM, ("malloc size %d\n", size));
+    }
 
     small_mem = (struct rt_small_mem *)m;
     /* alignment size */
@@ -373,7 +376,7 @@ void *rt_smem_alloc(rt_smem_t m, rt_size_t size)
             mem->pool_ptr = MEM_USED();
 #ifdef RT_USING_MEMTRACE
             if (rt_thread_self())
-                rt_smem_setname(mem, rt_thread_self()->name);
+                rt_smem_setname(mem, rt_thread_self()->parent.name);
             else
                 rt_smem_setname(mem, "NONE");
 #endif /* RT_USING_MEMTRACE */
@@ -521,12 +524,6 @@ void rt_smem_free(void *rmem)
 
     /* Get the corresponding struct rt_small_mem_item ... */
     mem = (struct rt_small_mem_item *)((rt_uint8_t *)rmem - SIZEOF_STRUCT_MEM);
-
-    RT_DEBUG_LOG(RT_DEBUG_MEM,
-                 ("release memory 0x%x, size: %d\n",
-                  (rt_ubase_t)rmem,
-                  (rt_ubase_t)(mem->next - ((rt_uint8_t *)mem - small_mem->heap_ptr))));
-
     /* ... which has to be in a used state ... */
     small_mem = MEM_POOL(mem);
     RT_ASSERT(small_mem != RT_NULL);
@@ -536,6 +533,11 @@ void rt_smem_free(void *rmem)
     RT_ASSERT((rt_uint8_t *)rmem >= (rt_uint8_t *)small_mem->heap_ptr &&
               (rt_uint8_t *)rmem < (rt_uint8_t *)small_mem->heap_end);
     RT_ASSERT(MEM_POOL(&small_mem->heap_ptr[mem->next]) == small_mem);
+
+    RT_DEBUG_LOG(RT_DEBUG_MEM,
+                 ("release memory 0x%x, size: %d\n",
+                  (rt_ubase_t)rmem,
+                  (rt_ubase_t)(mem->next - ((rt_uint8_t *)mem - small_mem->heap_ptr))));
 
     /* ... and is now unused. */
     mem->pool_ptr = MEM_FREED();
