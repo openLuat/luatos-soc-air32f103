@@ -130,3 +130,12 @@ dkms.conf
 *.l1p
 *.l2p
 *.iex
+
+back
+.vscode
+.xmake
+build
+
+
+
+
