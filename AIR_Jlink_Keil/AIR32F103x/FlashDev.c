@@ -80,6 +80,24 @@ struct FlashDevice const FlashDevice  =  {
 };
 #endif
 
+#ifdef Air32F103CGU6
+struct FlashDevice const FlashDevice  =  {
+   FLASH_DRV_VERS,             // Driver Version, do not modify!
+   "Air32F103CGU6",// Device Name (512kB/384kB/256kB)
+   ONCHIP,                     // Device Type
+   0x08000000,                 // Device Start Address
+   0x00100000,                 // Device Size in Bytes (1024kB)
+   1024,                       // Programming Page Size
+   0,                          // Reserved, must be 0
+   0xFF,                       // Initial Content of Erased Memory
+   100,                        // Program Page Timeout 100 mSec
+   500,                        // Erase Sector Timeout 500 mSec
+
+// Specify Size and Address of Sectors
+   0x1000, 0x000000,           // Sector Size 2kB (512 Sectors)
+   SECTOR_END
+};
+#endif
 
 
 

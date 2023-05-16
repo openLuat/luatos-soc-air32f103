@@ -85,7 +85,7 @@ typedef struct {
   vu32 RESERVED0[1];
   vu32 OBR;                                     // offset  0x01C
   vu32 WRPR;                                    // offset  0x020
-#ifdef STM32F10x_1024
+#ifdef Air32F10x_1024
   vu32 RESERVED1[8];
   vu32 KEYR2;                                   // offset  0x044
   vu32 RESERVED2[1];
@@ -140,6 +140,10 @@ int Init (unsigned long adr, unsigned long clk, unsigned long fnc) {
   // Unlock Flash    
   FLASH->KEYR  = FLASH_KEY1;
   FLASH->KEYR  = FLASH_KEY2;
+#ifdef Air32F10x_1024
+  FLASH->KEYR2 = FLASH_KEY1;                    // Flash bank 2
+  FLASH->KEYR2 = FLASH_KEY2;
+#endif
 
   // Test if IWDG is running (IWDG in HW mode)
   if ((FLASH->OBR & 0x04) == 0x00) {
@@ -164,6 +168,9 @@ int UnInit (unsigned long fnc) {
   /* Add your Code */
 	// Lock Flash
   FLASH->CR  |=  FLASH_LOCK;
+#ifdef Air32F10x_1024
+  FLASH->CR2 |=  FLASH_LOCK;                    // Flash bank 2
+#endif
   return (0);                                  // Finished without Errors
 }
 
@@ -185,6 +192,17 @@ int EraseChip (void) {
 
   FLASH->CR  &= ~FLASH_MER;                     // Mass Erase Disabled
 
+#ifdef Air32F10x_1024                           // Flash bank 2
+  FLASH->CR2 |=  FLASH_MER;
+  FLASH->CR2 |=  FLASH_STRT;
+
+  while (FLASH->SR2 & FLASH_BSY) {
+    IWDG->KR = 0xAAAA;
+  }
+
+  FLASH->CR2 &= ~FLASH_MER;
+#endif
+
 	return (0);                                  // Finished without Errors
 	
 	
@@ -201,7 +219,9 @@ int EraseChip (void) {
 int EraseSector (unsigned long adr) {
 
   /* Add your Code */
-
+#ifdef Air32F10x_1024
+  if (adr < (base_adr + BANK1_SIZE)) {          // Flash bank 2
+#endif
     FLASH->CR  |=  FLASH_PER;                   // Page Erase Enabled 
     FLASH->AR   =  adr;                         // Page Address
     FLASH->CR  |=  FLASH_STRT;                  // Start Erase
@@ -211,6 +231,20 @@ int EraseSector (unsigned long adr) {
     }
 
     FLASH->CR  &= ~FLASH_PER;                   // Page Erase Disabled 
+#ifdef Air32F10x_1024
+  }
+  else {                                        // Flash bank 2
+    FLASH->CR2 |=  FLASH_PER;
+    FLASH->AR2  =  adr;
+    FLASH->CR2 |=  FLASH_STRT;
+
+    while (FLASH->SR2 & FLASH_BSY) {
+      IWDG->KR = 0xAAAA;
+    }
+
+    FLASH->CR2 &= ~FLASH_PER;
+  }
+#endif
 	return (0);                                  // Finished without Errors
 }
 
@@ -228,7 +262,9 @@ int ProgramPage (unsigned long adr, unsigned long sz, unsigned char *buf) {
   /* Add your Code */
   
   sz = (sz + 1) & ~1;                           // Adjust size for Half Words
- 
+#ifdef Air32F10x_1024
+  if (adr < (base_adr + BANK1_SIZE)) {          // Flash bank 2
+#endif
     while (sz) {
 
       FLASH->CR  |=  FLASH_PG;                  // Programming Enabled
@@ -249,6 +285,30 @@ int ProgramPage (unsigned long adr, unsigned long sz, unsigned char *buf) {
       buf += 2;
       sz  -= 2;
     }
+#ifdef Air32F10x_1024
+  }
+  else {                                        // Flash bank 2
+    while (sz) {
 
+      FLASH->CR2 |=  FLASH_PG;
+
+      M16(adr) = *((unsigned short *)buf);
+      while (FLASH->SR2 & FLASH_BSY);
+
+      FLASH->CR2 &= ~FLASH_PG;
+
+      // Check for Errors
+      if (FLASH->SR2 & (FLASH_PGERR | FLASH_WRPRTERR)) {
+        FLASH->SR2 |= FLASH_PGERR | FLASH_WRPRTERR;
+        return (1);
+      }
+
+      // Go to next Half Word
+      adr += 2;
+      buf += 2;
+      sz  -= 2;
+    }
+  }
+#endif
 	return (0);                                  // Finished without Errors
 }
