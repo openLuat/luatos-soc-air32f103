@@ -11,15 +11,15 @@ USART_TypeDef *USART_TEST = USART1;
 void UART_Configuration(uint32_t bound);
 void PVD_Configuration(void);
 /********************************************************************************/
-// PVDµôµç¼ì²âÊ¾Àı£¬ÈÕÖ¾Í¨¹ı´®¿Ú1·¢ËÍ£¬²¨ÌØÂÊÎª115200£¬µ±µçÑ¹¸ßÓÚ2.9»òÕßµÍÓÚ2.9VÊ±£¬»á´¥·¢PVDÖĞ¶Ï
+// PVDæ‰ç”µæ£€æµ‹ç¤ºä¾‹ï¼Œæ—¥å¿—é€šè¿‡ä¸²å£1å‘é€ï¼Œæ³¢ç‰¹ç‡ä¸º115200ï¼Œå½“ç”µå‹é«˜äº2.9æˆ–è€…ä½äº2.9Væ—¶ï¼Œä¼šè§¦å‘PVDä¸­æ–­
 /********************************************************************************/
 int main(void)
 {
 	RCC_ClocksTypeDef clocks;
 
-	Delay_Init();				//ÑÓÊ±³õÊ¼»¯
-	UART_Configuration(115200); //Ä¬ÈÏ´®¿Ú1£¬²¨ÌØÂÊ115200
-	RCC_GetClocksFreq(&clocks); //»ñÈ¡ÏµÍ³Ê±ÖÓÆµÂÊ
+	Delay_Init();				//å»¶æ—¶åˆå§‹åŒ–
+	UART_Configuration(115200); //é»˜è®¤ä¸²å£1ï¼Œæ³¢ç‰¹ç‡115200
+	RCC_GetClocksFreq(&clocks); //è·å–ç³»ç»Ÿæ—¶é’Ÿé¢‘ç‡
 
 	PRINTF_LOG("\n");
 	PRINTF_LOG("SYSCLK: %3.1fMhz, HCLK: %3.1fMhz, PCLK1: %3.1fMhz, PCLK2: %3.1fMhz, ADCCLK: %3.1fMhz\n",
@@ -28,7 +28,7 @@ int main(void)
 
 	PRINTF_LOG("AIR32F103 PWR PVD.\n");
 
-	PVD_Configuration(); // PVDÅäÖÃ
+	PVD_Configuration(); // PVDé…ç½®
 	while (1)
 		;
 }
@@ -38,26 +38,26 @@ void PVD_Configuration(void)
 	EXTI_InitTypeDef EXTI_InitStructure;
 	NVIC_InitTypeDef NVIC_InitStructure;
 
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_PWR | RCC_APB1Periph_BKP, ENABLE); //Ê¹ÄÜPWRºÍBKPÊ±ÖÓ
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_PWR | RCC_APB1Periph_BKP, ENABLE); //ä½¿èƒ½PWRå’ŒBKPæ—¶é’Ÿ
 
-	EXTI_ClearITPendingBit(EXTI_Line16);						   //Çå³ıEXTIÏß16µÄÖĞ¶Ï±êÖ¾
-	EXTI_InitStructure.EXTI_Line = EXTI_Line16;					   // EXTIÏß16
-	EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;			   //ÖĞ¶ÏÄ£Ê½
-	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising_Falling; //ÉÏÉıÑØºÍÏÂ½µÑØ´¥·¢
-	EXTI_InitStructure.EXTI_LineCmd = ENABLE;					   //Ê¹ÄÜEXTIÏß
-	EXTI_Init(&EXTI_InitStructure);								   //³õÊ¼»¯EXTIÏß
+	EXTI_ClearITPendingBit(EXTI_Line16);						   //æ¸…é™¤EXTIçº¿16çš„ä¸­æ–­æ ‡å¿—
+	EXTI_InitStructure.EXTI_Line = EXTI_Line16;					   // EXTIçº¿16
+	EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;			   //ä¸­æ–­æ¨¡å¼
+	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising_Falling; //ä¸Šå‡æ²¿å’Œä¸‹é™æ²¿è§¦å‘
+	EXTI_InitStructure.EXTI_LineCmd = ENABLE;					   //ä½¿èƒ½EXTIçº¿
+	EXTI_Init(&EXTI_InitStructure);								   //åˆå§‹åŒ–EXTIçº¿
 
-	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1); //ÉèÖÃNVICµÄÓÅÏÈ¼¶·Ö×éÎª1
+	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1); //è®¾ç½®NVICçš„ä¼˜å…ˆçº§åˆ†ç»„ä¸º1
 
 	/* Enable the PVD Interrupt */
-	NVIC_InitStructure.NVIC_IRQChannel = PVD_IRQn;			  // PVDÖĞ¶Ï
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0; //ÇÀÕ¼ÓÅÏÈ¼¶0
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;		  //×ÓÓÅÏÈ¼¶0
-	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;			  //Ê¹ÄÜPVDÖĞ¶Ï
-	NVIC_Init(&NVIC_InitStructure);							  //³õÊ¼»¯PVDÖĞ¶Ï
+	NVIC_InitStructure.NVIC_IRQChannel = PVD_IRQn;			  // PVDä¸­æ–­
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0; //æŠ¢å ä¼˜å…ˆçº§0
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;		  //å­ä¼˜å…ˆçº§0
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;			  //ä½¿èƒ½PVDä¸­æ–­
+	NVIC_Init(&NVIC_InitStructure);							  //åˆå§‹åŒ–PVDä¸­æ–­
 
-	PWR_PVDLevelConfig(PWR_PVDLevel_2V9); //ÉèÖÃPVDµçÑ¹Îª2.9V
-	PWR_PVDCmd(ENABLE);					  //Ê¹ÄÜPVD
+	PWR_PVDLevelConfig(PWR_PVDLevel_2V9); //è®¾ç½®PVDç”µå‹ä¸º2.9V
+	PWR_PVDCmd(ENABLE);					  //ä½¿èƒ½PVD
 }
 
 void UART_Configuration(uint32_t bound)
@@ -90,18 +90,18 @@ void UART_Configuration(uint32_t bound)
 
 void PVD_IRQHandler(void)
 {
-	if (EXTI_GetITStatus(EXTI_Line16) != RESET) // PVDÖĞ¶Ï
+	if (EXTI_GetITStatus(EXTI_Line16) != RESET) // PVDä¸­æ–­
 	{
-		if (PWR_GetFlagStatus(PWR_FLAG_PVDO) == SET) // ÅĞ¶ÏÖĞ¶ÏÔ­Òò
+		if (PWR_GetFlagStatus(PWR_FLAG_PVDO) == SET) // åˆ¤æ–­ä¸­æ–­åŸå› 
 		{
-			PRINTF_LOG("VDD µÍÓÚÑ¡¶¨µÄPVD·§Öµ\n");
+			PRINTF_LOG("VDD ä½äºé€‰å®šçš„PVDé˜€å€¼\n");
 		}
 		else
 		{
-			PRINTF_LOG("VDD ¸ßÓÚÑ¡¶¨µÄPVD·§Öµ\n");
+			PRINTF_LOG("VDD é«˜äºé€‰å®šçš„PVDé˜€å€¼\n");
 		}
 
-		EXTI_ClearITPendingBit(EXTI_Line16); //Çå³ıPVDÖĞ¶Ï±êÖ¾
+		EXTI_ClearITPendingBit(EXTI_Line16); //æ¸…é™¤PVDä¸­æ–­æ ‡å¿—
 	}
 }
 

@@ -24,19 +24,19 @@ USART_TypeDef *USART_TEST = USART1;
 uint8_t SendBuff[BUFF_SIZE];
 uint8_t RecvBuff[BUFF_SIZE];
 uint8_t RecvFlag = 0;
-__IO uint32_t Timeout = LONG_TIMEOUT; //³¬Ê±Ê±¼ä
+__IO uint32_t Timeout = LONG_TIMEOUT; //è¶…æ—¶æ—¶é—´
 /********************************************************************************/
-// I2CÖ÷»úÄ£Ê½´Ó»úÄ£Ê½Ê¾Àı£¬ÈÕÖ¾Í¨¹ı´®¿Ú1·¢ËÍ£¬²¨ÌØÂÊÎª115200£¬¸ù¾İÌáÊ¾ÊäÈëÊı¾İÉèÖÃI2CÖ÷»úÄ£Ê½Óë´Ó»úÄ£Ê½
+// I2Cä¸»æœºæ¨¡å¼ä»æœºæ¨¡å¼ç¤ºä¾‹ï¼Œæ—¥å¿—é€šè¿‡ä¸²å£1å‘é€ï¼Œæ³¢ç‰¹ç‡ä¸º115200ï¼Œæ ¹æ®æç¤ºè¾“å…¥æ•°æ®è®¾ç½®I2Cä¸»æœºæ¨¡å¼ä¸ä»æœºæ¨¡å¼
 /********************************************************************************/
 int main(void)
 {
 	uint8_t cmd;
 	RCC_ClocksTypeDef clocks;
 
-	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_CRC, ENABLE); //Ê¹ÄÜCRCÊ±ÖÓ
-	Delay_Init();									  //ÑÓÊ±³õÊ¼»¯
-	UART_Configuration(115200);						  //Ä¬ÈÏ´®¿Ú1£¬²¨ÌØÂÊ115200
-	RCC_GetClocksFreq(&clocks);						  //»ñÈ¡ÏµÍ³Ê±ÖÓÆµÂÊ
+	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_CRC, ENABLE); //ä½¿èƒ½CRCæ—¶é’Ÿ
+	Delay_Init();									  //å»¶æ—¶åˆå§‹åŒ–
+	UART_Configuration(115200);						  //é»˜è®¤ä¸²å£1ï¼Œæ³¢ç‰¹ç‡115200
+	RCC_GetClocksFreq(&clocks);						  //è·å–ç³»ç»Ÿæ—¶é’Ÿé¢‘ç‡
 
 	PRINTF_LOG("\n");
 	PRINTF_LOG("SYSCLK: %3.1fMhz, HCLK: %3.1fMhz, PCLK1: %3.1fMhz, PCLK2: %3.1fMhz, ADCCLK: %3.1fMhz\n",
@@ -48,7 +48,7 @@ int main(void)
 	PRINTF_LOG("m: IIC master polling send\n");
 	PRINTF_LOG("r: IIC slave int receive\n");
 
-	IIC_Configuration(); // IICÅäÖÃ
+	IIC_Configuration(); // IICé…ç½®
 
 	while (1)
 	{
@@ -57,20 +57,20 @@ int main(void)
 		{
 		case 'm':
 			PRINTF_LOG("IIC polling master send data:\n");
-			IIC_MasterTest(); // IICÖ÷»ú²âÊÔ
+			IIC_MasterTest(); // IICä¸»æœºæµ‹è¯•
 			break;
 
 		case 'r':
 			PRINTF_LOG("IIC slave receive data...\n");
-			NVIC_Configuration(); // IIC´Ó»úÖĞ¶Ï½ÓÊÕ
-			IIC_SlaveTest();	  // IIC´Ó»ú²âÊÔ
+			NVIC_Configuration(); // IICä»æœºä¸­æ–­æ¥æ”¶
+			IIC_SlaveTest();	  // IICä»æœºæµ‹è¯•
 			break;
 		}
 	}
 }
 uint32_t TIMEOUT_UserCallback(void)
 {
-	// I2C³¬Ê±´¦Àí£¬ÕâÀï¿ÉÒÔ×Ô¶¨Òå´¦Àí·½Ê½£¬ÈçÖØĞÂ·¢ËÍ×îºóÒ»´ÎÊı¾İµÈ£¬ÕâÀïÖ»ÊÇ¼òµ¥µÄ´òÓ¡³¬Ê±ĞÅÏ¢£¬È»ºó×èÈûµÈ´ı
+	// I2Cè¶…æ—¶å¤„ç†ï¼Œè¿™é‡Œå¯ä»¥è‡ªå®šä¹‰å¤„ç†æ–¹å¼ï¼Œå¦‚é‡æ–°å‘é€æœ€åä¸€æ¬¡æ•°æ®ç­‰ï¼Œè¿™é‡Œåªæ˜¯ç®€å•çš„æ‰“å°è¶…æ—¶ä¿¡æ¯ï¼Œç„¶åé˜»å¡ç­‰å¾…
 	PRINTF_LOG("IIC TIMEOUT\n");
 	while (1)
 	{
@@ -81,90 +81,90 @@ void IIC_Configuration(void)
 	GPIO_InitTypeDef GPIO_InitStructure;
 	I2C_InitTypeDef I2C_InitStructure;
 
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);					   //Ê¹ÄÜGPIOBÊ±ÖÓ
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_I2C1 | RCC_APB1Periph_I2C2, ENABLE); //Ê¹ÄÜI2C1,I2C2Ê±ÖÓ
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);					   //Ê¹ÄÜ AFIO Ê±ÖÓ
-	GPIO_PinRemapConfig(GPIO_Remap_I2C1, ENABLE);							   //¿ªÆôÖØÓ³Éä
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);					   //ä½¿èƒ½GPIOBæ—¶é’Ÿ
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_I2C1 | RCC_APB1Periph_I2C2, ENABLE); //ä½¿èƒ½I2C1,I2C2æ—¶é’Ÿ
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);					   //ä½¿èƒ½ AFIO æ—¶é’Ÿ
+	GPIO_PinRemapConfig(GPIO_Remap_I2C1, ENABLE);							   //å¼€å¯é‡æ˜ å°„
 
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8 | GPIO_Pin_9; // PB8,PB9
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;	   //ËÙ¶È50MHz
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_OD;		   //¸´ÓÃ¿ªÂ©Êä³ö
-	GPIO_Init(GPIOB, &GPIO_InitStructure);				   //³õÊ¼»¯
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;	   //é€Ÿåº¦50MHz
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_OD;		   //å¤ç”¨å¼€æ¼è¾“å‡º
+	GPIO_Init(GPIOB, &GPIO_InitStructure);				   //åˆå§‹åŒ–
 
-	GPIO_ForcePuPdCmd(GPIOB, ENABLE);		   //¿ªÆôÄÚ²¿ÉÏÀ­
-	GPIO_ForcePullUpConfig(GPIOB, GPIO_Pin_8); // PB8ÉÏÀ­
-	GPIO_ForcePullUpConfig(GPIOB, GPIO_Pin_9); // PB9ÉÏÀ­
+	GPIO_ForcePuPdCmd(GPIOB, ENABLE);		   //å¼€å¯å†…éƒ¨ä¸Šæ‹‰
+	GPIO_ForcePullUpConfig(GPIOB, GPIO_Pin_8); // PB8ä¸Šæ‹‰
+	GPIO_ForcePullUpConfig(GPIOB, GPIO_Pin_9); // PB9ä¸Šæ‹‰
 
-	I2C_DeInit(I2C1);														  //¸´Î»I2C1
-	I2C_InitStructure.I2C_Mode = I2C_Mode_I2C;								  // I2CÄ£Ê½
-	I2C_InitStructure.I2C_DutyCycle = I2C_DutyCycle_2;						  //Ö¸¶¨Ê±ÖÓÕ¼¿Õ±È£¬¿ÉÑ¡ low/high = 2:1 ¼° 16:9 Ä£Ê½
-	I2C_InitStructure.I2C_AcknowledgedAddress = I2C_AcknowledgedAddress_7bit; // 7Î»µØÖ·
-	I2C_InitStructure.I2C_OwnAddress1 = 0xA0;								  //ÉèÖÃI2CÉè±¸µØÖ·
+	I2C_DeInit(I2C1);														  //å¤ä½I2C1
+	I2C_InitStructure.I2C_Mode = I2C_Mode_I2C;								  // I2Cæ¨¡å¼
+	I2C_InitStructure.I2C_DutyCycle = I2C_DutyCycle_2;						  //æŒ‡å®šæ—¶é’Ÿå ç©ºæ¯”ï¼Œå¯é€‰ low/high = 2:1 åŠ 16:9 æ¨¡å¼
+	I2C_InitStructure.I2C_AcknowledgedAddress = I2C_AcknowledgedAddress_7bit; // 7ä½åœ°å€
+	I2C_InitStructure.I2C_OwnAddress1 = 0xA0;								  //è®¾ç½®I2Cè®¾å¤‡åœ°å€
 	I2C_InitStructure.I2C_ClockSpeed = 100000;								  // 100kHz
-	I2C_InitStructure.I2C_Ack = I2C_Ack_Enable;								  //Ê¹ÄÜÓ¦´ğ
+	I2C_InitStructure.I2C_Ack = I2C_Ack_Enable;								  //ä½¿èƒ½åº”ç­”
 
-	I2C_Init(I2C1, &I2C_InitStructure); //³õÊ¼»¯I2C1
-	I2C_Cmd(I2C1, ENABLE);				//Ê¹ÄÜI2C1
+	I2C_Init(I2C1, &I2C_InitStructure); //åˆå§‹åŒ–I2C1
+	I2C_Cmd(I2C1, ENABLE);				//ä½¿èƒ½I2C1
 }
 
 uint32_t IIC_MasterTest(void)
 {
 	uint32_t i = 0, j;
 
-	FillData(); //Ìî³äÊı¾İ
+	FillData(); //å¡«å……æ•°æ®
 	j = BUFF_SIZE;
 	DataPrintf(SendBuff, BUFF_SIZE);
 
-	I2C_GenerateSTART(I2C1, ENABLE); //·¢ËÍ¿ªÊ¼ĞÅºÅ
+	I2C_GenerateSTART(I2C1, ENABLE); //å‘é€å¼€å§‹ä¿¡å·
 	Timeout = FLAG_TIMEOUT;
 	while (!I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_MODE_SELECT))
 	{
 		if ((Timeout--) == 0)
 			return TIMEOUT_UserCallback();
-	} //µÈ´ıÖ÷»ú·¢ËÍÉè±¸µØÖ·
+	} //ç­‰å¾…ä¸»æœºå‘é€è®¾å¤‡åœ°å€
 
-	I2C_Send7bitAddress(I2C1, 0xA0, I2C_Direction_Transmitter); //·¢ËÍÉè±¸µØÖ·
+	I2C_Send7bitAddress(I2C1, 0xA0, I2C_Direction_Transmitter); //å‘é€è®¾å¤‡åœ°å€
 	while (!I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED))
 	{
 		if ((Timeout--) == 0)
 			return TIMEOUT_UserCallback();
-	} //µÈ´ıÉè±¸µØÖ··¢ËÍÍê³É
+	} //ç­‰å¾…è®¾å¤‡åœ°å€å‘é€å®Œæˆ
 
 	while (j--)
 	{
-		I2C_SendData(I2C1, SendBuff[i]); //·¢ËÍÊı¾İ
+		I2C_SendData(I2C1, SendBuff[i]); //å‘é€æ•°æ®
 		while (!I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_BYTE_TRANSMITTED))
 		{
 			if ((Timeout--) == 0)
 				return TIMEOUT_UserCallback();
-		} //µÈ´ıÊı¾İ·¢ËÍÍê³É
+		} //ç­‰å¾…æ•°æ®å‘é€å®Œæˆ
 		i++;
 	}
 
-	I2C_GenerateSTOP(I2C1, ENABLE); //·¢ËÍÍ£Ö¹ĞÅºÅ
+	I2C_GenerateSTOP(I2C1, ENABLE); //å‘é€åœæ­¢ä¿¡å·
 	while ((I2C1->CR1 & 0x200) == 0x200)
 	{
 		if ((Timeout--) == 0)
 			return TIMEOUT_UserCallback();
-	} //µÈ´ıÍ£Ö¹ĞÅºÅ·¢ËÍÍê³É
+	} //ç­‰å¾…åœæ­¢ä¿¡å·å‘é€å®Œæˆ
 	return 0;
 }
 
 uint32_t IIC_SlaveTest(void)
 {
-	FillData();											 //Ìî³äÊı¾İ
-	I2C_ITConfig(I2C1, I2C_IT_EVT | I2C_IT_BUF, ENABLE); //¿ªÆôÖĞ¶Ï
-	I2C_ITConfig(I2C1, I2C_IT_ERR, ENABLE);				 //¿ªÆôÖĞ¶Ï
+	FillData();											 //å¡«å……æ•°æ®
+	I2C_ITConfig(I2C1, I2C_IT_EVT | I2C_IT_BUF, ENABLE); //å¼€å¯ä¸­æ–­
+	I2C_ITConfig(I2C1, I2C_IT_ERR, ENABLE);				 //å¼€å¯ä¸­æ–­
 	while (1)
 	{
-		if (RecvFlag == 1) //½ÓÊÕÍê³É
+		if (RecvFlag == 1) //æ¥æ”¶å®Œæˆ
 		{
-			DataPrintf(RecvBuff, BUFF_SIZE);				//´òÓ¡Êı¾İ
-			if (memcmp(RecvBuff, SendBuff, BUFF_SIZE) == 0) //±È½ÏÊı¾İ
+			DataPrintf(RecvBuff, BUFF_SIZE);				//æ‰“å°æ•°æ®
+			if (memcmp(RecvBuff, SendBuff, BUFF_SIZE) == 0) //æ¯”è¾ƒæ•°æ®
 			{
 				PRINTF_LOG("IIC slave int receive data success\n");
 			}
-			memset(RecvBuff, 0, BUFF_SIZE); //Çå¿ÕÊı¾İ
+			memset(RecvBuff, 0, BUFF_SIZE); //æ¸…ç©ºæ•°æ®
 			RecvFlag = 0;
 		}
 	}
@@ -174,16 +174,16 @@ void NVIC_Configuration(void)
 {
 	NVIC_InitTypeDef NVIC_InitStructure;
 
-	NVIC_InitStructure.NVIC_IRQChannel = I2C1_EV_IRQn;		  // I2C1ÊÂ¼şÖĞ¶Ï
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1; //ÇÀÕ¼ÓÅÏÈ¼¶
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;		  //×ÓÓÅÏÈ¼¶
-	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;			  //Ê¹ÄÜÖĞ¶Ï
-	NVIC_Init(&NVIC_InitStructure);							  //³õÊ¼»¯
+	NVIC_InitStructure.NVIC_IRQChannel = I2C1_EV_IRQn;		  // I2C1äº‹ä»¶ä¸­æ–­
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1; //æŠ¢å ä¼˜å…ˆçº§
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;		  //å­ä¼˜å…ˆçº§
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;			  //ä½¿èƒ½ä¸­æ–­
+	NVIC_Init(&NVIC_InitStructure);							  //åˆå§‹åŒ–
 
-	NVIC_InitStructure.NVIC_IRQChannel = I2C1_ER_IRQn;		  // I2C1´íÎóÖĞ¶Ï
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1; //ÇÀÕ¼ÓÅÏÈ¼¶
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;		  //×ÓÓÅÏÈ¼¶
-	NVIC_Init(&NVIC_InitStructure);							  //³õÊ¼»¯
+	NVIC_InitStructure.NVIC_IRQChannel = I2C1_ER_IRQn;		  // I2C1é”™è¯¯ä¸­æ–­
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1; //æŠ¢å ä¼˜å…ˆçº§
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;		  //å­ä¼˜å…ˆçº§
+	NVIC_Init(&NVIC_InitStructure);							  //åˆå§‹åŒ–
 }
 
 void UART_Configuration(uint32_t bound)
@@ -213,7 +213,7 @@ void UART_Configuration(uint32_t bound)
 	USART_Init(USART_TEST, &USART_InitStructure);
 	USART_Cmd(USART_TEST, ENABLE);
 }
-//´òÓ¡Êı¾İ
+//æ‰“å°æ•°æ®
 void DataPrintf(void *buf, uint32_t bufsize)
 {
 	uint32_t i = 0;
@@ -233,7 +233,7 @@ void DataPrintf(void *buf, uint32_t bufsize)
 	}
 	PRINTF_LOG("\n");
 }
-//Ìî³äÊı¾İ
+//å¡«å……æ•°æ®
 void FillData(void)
 {
 	uint32_t i = 0;

@@ -18,20 +18,20 @@ void ViewRootDir(void);
 extern uint32_t CSD_Tab[4], CID_Tab[4];
 extern SD_CardInfo SDCardInfo;
 /**
-¶¨ÒåFATFSĞèÒªµÄ±äÁ¿
+å®šä¹‰FATFSéœ€è¦çš„å˜é‡
 */
-FATFS fs;																 // FATFSÎÄ¼şÏµÍ³¶ÔÏó
-FIL fnew;																 //ÎÄ¼ş¶ÔÏó
-FRESULT res_sd;															 //ÎÄ¼ş²Ù×÷½á¹û
-UINT fnum;																 //ÎÄ¼ş³É¹¦¶ÁĞ´ÊıÁ¿
-BYTE ReadBuffer[1024] = {0};											 //¶Á»º³å
-BYTE WriteBuffer[] = "AirM2M ÉÏº£ºÏÖæ  ------>  ĞÂ½¨ÎÄ¼şÏµÍ³²âÊÔÎÄ¼ş\n"; //Ğ´»º³åÇø
+FATFS fs;																 // FATFSæ–‡ä»¶ç³»ç»Ÿå¯¹è±¡
+FIL fnew;																 //æ–‡ä»¶å¯¹è±¡
+FRESULT res_sd;															 //æ–‡ä»¶æ“ä½œç»“æœ
+UINT fnum;																 //æ–‡ä»¶æˆåŠŸè¯»å†™æ•°é‡
+BYTE ReadBuffer[1024] = {0};											 //è¯»ç¼“å†²
+BYTE WriteBuffer[] = "AirM2M ä¸Šæµ·åˆå®™  ------>  æ–°å»ºæ–‡ä»¶ç³»ç»Ÿæµ‹è¯•æ–‡ä»¶\n"; //å†™ç¼“å†²åŒº
 
 /**
-ÓÃÓÚ²âÊÔ¶ÁĞ´ËÙ¶È
+ç”¨äºæµ‹è¯•è¯»å†™é€Ÿåº¦
 **/
-#define TEST_FILE_LEN (2 * 1024 * 1024) //ÓÃÓÚ²âÊÔµÄÎÄ¼ş³¤¶È
-#define BUF_SIZE (4 * 1024)				//Ã¿´Î¶ÁĞ´SDµÄ×î´óÊı¾İ³¤¶È
+#define TEST_FILE_LEN (2 * 1024 * 1024) //ç”¨äºæµ‹è¯•çš„æ–‡ä»¶é•¿åº¦
+#define BUF_SIZE (4 * 1024)				//æ¯æ¬¡è¯»å†™SDçš„æœ€å¤§æ•°æ®é•¿åº¦
 uint8_t TestBuf[BUF_SIZE];
 
 #include <stdlib.h>
@@ -51,10 +51,10 @@ int main(void)
 	uint8_t cmd = 0;
 	RCC_ClocksTypeDef clocks;
 
-	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_CRC, ENABLE); //Ê¹ÄÜCRCÊ±ÖÓ
-	Delay_Init();									  //ÑÓÊ±³õÊ¼»¯
-	UART_Configuration(115200);						  //´®¿Ú³õÊ¼»¯
-	RCC_GetClocksFreq(&clocks);						  //»ñÈ¡Ê±ÖÓÆµÂÊ
+	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_CRC, ENABLE); //ä½¿èƒ½CRCæ—¶é’Ÿ
+	Delay_Init();									  //å»¶æ—¶åˆå§‹åŒ–
+	UART_Configuration(115200);						  //ä¸²å£åˆå§‹åŒ–
+	RCC_GetClocksFreq(&clocks);						  //è·å–æ—¶é’Ÿé¢‘ç‡
 
 	PRINTF_LOG("\n");
 	PRINTF_LOG("SYSCLK: %3.1fMhz, HCLK: %3.1fMhz, PCLK1: %3.1fMhz, PCLK2: %3.1fMhz, ADCCLK: %3.1fMhz\n",
@@ -62,7 +62,7 @@ int main(void)
 			   (float)clocks.PCLK1_Frequency / 1000000, (float)clocks.PCLK2_Frequency / 1000000, (float)clocks.ADCCLK_Frequency / 1000000);
 
 	PRINTF_LOG("AIR32F103 SDIO SD Card Fatfs Test.\n");
-	TestList(); //ÏÔÊ¾²âÊÔÁĞ±í
+	TestList(); //æ˜¾ç¤ºæµ‹è¯•åˆ—è¡¨
 
 	while (1)
 	{
@@ -72,28 +72,28 @@ int main(void)
 		case '1':
 		{
 			PRINTF_LOG("1.--->>>FatfsTest\r\n");
-			FatfsTest(); // FATFS²âÊÔ
+			FatfsTest(); // FATFSæµ‹è¯•
 			TestList();
 			break;
 		}
 		case '2':
 		{
 			PRINTF_LOG("2.--->>>ViewRootDir\r\n");
-			ViewRootDir(); //²é¿´¸ùÄ¿Â¼
+			ViewRootDir(); //æŸ¥çœ‹æ ¹ç›®å½•
 			TestList();
 			break;
 		}
 		case '3':
 		{
 			PRINTF_LOG("3.--->>>CreateDir\r\n");
-			CreateDir(); //´´½¨Ä¿Â¼
+			CreateDir(); //åˆ›å»ºç›®å½•
 			TestList();
 			break;
 		}
 		case '4':
 		{
 			PRINTF_LOG("4.--->>>DeleteDirFile\r\n");
-			DeleteDirFile(); //É¾³ıÄ¿Â¼»òÎÄ¼ş
+			DeleteDirFile(); //åˆ é™¤ç›®å½•æˆ–æ–‡ä»¶
 			TestList();
 			break;
 		}
@@ -105,10 +105,10 @@ void TestList(void)
 {
 	PRINTF_LOG("/***************************SD Card Test*******************************/\n");
 	PRINTF_LOG("==========================List==========================\n");
-	PRINTF_LOG("1: ´´½¨Ò»¸öĞÂÎÄ¼ş(FatFs¶ÁĞ´²âÊÔÎÄ¼ş.txt),½øĞĞ¶ÁĞ´²âÊÔ\n");
-	PRINTF_LOG("2: ÏÔÊ¾SD Card ¸ùÄ¿Â¼ÏÂµÄÎÄ¼ş²âÊÔ\n");
-	PRINTF_LOG("3: ´´½¨Ä¿Â¼(/Dir1,/Dir1/Die1_1,/Dir2)\n");
-	PRINTF_LOG("4: É¾³ıÎÄ¼şºÍÄ¿Â¼(/Dir1,/Dir1/Dir1_1,/Dir2,FatFs¶ÁĞ´²âÊÔÎÄ¼ş.txt)\n");
+	PRINTF_LOG("1: åˆ›å»ºä¸€ä¸ªæ–°æ–‡ä»¶(FatFsè¯»å†™æµ‹è¯•æ–‡ä»¶.txt),è¿›è¡Œè¯»å†™æµ‹è¯•\n");
+	PRINTF_LOG("2: æ˜¾ç¤ºSD Card æ ¹ç›®å½•ä¸‹çš„æ–‡ä»¶æµ‹è¯•\n");
+	PRINTF_LOG("3: åˆ›å»ºç›®å½•(/Dir1,/Dir1/Die1_1,/Dir2)\n");
+	PRINTF_LOG("4: åˆ é™¤æ–‡ä»¶å’Œç›®å½•(/Dir1,/Dir1/Dir1_1,/Dir2,FatFsè¯»å†™æµ‹è¯•æ–‡ä»¶.txt)\n");
 	PRINTF_LOG("****************************************************************************/\n");
 }
 
@@ -155,80 +155,80 @@ void FatfsTest(void)
 {
 	res_sd = f_mount(&fs, "0:", 1);
 
-	/***************************¸ñÊ½»¯²âÊÔ**************************/
-	PRINTF_LOG("\n¸ñÊ½»¯²âÊÔ\n");
+	/***************************æ ¼å¼åŒ–æµ‹è¯•**************************/
+	PRINTF_LOG("\næ ¼å¼åŒ–æµ‹è¯•\n");
 	if (res_sd == FR_NO_FILESYSTEM)
 	{
-		PRINTF_LOG("SD ¿¨Ã»ÓĞÎÄ¼şÏµÍ³, ¼´½«½øĞĞ¸ñÊ½»¯\r\n");
+		PRINTF_LOG("SD å¡æ²¡æœ‰æ–‡ä»¶ç³»ç»Ÿ, å³å°†è¿›è¡Œæ ¼å¼åŒ–\r\n");
 
 		res_sd = f_mkfs("0:", 0, 0);
 
 		if (res_sd == FR_OK)
 		{
-			PRINTF_LOG("SD ¿¨³É¹¦¹ÒÔØÎÄ¼şÏµÍ³\r\n");
+			PRINTF_LOG("SD å¡æˆåŠŸæŒ‚è½½æ–‡ä»¶ç³»ç»Ÿ\r\n");
 			res_sd = f_mount(NULL, "0:", 1);
 			res_sd = f_mount(&fs, "0:", 1);
 		}
 		else
 		{
-			PRINTF_LOG("SD ¿¨¸ñÊ½»¯Ê§°Ü\r\n");
+			PRINTF_LOG("SD å¡æ ¼å¼åŒ–å¤±è´¥\r\n");
 			while (1)
 				;
 		}
 	}
 	else if (res_sd != FR_OK)
 	{
-		PRINTF_LOG("SD ¿¨¹ÒÔØÊ§°Ü (%d), ¿ÉÄÜÊÇSD¿¨³õÊ¼»¯Ê§°Ü\r\n", res_sd);
+		PRINTF_LOG("SD å¡æŒ‚è½½å¤±è´¥ (%d), å¯èƒ½æ˜¯SDå¡åˆå§‹åŒ–å¤±è´¥\r\n", res_sd);
 		while (1)
 			;
 	}
 	else
 	{
-		PRINTF_LOG("ÎÄ¼şÏµÍ³¹ÒÔØ³É, ¿ÉÒÔ½øĞĞ¶ÁĞ´²âÊÔ\r\n");
+		PRINTF_LOG("æ–‡ä»¶ç³»ç»ŸæŒ‚è½½æˆ, å¯ä»¥è¿›è¡Œè¯»å†™æµ‹è¯•\r\n");
 	}
 
-	/***************************ÎÄ¼şÏµÍ³²âÊÔ --->>> Ğ´²âÊÔ*********************/
-	PRINTF_LOG("\nÎÄ¼şÏµÍ³²â --->>> Ğ´²âÊÔ\n");
-	res_sd = f_open(&fnew, "0:FatFs¶ÁĞ´²âÊÔÎÄ¼ş.txt", FA_OPEN_ALWAYS | FA_WRITE | FA_READ);
+	/***************************æ–‡ä»¶ç³»ç»Ÿæµ‹è¯• --->>> å†™æµ‹è¯•*********************/
+	PRINTF_LOG("\næ–‡ä»¶ç³»ç»Ÿæµ‹ --->>> å†™æµ‹è¯•\n");
+	res_sd = f_open(&fnew, "0:FatFsè¯»å†™æµ‹è¯•æ–‡ä»¶.txt", FA_OPEN_ALWAYS | FA_WRITE | FA_READ);
 	if (res_sd == FR_OK)
 	{
-		PRINTF_LOG("´ò¿ª/´´½¨ FatFs¶ÁĞ´²âÊÔÎÄ¼ş.txt ³É¹¦, ÏòÎÄ¼şÖĞĞ´ÈëÊı¾İ\r\n");
+		PRINTF_LOG("æ‰“å¼€/åˆ›å»º FatFsè¯»å†™æµ‹è¯•æ–‡ä»¶.txt æˆåŠŸ, å‘æ–‡ä»¶ä¸­å†™å…¥æ•°æ®\r\n");
 
 		res_sd = f_write(&fnew, WriteBuffer, sizeof(WriteBuffer), &fnum);
 		if (res_sd == FR_OK)
 		{
-			PRINTF_LOG("ÎÄ¼şĞ´Èë³É¹¦, Ğ´Èë×Ö½ÚÊı£º%d Ğ´ÈëµÄÊı¾İÎª: \n%s\r\n", fnum, WriteBuffer);
+			PRINTF_LOG("æ–‡ä»¶å†™å…¥æˆåŠŸ, å†™å…¥å­—èŠ‚æ•°ï¼š%d å†™å…¥çš„æ•°æ®ä¸º: \n%s\r\n", fnum, WriteBuffer);
 		}
 		else
 		{
-			PRINTF_LOG("ÎÄ¼şĞ´ÈëÊ§°Ü (%d)\n", res_sd);
+			PRINTF_LOG("æ–‡ä»¶å†™å…¥å¤±è´¥ (%d)\n", res_sd);
 		}
 		f_close(&fnew);
 	}
 	else
 	{
-		PRINTF_LOG("´ò¿ª/´´½¨ ÎÄ¼şÊ§°Ü\r\n");
+		PRINTF_LOG("æ‰“å¼€/åˆ›å»º æ–‡ä»¶å¤±è´¥\r\n");
 	}
 
-	/*************************ÎÄ¼şÏµÍ³²âÊÔ --->>> ¶Á²âÊÔ**************************/
-	PRINTF_LOG("\nÎÄ¼şÏµÍ³²â --->>> ¶Á²âÊÔ\n");
-	res_sd = f_open(&fnew, "0:FatFs¶ÁĞ´²âÊÔÎÄ¼ş.txt", FA_OPEN_ALWAYS | FA_READ);
+	/*************************æ–‡ä»¶ç³»ç»Ÿæµ‹è¯• --->>> è¯»æµ‹è¯•**************************/
+	PRINTF_LOG("\næ–‡ä»¶ç³»ç»Ÿæµ‹ --->>> è¯»æµ‹è¯•\n");
+	res_sd = f_open(&fnew, "0:FatFsè¯»å†™æµ‹è¯•æ–‡ä»¶.txt", FA_OPEN_ALWAYS | FA_READ);
 	if (res_sd == FR_OK)
 	{
-		PRINTF_LOG("´ò¿ªÎÄ¼ş³É¹¦\r\n");
+		PRINTF_LOG("æ‰“å¼€æ–‡ä»¶æˆåŠŸ\r\n");
 		res_sd = f_read(&fnew, ReadBuffer, sizeof(ReadBuffer), &fnum);
 		if (res_sd == FR_OK)
 		{
-			PRINTF_LOG("ÎÄ¼ş¶ÁÈ¡³É¹¦. ¶ÁÈ¡µÄ×Ö½ÚÊı:%d ¶ÁÈ¡µÄÊı¾İÎª: \n%s\r\n", fnum, ReadBuffer);
+			PRINTF_LOG("æ–‡ä»¶è¯»å–æˆåŠŸ. è¯»å–çš„å­—èŠ‚æ•°:%d è¯»å–çš„æ•°æ®ä¸º: \n%s\r\n", fnum, ReadBuffer);
 		}
 		else
 		{
-			PRINTF_LOG("ÎÄ¼ş¶ÁÈ¡Ê§°Ü (%d)\n", res_sd);
+			PRINTF_LOG("æ–‡ä»¶è¯»å–å¤±è´¥ (%d)\n", res_sd);
 		}
 	}
 	else
 	{
-		PRINTF_LOG("ÎÄ¼ş´ò¿ªÊ§°Ü\n");
+		PRINTF_LOG("æ–‡ä»¶æ‰“å¼€å¤±è´¥\n");
 	}
 
 	f_close(&fnew);
@@ -241,7 +241,7 @@ void CreateDir(void)
 	res_sd = f_mount(&fs, "0:", 1);
 	if (res_sd != FR_OK)
 	{
-		PRINTF_LOG("¹ÒÔØÎÄ¼şÏµÍ³Ê§°Ü (%d)\r\n", res_sd);
+		PRINTF_LOG("æŒ‚è½½æ–‡ä»¶ç³»ç»Ÿå¤±è´¥ (%d)\r\n", res_sd);
 	}
 
 	res_sd = f_mkdir("/Dir1");
@@ -251,11 +251,11 @@ void CreateDir(void)
 	}
 	else if (res_sd == FR_EXIST)
 	{
-		PRINTF_LOG("Dir1 Ä¿±êÒÑ´æÔÚ(%d)\r\n", res_sd);
+		PRINTF_LOG("Dir1 ç›®æ ‡å·²å­˜åœ¨(%d)\r\n", res_sd);
 	}
 	else
 	{
-		PRINTF_LOG("f_mkdir Dir1 Ê§°Ü(%d)\r\n", res_sd);
+		PRINTF_LOG("f_mkdir Dir1 å¤±è´¥(%d)\r\n", res_sd);
 		return;
 	}
 
@@ -266,11 +266,11 @@ void CreateDir(void)
 	}
 	else if (res_sd == FR_EXIST)
 	{
-		PRINTF_LOG("Dir2 Ä¿±êÒÑ´æÔÚ(%d)\r\n", res_sd);
+		PRINTF_LOG("Dir2 ç›®æ ‡å·²å­˜åœ¨(%d)\r\n", res_sd);
 	}
 	else
 	{
-		PRINTF_LOG("f_mkdir Dir2 Ê§°Ü (%d)\r\n", res_sd);
+		PRINTF_LOG("f_mkdir Dir2 å¤±è´¥ (%d)\r\n", res_sd);
 		return;
 	}
 
@@ -281,11 +281,11 @@ void CreateDir(void)
 	}
 	else if (res_sd == FR_EXIST)
 	{
-		PRINTF_LOG("Dir1_1 Ä¿±êÒÑ´æÔÚ(%d)\r\n", res_sd);
+		PRINTF_LOG("Dir1_1 ç›®æ ‡å·²å­˜åœ¨(%d)\r\n", res_sd);
 	}
 	else
 	{
-		PRINTF_LOG("f_mkdir Dir1_1 Ê§°Ü (%d)\r\n", res_sd);
+		PRINTF_LOG("f_mkdir Dir1_1 å¤±è´¥ (%d)\r\n", res_sd);
 		return;
 	}
 
@@ -297,63 +297,63 @@ void DeleteDirFile(void)
 	res_sd = f_mount(&fs, "0:", 1);
 	if (res_sd != FR_OK)
 	{
-		PRINTF_LOG("¹ÒÔØÎÄ¼şÏµÍ³Ê§°Ü (%d)\r\n", res_sd);
+		PRINTF_LOG("æŒ‚è½½æ–‡ä»¶ç³»ç»Ÿå¤±è´¥ (%d)\r\n", res_sd);
 	}
 
 	res_sd = f_unlink("/Dir1/Dir1_1");
 	if (res_sd == FR_OK)
 	{
-		PRINTF_LOG("É¾³ı×ÓÄ¿Â¼/Dir1/Dir1_1³É¹¦\r\n");
+		PRINTF_LOG("åˆ é™¤å­ç›®å½•/Dir1/Dir1_1æˆåŠŸ\r\n");
 	}
 	else if ((res_sd == FR_NO_FILE) || (res_sd == FR_NO_PATH))
 	{
-		PRINTF_LOG("Ã»ÓĞ·¢ÏÖÎÄ¼ş»òÄ¿Â¼: %s\r\n", "/Dir1/Dir1_1");
+		PRINTF_LOG("æ²¡æœ‰å‘ç°æ–‡ä»¶æˆ–ç›®å½•: %s\r\n", "/Dir1/Dir1_1");
 	}
 	else
 	{
-		PRINTF_LOG("É¾³ı×ÓÄ¿Â¼/Dir1/Dir1_1Ê§°Ü(´íÎó´úÂë = %d) ÎÄ¼şÖ»¶Á»òÕßÄ¿Â¼·Ç¿Õ\r\n", res_sd);
+		PRINTF_LOG("åˆ é™¤å­ç›®å½•/Dir1/Dir1_1å¤±è´¥(é”™è¯¯ä»£ç  = %d) æ–‡ä»¶åªè¯»æˆ–è€…ç›®å½•éç©º\r\n", res_sd);
 	}
 
 	res_sd = f_unlink("/Dir1");
 	if (res_sd == FR_OK)
 	{
-		PRINTF_LOG("É¾³ıÄ¿Â¼/Dir1³É¹¦\r\n");
+		PRINTF_LOG("åˆ é™¤ç›®å½•/Dir1æˆåŠŸ\r\n");
 	}
 	else if ((res_sd == FR_NO_FILE) || (res_sd == FR_NO_PATH))
 	{
-		PRINTF_LOG("Ã»ÓĞ·¢ÏÖÎÄ¼ş»òÕßÄ¿Â¼ : %s\r\n", "/Dir1");
+		PRINTF_LOG("æ²¡æœ‰å‘ç°æ–‡ä»¶æˆ–è€…ç›®å½• : %s\r\n", "/Dir1");
 	}
 	else
 	{
-		PRINTF_LOG("É¾³ı×ÓÄ¿Â¼/Dir1/Dir1_1Ê§°Ü(´íÎó´úÂë = %d) ÎÄ¼şÖ»¶Á»òÕßÄ¿Â¼·Ç¿Õ\r\n", res_sd);
+		PRINTF_LOG("åˆ é™¤å­ç›®å½•/Dir1/Dir1_1å¤±è´¥(é”™è¯¯ä»£ç  = %d) æ–‡ä»¶åªè¯»æˆ–è€…ç›®å½•éç©º\r\n", res_sd);
 	}
 
 	res_sd = f_unlink("/Dir2");
 	if (res_sd == FR_OK)
 	{
-		PRINTF_LOG("É¾³ı/Dir2³É¹¦\r\n");
+		PRINTF_LOG("åˆ é™¤/Dir2æˆåŠŸ\r\n");
 	}
 	else if ((res_sd == FR_NO_FILE) || (res_sd == FR_NO_PATH))
 	{
-		PRINTF_LOG("Ã»ÓĞ·¢ÏÖÎÄ¼ş»òÄ¿Â¼ : %s\r\n", "/Dir2");
+		PRINTF_LOG("æ²¡æœ‰å‘ç°æ–‡ä»¶æˆ–ç›®å½• : %s\r\n", "/Dir2");
 	}
 	else
 	{
-		PRINTF_LOG("É¾³ı×ÓÄ¿Â¼/Dir1/Dir1_1Ê§°Ü(´íÎó´úÂë = %d) ÎÄ¼şÖ»¶Á»òÕßÄ¿Â¼·Ç¿Õ\r\n", res_sd);
+		PRINTF_LOG("åˆ é™¤å­ç›®å½•/Dir1/Dir1_1å¤±è´¥(é”™è¯¯ä»£ç  = %d) æ–‡ä»¶åªè¯»æˆ–è€…ç›®å½•éç©º\r\n", res_sd);
 	}
 
-	res_sd = f_unlink("FatFs¶ÁĞ´²âÊÔÎÄ¼ş.txt");
+	res_sd = f_unlink("FatFsè¯»å†™æµ‹è¯•æ–‡ä»¶.txt");
 	if (res_sd == FR_OK)
 	{
-		PRINTF_LOG("É¾³ıFatFs¶ÁĞ´²âÊÔÎÄ¼ş.txt³É¹¦\r\n");
+		PRINTF_LOG("åˆ é™¤FatFsè¯»å†™æµ‹è¯•æ–‡ä»¶.txtæˆåŠŸ\r\n");
 	}
 	else if ((res_sd == FR_NO_FILE) || (res_sd == FR_NO_PATH))
 	{
-		PRINTF_LOG("Ã»ÓĞ·¢ÏÖÎÄ¼ş»òÄ¿Â¼ : %s\r\n", "/FatFs¶ÁĞ´²âÊÔÎÄ¼ş.txt");
+		PRINTF_LOG("æ²¡æœ‰å‘ç°æ–‡ä»¶æˆ–ç›®å½• : %s\r\n", "/FatFsè¯»å†™æµ‹è¯•æ–‡ä»¶.txt");
 	}
 	else
 	{
-		PRINTF_LOG("É¾³ıFatFs¶ÁĞ´²âÊÔÎÄ¼ş.txtÊ§°Ü(´íÎó´úÂë = %d) ÎÄ¼şÖ»¶Á»òÕßÄ¿Â¼·Ç¿Õ\r\n", res_sd);
+		PRINTF_LOG("åˆ é™¤FatFsè¯»å†™æµ‹è¯•æ–‡ä»¶.txtå¤±è´¥(é”™è¯¯ä»£ç  = %d) æ–‡ä»¶åªè¯»æˆ–è€…ç›®å½•éç©º\r\n", res_sd);
 	}
 
 	f_mount(NULL, "0:", 1);
@@ -369,20 +369,20 @@ void ViewRootDir(void)
 	res_sd = f_mount(&fs, "0:", 1);
 	if (res_sd != FR_OK)
 	{
-		PRINTF_LOG("¹ÒÔØÎÄ¼şÏµÍ³Ê§°Ü (%d)\r\n", res_sd);
+		PRINTF_LOG("æŒ‚è½½æ–‡ä»¶ç³»ç»Ÿå¤±è´¥ (%d)\r\n", res_sd);
 	}
 
 	res_sd = f_opendir(&dirinf, "/");
 	if (res_sd != FR_OK)
 	{
-		PRINTF_LOG("´ò¿ª¸ùÄ¿Â¼Ê§°Ü (%d)\r\n", res_sd);
+		PRINTF_LOG("æ‰“å¼€æ ¹ç›®å½•å¤±è´¥ (%d)\r\n", res_sd);
 		return;
 	}
 
 	fileinf.lfname = name;
 	fileinf.lfsize = 256;
 
-	PRINTF_LOG("ÊôĞÔ		|	ÎÄ¼ş´óĞ¡	|	¶ÌÎÄ¼şÃû	|	³¤ÎÄ¼şÃû\r\n");
+	PRINTF_LOG("å±æ€§		|	æ–‡ä»¶å¤§å°	|	çŸ­æ–‡ä»¶å	|	é•¿æ–‡ä»¶å\r\n");
 	for (cnt = 0;; cnt++)
 	{
 		res_sd = f_readdir(&dirinf, &fileinf);
@@ -398,11 +398,11 @@ void ViewRootDir(void)
 
 		if (fileinf.fattrib & AM_DIR)
 		{
-			PRINTF_LOG("(0x%02d)Ä¿Â¼", fileinf.fattrib);
+			PRINTF_LOG("(0x%02d)ç›®å½•", fileinf.fattrib);
 		}
 		else
 		{
-			PRINTF_LOG("(0x%02d)ÊôĞÔ", fileinf.fattrib);
+			PRINTF_LOG("(0x%02d)å±æ€§", fileinf.fattrib);
 		}
 
 		PRINTF_LOG("%10d	", fileinf.fsize);

@@ -11,21 +11,21 @@ USART_TypeDef *USART_TEST = USART1;
 
 void UART_Configuration(uint32_t bound);
 
-//Ҫд�뵽AIR32 FLASH���ַ�������
+//要写入到AIR32 FLASH的字符串数组
 const u8 TEXT_Buffer[] = {"AIR FLASH TEST"};
-#define SIZE sizeof(TEXT_Buffer)   //���鳤��
-#define FLASH_SAVE_ADDR 0X08008000 //����FLASH �����ַ(����Ϊż��������ֵҪ���ڱ�������ռ��FLASH�Ĵ�С+0X08000000)
+#define SIZE sizeof(TEXT_Buffer)   //数组长度
+#define FLASH_SAVE_ADDR 0X08008000 //设置FLASH 保存地址(必须为偶数，且其值要大于本代码所占用FLASH的大小+0X08000000)
 /********************************************************************************/
-// Flashģ��eeprom��ʾ������־ͨ������1���ͣ�������Ϊ115200
+// Flash模拟eeprom的示例，日志通过串口1发送，波特率为115200
 /********************************************************************************/
 int main(void)
 {
 	uint8_t datatemp[SIZE], i;
 
 	RCC_ClocksTypeDef clocks;
-	Delay_Init();				//��ʱ��ʼ��
-	UART_Configuration(115200); //Ĭ��Ϊ����1��������115200
-	RCC_GetClocksFreq(&clocks); //��ȡϵͳʱ��Ƶ��
+	Delay_Init();				//延时初始化
+	UART_Configuration(115200); //默认为串口1，波特率115200
+	RCC_GetClocksFreq(&clocks); //获取系统时钟频率
 
 	PRINTF_LOG("\n");
 	PRINTF_LOG("SYSCLK: %3.1fMhz, HCLK: %3.1fMhz, PCLK1: %3.1fMhz, PCLK2: %3.1fMhz, ADCCLK: %3.1fMhz\n",
@@ -35,14 +35,14 @@ int main(void)
 
 	while (1)
 	{
-		AIRFLASH_Write(FLASH_SAVE_ADDR, (u16 *)TEXT_Buffer, SIZE); //������д�뵽FLASH
-		AIRFLASH_Read(FLASH_SAVE_ADDR, (u16 *)datatemp, SIZE);	   //��FLASH��ȡ����
+		AIRFLASH_Write(FLASH_SAVE_ADDR, (u16 *)TEXT_Buffer, SIZE); //将数组写入到FLASH
+		AIRFLASH_Read(FLASH_SAVE_ADDR, (u16 *)datatemp, SIZE);	   //从FLASH读取数据
 		for (i = 0; i < SIZE; i++)
 		{
 			PRINTF_LOG("%s\n", datatemp);
 		}
 
-		memset(datatemp, 0x00, sizeof(datatemp)); //�������
+		memset(datatemp, 0x00, sizeof(datatemp)); //清空数组
 		Delay_Ms(1000);
 	}
 }

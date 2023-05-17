@@ -16,14 +16,14 @@ USART_TypeDef *USART_TEST = USART1;
 void UART_Configuration(uint32_t bound);
 void GPIO_Configuration(void);
 /********************************************************************************/
-// GPIOÖĞ¶ÏÊäÈë²âÊÔ£¬ÈÕÖ¾Í¨¹ı´®¿Ú1·¢ËÍ£¬²¨ÌØÂÊÎª115200£¬PA2ÎªÖĞ¶ÏÊäÈë£¬ÏÂ½µÑØ´¥·¢
+// GPIOä¸­æ–­è¾“å…¥æµ‹è¯•ï¼Œæ—¥å¿—é€šè¿‡ä¸²å£1å‘é€ï¼Œæ³¢ç‰¹ç‡ä¸º115200ï¼ŒPA2ä¸ºä¸­æ–­è¾“å…¥ï¼Œä¸‹é™æ²¿è§¦å‘
 /********************************************************************************/
 int main(void)
 {
 	RCC_ClocksTypeDef clocks;
-	Delay_Init();				//ÑÓÊ±³õÊ¼»¯
-	UART_Configuration(115200); //Ä¬ÈÏÎª´®¿Ú1£¬²¨ÌØÂÊ115200
-	RCC_GetClocksFreq(&clocks); //»ñÈ¡ÏµÍ³Ê±ÖÓÆµÂÊ
+	Delay_Init();				//å»¶æ—¶åˆå§‹åŒ–
+	UART_Configuration(115200); //é»˜è®¤ä¸ºä¸²å£1ï¼Œæ³¢ç‰¹ç‡115200
+	RCC_GetClocksFreq(&clocks); //è·å–ç³»ç»Ÿæ—¶é’Ÿé¢‘ç‡
 
 	PRINTF_LOG("\n");
 	PRINTF_LOG("SYSCLK: %3.1fMhz, HCLK: %3.1fMhz, PCLK1: %3.1fMhz, PCLK2: %3.1fMhz, ADCCLK: %3.1fMhz\n",
@@ -44,26 +44,26 @@ void GPIO_Configuration(void)
 	NVIC_InitTypeDef NVIC_InitStructure;
 	EXTI_InitTypeDef EXTI_InitStructure;
 
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE); //Ê¹ÄÜGPIOAÊ±ÖÓ
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE); //ä½¿èƒ½GPIOAæ—¶é’Ÿ
 
 	GPIO_InitStructure.GPIO_Pin = GPIO_PIN1_TEST;
 	GPIO_InitStructure.GPIO_Speed = GPIO_SPEED_TEST;
 	GPIO_InitStructure.GPIO_Mode = GPIO_MODE_TEST;
 	GPIO_Init(GPIO_GROUP_TEST, &GPIO_InitStructure);
 
-	GPIO_EXTILineConfig(GPIO_PortSourceGPIOA, GPIO_PinSource1); // GPIOA1ÎªÍâ²¿ÖĞ¶Ï1µÄ´¥·¢Ô´
+	GPIO_EXTILineConfig(GPIO_PortSourceGPIOA, GPIO_PinSource1); // GPIOA1ä¸ºå¤–éƒ¨ä¸­æ–­1çš„è§¦å‘æº
 
-	NVIC_InitStructure.NVIC_IRQChannel = EXTI1_IRQn;		  // EXTI0ÖĞ¶ÏÍ¨µÀ
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2; //ÇÀÕ¼ÓÅÏÈ¼¶
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;		  //×ÓÓÅÏÈ¼¶
-	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;			  // IRQÍ¨µÀÊ¹ÄÜ
-	NVIC_Init(&NVIC_InitStructure);							  //¸ù¾İÖ¸¶¨µÄ²ÎÊı³õÊ¼»¯VIC¼Ä´æÆ÷
+	NVIC_InitStructure.NVIC_IRQChannel = EXTI1_IRQn;		  // EXTI0ä¸­æ–­é€šé“
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2; //æŠ¢å ä¼˜å…ˆçº§
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;		  //å­ä¼˜å…ˆçº§
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;			  // IRQé€šé“ä½¿èƒ½
+	NVIC_Init(&NVIC_InitStructure);							  //æ ¹æ®æŒ‡å®šçš„å‚æ•°åˆå§‹åŒ–VICå¯„å­˜å™¨
 
-	EXTI_InitStructure.EXTI_Line = EXTI_Line1;				// EXTI1ÖĞ¶ÏÏß
-	EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;		// EXTI1ÖĞ¶ÏÄ£Ê½
-	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling; //ÏÂ½µÑØ´¥·¢
-	EXTI_InitStructure.EXTI_LineCmd = ENABLE;				//Ê¹ÄÜEXTI1ÖĞ¶Ï
-	EXTI_Init(&EXTI_InitStructure);							//¸ù¾İÖ¸¶¨µÄ²ÎÊı³õÊ¼»¯EXTI¼Ä´æÆ÷
+	EXTI_InitStructure.EXTI_Line = EXTI_Line1;				// EXTI1ä¸­æ–­çº¿
+	EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;		// EXTI1ä¸­æ–­æ¨¡å¼
+	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling; //ä¸‹é™æ²¿è§¦å‘
+	EXTI_InitStructure.EXTI_LineCmd = ENABLE;				//ä½¿èƒ½EXTI1ä¸­æ–­
+	EXTI_Init(&EXTI_InitStructure);							//æ ¹æ®æŒ‡å®šçš„å‚æ•°åˆå§‹åŒ–EXTIå¯„å­˜å™¨
 }
 
 void UART_Configuration(uint32_t bound)
@@ -94,18 +94,18 @@ void UART_Configuration(uint32_t bound)
 	USART_Cmd(USART_TEST, ENABLE);
 }
 
-// EXTI1ÖĞ¶Ï·şÎñ³ÌĞò
+// EXTI1ä¸­æ–­æœåŠ¡ç¨‹åº
 void EXTI1_IRQHandler(void)
 {
-	if (EXTI_GetITStatus(EXTI_Line1) == SET) //¼ì²âEXTI1ÉÏµÄÖĞ¶Ï
+	if (EXTI_GetITStatus(EXTI_Line1) == SET) //æ£€æµ‹EXTI1ä¸Šçš„ä¸­æ–­
 	{
 		Delay_Ms(10);
-		if (GPIO_ReadOutputDataBit(GPIOA, GPIO_PIN1_TEST) == Bit_SET) //¼ì²âGPIOAÉÏµÄGPIO_Pin_1Òı½ÅµÄµçÆ½
+		if (GPIO_ReadOutputDataBit(GPIOA, GPIO_PIN1_TEST) == Bit_SET) //æ£€æµ‹GPIOAä¸Šçš„GPIO_Pin_1å¼•è„šçš„ç”µå¹³
 		{
 			PRINTF_LOG("The key is pressed\n");
 		}
 	}
-	EXTI_ClearITPendingBit(EXTI_Line1); //Çå³ıEXTI1ÉÏµÄÖĞ¶Ï±êÖ¾Î»
+	EXTI_ClearITPendingBit(EXTI_Line1); //æ¸…é™¤EXTI1ä¸Šçš„ä¸­æ–­æ ‡å¿—ä½
 }
 
 int SER_PutChar(int ch)

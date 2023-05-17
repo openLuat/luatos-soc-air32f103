@@ -24,10 +24,10 @@ uint16_t Sine12bit[DATA_LEN];
 
 int main(void)
 {
-	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_CRC, ENABLE); //Ê¹ÄÜCRCÊ±ÖÓ
-	Delay_Init();									  //³õÊ¼»¯ÑÓÊ±º¯Êı
-	UART_Configuration(115200);						  //³õÊ¼»¯´®¿Ú
-	RCC_GetClocksFreq(&clocks);						  //»ñÈ¡ÏµÍ³Ê±ÖÓ
+	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_CRC, ENABLE); //ä½¿èƒ½CRCæ—¶é’Ÿ
+	Delay_Init();									  //åˆå§‹åŒ–å»¶æ—¶å‡½æ•°
+	UART_Configuration(115200);						  //åˆå§‹åŒ–ä¸²å£
+	RCC_GetClocksFreq(&clocks);						  //è·å–ç³»ç»Ÿæ—¶é’Ÿ
 
 	PRINTF_LOG("\n");
 	PRINTF_LOG("SYSCLK: %3.1fMhz, HCLK: %3.1fMhz, PCLK1: %3.1fMhz, PCLK2: %3.1fMhz, ADCCLK: %3.1fMhz\n",
@@ -36,13 +36,13 @@ int main(void)
 
 	PRINTF_LOG("AIR32F103 DAC Out Software Sine Wave.\n");
 
-	GPIO_Configuration(); //³õÊ¼»¯GPIO
-	DAC_Configuration();  //³õÊ¼»¯DAC
-	TIM_Configuration();  //³õÊ¼»¯TIM
+	GPIO_Configuration(); //åˆå§‹åŒ–GPIO
+	DAC_Configuration();  //åˆå§‹åŒ–DAC
+	TIM_Configuration();  //åˆå§‹åŒ–TIM
 
 	uint8_uint16(Sine12bit);
 
-	DMA_Configuration(); //³õÊ¼»¯DMA
+	DMA_Configuration(); //åˆå§‹åŒ–DMA
 
 	while (1)
 		;
@@ -62,43 +62,43 @@ void DMA_Configuration(void)
 {
 	DMA_InitTypeDef DMA_InitStructure;
 
-	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA2, ENABLE); //Ê¹ÄÜDMAÊ±ÖÓ
+	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA2, ENABLE); //ä½¿èƒ½DMAæ—¶é’Ÿ
 
-	DMA_InitStructure.DMA_PeripheralBaseAddr = DAC2_DHR12RD_ADDRESS;			// DAC2µÄDHR12RD¼Ä´æÆ÷µØÖ·
-	DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t)&Sine12bit;				// DMAµÄÄÚ´æµØÖ·
-	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralDST;							// DMA´«Êä·½Ïò£ºÍâÉèµ½ÄÚ´æ
-	DMA_InitStructure.DMA_BufferSize = DATA_LEN;								// DMAµÄDMA_BufferSize´óĞ¡
-	DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;			//ÍâÉèµØÖ·¼Ä´æÆ÷²»±ä
-	DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;						//ÄÚ´æµØÖ·¼Ä´æÆ÷µİÔö
-	DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_HalfWord; //ÍâÉèÊı¾İ¿í¶ÈÎª16Î»
-	DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_HalfWord;			//ÄÚ´æÊı¾İ¿í¶ÈÎª16Î»
-	DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;								//¹¤×÷ÔÚÑ­»·»º´æÄ£Ê½
-	DMA_InitStructure.DMA_Priority = DMA_Priority_High;							// DMAµÄÓÅÏÈ¼¶Îª¸ß
-	DMA_InitStructure.DMA_M2M = DMA_M2M_Disable;								//·ÇÄÚ´æµ½ÄÚ´æ´«Êä
+	DMA_InitStructure.DMA_PeripheralBaseAddr = DAC2_DHR12RD_ADDRESS;			// DAC2çš„DHR12RDå¯„å­˜å™¨åœ°å€
+	DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t)&Sine12bit;				// DMAçš„å†…å­˜åœ°å€
+	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralDST;							// DMAä¼ è¾“æ–¹å‘ï¼šå¤–è®¾åˆ°å†…å­˜
+	DMA_InitStructure.DMA_BufferSize = DATA_LEN;								// DMAçš„DMA_BufferSizeå¤§å°
+	DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;			//å¤–è®¾åœ°å€å¯„å­˜å™¨ä¸å˜
+	DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;						//å†…å­˜åœ°å€å¯„å­˜å™¨é€’å¢
+	DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_HalfWord; //å¤–è®¾æ•°æ®å®½åº¦ä¸º16ä½
+	DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_HalfWord;			//å†…å­˜æ•°æ®å®½åº¦ä¸º16ä½
+	DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;								//å·¥ä½œåœ¨å¾ªç¯ç¼“å­˜æ¨¡å¼
+	DMA_InitStructure.DMA_Priority = DMA_Priority_High;							// DMAçš„ä¼˜å…ˆçº§ä¸ºé«˜
+	DMA_InitStructure.DMA_M2M = DMA_M2M_Disable;								//éå†…å­˜åˆ°å†…å­˜ä¼ è¾“
 
-	DMA_Init(DMA2_Channel4, &DMA_InitStructure); //¸ù¾İDMA_InitStructÖĞÖ¸¶¨µÄ²ÎÊı³õÊ¼»¯DMAµÄÍ¨µÀ4
-	DMA_Cmd(DMA2_Channel4, ENABLE);				 //Ê¹ÄÜDMAÍ¨µÀ4
+	DMA_Init(DMA2_Channel4, &DMA_InitStructure); //æ ¹æ®DMA_InitStructä¸­æŒ‡å®šçš„å‚æ•°åˆå§‹åŒ–DMAçš„é€šé“4
+	DMA_Cmd(DMA2_Channel4, ENABLE);				 //ä½¿èƒ½DMAé€šé“4
 
-	DMA_InitStructure.DMA_PeripheralBaseAddr = DAC1_DHR12RD_ADDRESS; // DAC1µÄDHR12RD¼Ä´æÆ÷µØÖ·
-	DMA_Init(DMA2_Channel3, &DMA_InitStructure);					 //¸ù¾İDMA_InitStructÖĞÖ¸¶¨µÄ²ÎÊı³õÊ¼»¯DMAµÄÍ¨µÀ3
-	DMA_Cmd(DMA2_Channel3, ENABLE);									 //Ê¹ÄÜDMAÍ¨µÀ3
+	DMA_InitStructure.DMA_PeripheralBaseAddr = DAC1_DHR12RD_ADDRESS; // DAC1çš„DHR12RDå¯„å­˜å™¨åœ°å€
+	DMA_Init(DMA2_Channel3, &DMA_InitStructure);					 //æ ¹æ®DMA_InitStructä¸­æŒ‡å®šçš„å‚æ•°åˆå§‹åŒ–DMAçš„é€šé“3
+	DMA_Cmd(DMA2_Channel3, ENABLE);									 //ä½¿èƒ½DMAé€šé“3
 }
 
 void TIM_Configuration(void)
 {
 	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
 
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE); //Ê¹ÄÜTIM2Ê±ÖÓ
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE); //ä½¿èƒ½TIM2æ—¶é’Ÿ
 
 	TIM_TimeBaseStructure.TIM_Period = 8999;					// 8K
-	TIM_TimeBaseStructure.TIM_Prescaler = 0;					//²»·ÖÆµ
+	TIM_TimeBaseStructure.TIM_Prescaler = 0;					//ä¸åˆ†é¢‘
 	TIM_TimeBaseStructure.TIM_ClockDivision = 0x0;				// TDTS = Tck_tim
-	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up; // TIMÏòÉÏ¼ÆÊıÄ£Ê½
-	TIM_TimeBaseInit(TIM2, &TIM_TimeBaseStructure);				//¸ù¾İTIM_TimeBaseInitStructÖĞÖ¸¶¨µÄ²ÎÊı³õÊ¼»¯TIMxµÄÊ±¼ä»ùÊıµ¥Î»
+	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up; // TIMå‘ä¸Šè®¡æ•°æ¨¡å¼
+	TIM_TimeBaseInit(TIM2, &TIM_TimeBaseStructure);				//æ ¹æ®TIM_TimeBaseInitStructä¸­æŒ‡å®šçš„å‚æ•°åˆå§‹åŒ–TIMxçš„æ—¶é—´åŸºæ•°å•ä½
 
-	TIM_SelectOutputTrigger(TIM2, TIM_TRGOSource_Update); //Ö¸¶¨TIM2µÄÊä³ö´¥·¢Ô´
+	TIM_SelectOutputTrigger(TIM2, TIM_TRGOSource_Update); //æŒ‡å®šTIM2çš„è¾“å‡ºè§¦å‘æº
 
-	TIM_Cmd(TIM2, ENABLE); //Ê¹ÄÜTIM2
+	TIM_Cmd(TIM2, ENABLE); //ä½¿èƒ½TIM2
 }
 
 void GPIO_Configuration(void)
@@ -108,7 +108,7 @@ void GPIO_Configuration(void)
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
 
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4 | GPIO_Pin_5;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN; //Ä£ÄâÊäÈë
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN; //æ¨¡æ‹Ÿè¾“å…¥
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_Init(GPIOA, &GPIO_InitStructure);
 }
@@ -117,31 +117,31 @@ void DAC_Configuration(void)
 {
 	DAC_InitTypeDef DAC_InitStructure;
 
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_DAC, ENABLE); //Ê¹ÄÜDACÊ±ÖÓ
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_DAC, ENABLE); //ä½¿èƒ½DACæ—¶é’Ÿ
 
-	DAC_InitStructure.DAC_Trigger = DAC_Trigger_None;								 //´¥·¢Ä£Ê½:ÎŞ
-	DAC_InitStructure.DAC_WaveGeneration = DAC_WaveGeneration_None;					 // DAC²¨ĞÎÉú³ÉÄ£Ê½:ÎŞ
-	DAC_InitStructure.DAC_LFSRUnmask_TriangleAmplitude = DAC_TriangleAmplitude_4095; //Èı½Ç²¨È¡Ñù¿í¶ÈÎª4095
-	DAC_InitStructure.DAC_OutputBuffer = DAC_OutputBuffer_Enable;					 // DACÊä³ö»º³åÊ¹ÄÜ
-	DAC_Init(DAC_Channel_1, &DAC_InitStructure);									 //¸ù¾İDAC_InitStructÖĞÖ¸¶¨µÄ²ÎÊı³õÊ¼»¯DAC¼Ä´æÆ÷
-	DAC_Init(DAC_Channel_2, &DAC_InitStructure);									 //¸ù¾İDAC_InitStructÖĞÖ¸¶¨µÄ²ÎÊı³õÊ¼»¯DAC¼Ä´æÆ÷
+	DAC_InitStructure.DAC_Trigger = DAC_Trigger_None;								 //è§¦å‘æ¨¡å¼:æ— 
+	DAC_InitStructure.DAC_WaveGeneration = DAC_WaveGeneration_None;					 // DACæ³¢å½¢ç”Ÿæˆæ¨¡å¼:æ— 
+	DAC_InitStructure.DAC_LFSRUnmask_TriangleAmplitude = DAC_TriangleAmplitude_4095; //ä¸‰è§’æ³¢å–æ ·å®½åº¦ä¸º4095
+	DAC_InitStructure.DAC_OutputBuffer = DAC_OutputBuffer_Enable;					 // DACè¾“å‡ºç¼“å†²ä½¿èƒ½
+	DAC_Init(DAC_Channel_1, &DAC_InitStructure);									 //æ ¹æ®DAC_InitStructä¸­æŒ‡å®šçš„å‚æ•°åˆå§‹åŒ–DACå¯„å­˜å™¨
+	DAC_Init(DAC_Channel_2, &DAC_InitStructure);									 //æ ¹æ®DAC_InitStructä¸­æŒ‡å®šçš„å‚æ•°åˆå§‹åŒ–DACå¯„å­˜å™¨
 
-	DAC_Cmd(DAC_Channel_1, ENABLE); //Ê¹ÄÜDACÍ¨µÀ1
-	DAC_Cmd(DAC_Channel_2, ENABLE); //Ê¹ÄÜDACÍ¨µÀ2
+	DAC_Cmd(DAC_Channel_1, ENABLE); //ä½¿èƒ½DACé€šé“1
+	DAC_Cmd(DAC_Channel_2, ENABLE); //ä½¿èƒ½DACé€šé“2
 
-	// TC8002D ÔÚDACÊä³öÇ° -INÎª2.5V(VDD = 5V)
-	DAC_SetChannel1Data(DAC_Align_12b_R, 3102); //ÉèÖÃDACÍ¨µÀ1µÄÊä³öµçÑ¹Öµ
-	DAC_SetChannel2Data(DAC_Align_12b_R, 3102); //ÉèÖÃDACÍ¨µÀ2µÄÊä³öµçÑ¹Öµ
+	// TC8002D åœ¨DACè¾“å‡ºå‰ -INä¸º2.5V(VDD = 5V)
+	DAC_SetChannel1Data(DAC_Align_12b_R, 3102); //è®¾ç½®DACé€šé“1çš„è¾“å‡ºç”µå‹å€¼
+	DAC_SetChannel2Data(DAC_Align_12b_R, 3102); //è®¾ç½®DACé€šé“2çš„è¾“å‡ºç”µå‹å€¼
 
-	DAC_InitStructure.DAC_Trigger = DAC_Trigger_T2_TRGO;							 //´¥·¢Ä£Ê½:T2´¥·¢
-	DAC_InitStructure.DAC_WaveGeneration = DAC_WaveGeneration_None;					 // DAC²¨ĞÎÉú³ÉÄ£Ê½:ÎŞ
-	DAC_InitStructure.DAC_LFSRUnmask_TriangleAmplitude = DAC_TriangleAmplitude_4095; //Èı½Ç²¨È¡Ñù¿í¶ÈÎª4095
-	DAC_InitStructure.DAC_OutputBuffer = DAC_OutputBuffer_Enable;					 // DACÊä³ö»º³åÊ¹ÄÜ
-	DAC_Init(DAC_Channel_1, &DAC_InitStructure);									 //¸ù¾İDAC_InitStructÖĞÖ¸¶¨µÄ²ÎÊı³õÊ¼»¯DAC¼Ä´æÆ÷
-	DAC_Init(DAC_Channel_2, &DAC_InitStructure);									 //¸ù¾İDAC_InitStructÖĞÖ¸¶¨µÄ²ÎÊı³õÊ¼»¯DAC¼Ä´æÆ÷
+	DAC_InitStructure.DAC_Trigger = DAC_Trigger_T2_TRGO;							 //è§¦å‘æ¨¡å¼:T2è§¦å‘
+	DAC_InitStructure.DAC_WaveGeneration = DAC_WaveGeneration_None;					 // DACæ³¢å½¢ç”Ÿæˆæ¨¡å¼:æ— 
+	DAC_InitStructure.DAC_LFSRUnmask_TriangleAmplitude = DAC_TriangleAmplitude_4095; //ä¸‰è§’æ³¢å–æ ·å®½åº¦ä¸º4095
+	DAC_InitStructure.DAC_OutputBuffer = DAC_OutputBuffer_Enable;					 // DACè¾“å‡ºç¼“å†²ä½¿èƒ½
+	DAC_Init(DAC_Channel_1, &DAC_InitStructure);									 //æ ¹æ®DAC_InitStructä¸­æŒ‡å®šçš„å‚æ•°åˆå§‹åŒ–DACå¯„å­˜å™¨
+	DAC_Init(DAC_Channel_2, &DAC_InitStructure);									 //æ ¹æ®DAC_InitStructä¸­æŒ‡å®šçš„å‚æ•°åˆå§‹åŒ–DACå¯„å­˜å™¨
 
-	DAC_DMACmd(DAC_Channel_1, ENABLE); // DACÍ¨µÀ1 DMAÊ¹ÄÜ
-	DAC_DMACmd(DAC_Channel_2, ENABLE); // DACÍ¨µÀ2 DMAÊ¹ÄÜ
+	DAC_DMACmd(DAC_Channel_1, ENABLE); // DACé€šé“1 DMAä½¿èƒ½
+	DAC_DMACmd(DAC_Channel_2, ENABLE); // DACé€šé“2 DMAä½¿èƒ½
 }
 
 void UART_Configuration(uint32_t bound)

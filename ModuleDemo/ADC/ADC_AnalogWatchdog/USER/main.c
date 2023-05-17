@@ -6,36 +6,36 @@
 #include "math.h"
 
 #define PRINTF_LOG printf
-int LTR = 50;	   //��������
-int HTRHTR = 4095; //��������
+int LTR = 50;	   //触发下限
+int HTRHTR = 4095; //触发上限
 void UART_Configuration(void);
 void ADC_Configuration(void);
 void GPIO_Configuration(void);
 /********************************************************************************/
-// ADCģ�⿴�Ź��ж�ʾ����PA2ΪADC�������ţ��ӵ�ʱ������������PB11�����ӵ�LED��˸
+// ADC模拟看门狗中断示例，PA2为ADC触发引脚，接地时触发，触发后PB11所连接的LED闪烁
 /********************************************************************************/
 int main(void)
 {
 	RCC_ClocksTypeDef clocks;
-	Delay_Init(); //��ʱ��ʼ��
+	Delay_Init(); //延时初始化
 
-	UART_Configuration();		//Ĭ��Ϊ����1��������115200
-	ADC_Configuration();		// ADC��ʼ��
-	GPIO_Configuration();		// GPIO��ʼ��
-	RCC_GetClocksFreq(&clocks); //��ȡϵͳʱ��Ƶ��
+	UART_Configuration();		//默认为串口1，波特率115200
+	ADC_Configuration();		// ADC初始化
+	GPIO_Configuration();		// GPIO初始化
+	RCC_GetClocksFreq(&clocks); //获取系统时钟频率
 	PRINTF_LOG("\n");
 	PRINTF_LOG("SYSCLK: %3.1fMhz, HCLK: %3.1fMhz, PCLK1: %3.1fMhz, PCLK2: %3.1fMhz, ADCCLK: %3.1fMhz\n",
 			   (float)clocks.SYSCLK_Frequency / 1000000, (float)clocks.HCLK_Frequency / 1000000,
 			   (float)clocks.PCLK1_Frequency / 1000000, (float)clocks.PCLK2_Frequency / 1000000, (float)clocks.ADCCLK_Frequency / 1000000);
 
 	PRINTF_LOG("ADC Analog Watchdog Test\n");
-	PRINTF_LOG("LTR: %d, HTR��%d\n", LTR, HTRHTR);
-	ADC_SoftwareStartConvCmd(ADC1, ENABLE); //ʹ��ADC����ת��
+	PRINTF_LOG("LTR: %d, HTR：%d\n", LTR, HTRHTR);
+	ADC_SoftwareStartConvCmd(ADC1, ENABLE); //使能ADC软件转换
 	while (1)
 	{
 		GPIO_ResetBits(GPIOB, GPIO_Pin_11);
 		Delay_Ms(200);
-		ADC_ITConfig(ADC1, ADC_IT_AWD, ENABLE); //ʹ��ADC�ж�
+		ADC_ITConfig(ADC1, ADC_IT_AWD, ENABLE); //使能ADC中断
 		Delay_Ms(200);
 	}
 }
@@ -53,7 +53,7 @@ uint8_t GetCmd(void)
 
 void UART_Configuration(void)
 {
-	// GPIO�˿�����
+	// GPIO端口设置
 	GPIO_InitTypeDef GPIO_InitStructure;
 	USART_InitTypeDef USART_InitStructure;
 
@@ -84,50 +84,50 @@ void ADC_Configuration(void)
 	ADC_InitTypeDef ADC_InitStructure;
 	NVIC_InitTypeDef NVIC_InitStructure;
 
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA | RCC_APB2Periph_ADC1, ENABLE); //ʹ��ADC1ͨ��ʱ��
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA | RCC_APB2Periph_ADC1, ENABLE); //使能ADC1通道时钟
 
-	RCC_ADCCLKConfig(RCC_PCLK2_Div6); //����ADC��Ƶ����6 72M/6=12,ADC���ʱ�䲻�ܳ���14M
-	ADC_DeInit(ADC1);				  //��λADC1,������ ADC1 ��ȫ���Ĵ�������Ϊȱʡֵ
+	RCC_ADCCLKConfig(RCC_PCLK2_Div6); //设置ADC分频因子6 72M/6=12,ADC最大时间不能超过14M
+	ADC_DeInit(ADC1);				  //复位ADC1,将外设 ADC1 的全部寄存器重设为缺省值
 
-	ADC_InitStructure.ADC_Mode = ADC_Mode_Independent;					// ADC����ģʽ:ADC1��ADC2�����ڶ���ģʽ
-	ADC_InitStructure.ADC_ScanConvMode = DISABLE;						// ADC�����ڵ�ͨ��ģʽ
-	ADC_InitStructure.ADC_ContinuousConvMode = ENABLE;					//����ת��ģʽ
-	ADC_InitStructure.ADC_ExternalTrigConv = ADC_ExternalTrigConv_None; //ת���������������ⲿ��������
-	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;				// ADC�����Ҷ���
-	ADC_InitStructure.ADC_NbrOfChannel = 1;								//˳����й���ת����ADCͨ������Ŀ
-	ADC_Init(ADC1, &ADC_InitStructure);									//����ADC_InitStruct��ָ���Ĳ�����ʼ������ADCx�ļĴ���
+	ADC_InitStructure.ADC_Mode = ADC_Mode_Independent;					// ADC工作模式:ADC1和ADC2工作在独立模式
+	ADC_InitStructure.ADC_ScanConvMode = DISABLE;						// ADC工作在单通道模式
+	ADC_InitStructure.ADC_ContinuousConvMode = ENABLE;					//连续转换模式
+	ADC_InitStructure.ADC_ExternalTrigConv = ADC_ExternalTrigConv_None; //转换由软件而不是外部触发启动
+	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;				// ADC数据右对齐
+	ADC_InitStructure.ADC_NbrOfChannel = 1;								//顺序进行规则转换的ADC通道的数目
+	ADC_Init(ADC1, &ADC_InitStructure);									//根据ADC_InitStruct中指定的参数初始化外设ADCx的寄存器
 
-	ADC_Cmd(ADC1, ENABLE); //ʹ��ָ����ADC1
+	ADC_Cmd(ADC1, ENABLE); //使能指定的ADC1
 
-	NVIC_InitStructure.NVIC_IRQChannel = ADC1_2_IRQn;		  //����ADC1�ж�ͨ��
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0; //��ռ���ȼ�0
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;		  //�����ȼ�0
-	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;			  //ʹ��ADC1�ж�ͨ��
-	NVIC_Init(&NVIC_InitStructure);							  //����ָ���Ĳ�����ʼ��VIC�Ĵ���
+	NVIC_InitStructure.NVIC_IRQChannel = ADC1_2_IRQn;		  //配置ADC1中断通道
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0; //抢占优先级0
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;		  //子优先级0
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;			  //使能ADC1中断通道
+	NVIC_Init(&NVIC_InitStructure);							  //根据指定的参数初始化VIC寄存器
 
-	ADC_RegularChannelConfig(ADC1, ADC_Channel_2, 1, ADC_SampleTime_239Cycles5); // ADC1,ADCͨ��2,����ʱ��239.5����
-	ADC_AnalogWatchdogSingleChannelConfig(ADC1, ADC_Channel_2);					 //����ADC1��ģ�⿴�Ź�ͨ��
-	ADC_AnalogWatchdogThresholdsConfig(ADC1, HTRHTR, LTR);						 //����ADC���Ź�����ֵ��ADC���Ÿ���һ�㲻Ϊ�㣬��PA2�ӵ�ʱADCֵ����LTR������ADC1��ģ�⿴�Ź��ж�
-	ADC_AnalogWatchdogCmd(ADC1, ADC_AnalogWatchdog_SingleRegEnable);			 // ADC1,ADCͨ��2,ģ�⿴�Ź�ʹ��
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_2, 1, ADC_SampleTime_239Cycles5); // ADC1,ADC通道2,采样时间239.5周期
+	ADC_AnalogWatchdogSingleChannelConfig(ADC1, ADC_Channel_2);					 //配置ADC1的模拟看门狗通道
+	ADC_AnalogWatchdogThresholdsConfig(ADC1, HTRHTR, LTR);						 //设置ADC看门狗门限值，ADC引脚浮空一般不为零，当PA2接地时ADC值低于LTR，触发ADC1的模拟看门狗中断
+	ADC_AnalogWatchdogCmd(ADC1, ADC_AnalogWatchdog_SingleRegEnable);			 // ADC1,ADC通道2,模拟看门狗使能
 
-	ADC_ITConfig(ADC1, ADC_IT_AWD, ENABLE); //ʹ��ADC1��ģ�⿴�Ź��ж�
+	ADC_ITConfig(ADC1, ADC_IT_AWD, ENABLE); //使能ADC1的模拟看门狗中断
 
-	ADC_ResetCalibration(ADC1);					// ADC1��λУ׼
-	while (ADC_GetResetCalibrationStatus(ADC1)) //�ȴ���λУ׼����
+	ADC_ResetCalibration(ADC1);					// ADC1复位校准
+	while (ADC_GetResetCalibrationStatus(ADC1)) //等待复位校准结束
 		;
-	ADC_StartCalibration(ADC1);			   //��ʼADC1У׼
-	while (ADC_GetCalibrationStatus(ADC1)) //�ȴ�У׼����
+	ADC_StartCalibration(ADC1);			   //开始ADC1校准
+	while (ADC_GetCalibrationStatus(ADC1)) //等待校准结束
 		;
 }
 
 void ADC1_2_IRQHandler(void)
 {
-	ADC_ITConfig(ADC1, ADC_IT_AWD, DISABLE);		  //�ر�ADC1��ģ�⿴�Ź��ж�
-	if (SET == ADC_GetFlagStatus(ADC1, ADC_FLAG_AWD)) //���ADC1��ģ�⿴�Ź���־λ
+	ADC_ITConfig(ADC1, ADC_IT_AWD, DISABLE);		  //关闭ADC1的模拟看门狗中断
+	if (SET == ADC_GetFlagStatus(ADC1, ADC_FLAG_AWD)) //检查ADC1的模拟看门狗标志位
 	{
-		ADC_ClearFlag(ADC1, ADC_FLAG_AWD);								   //���ADC1��ģ�⿴�Ź���־λ
-		ADC_ClearITPendingBit(ADC1, ADC_IT_AWD);						   //���ADC1��ģ�⿴�Ź��жϱ�־λ
-		PRINTF_LOG("ADC Awd is Happened. Code Value = %d \r\n", ADC1->DR); //��ӡADC1��ģ�⿴�Ź��ж�
+		ADC_ClearFlag(ADC1, ADC_FLAG_AWD);								   //清除ADC1的模拟看门狗标志位
+		ADC_ClearITPendingBit(ADC1, ADC_IT_AWD);						   //清除ADC1的模拟看门狗中断标志位
+		PRINTF_LOG("ADC Awd is Happened. Code Value = %d \r\n", ADC1->DR); //打印ADC1的模拟看门狗中断
 		GPIO_SetBits(GPIOB, GPIO_Pin_11);
 	}
 }

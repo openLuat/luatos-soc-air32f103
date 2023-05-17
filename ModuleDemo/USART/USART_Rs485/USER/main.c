@@ -30,7 +30,7 @@ int main(void)
 	
 	PRINTF_LOG("AIR32F103 USART RS485.\n");
 	
-	RS485_Init(9600);	//³õÊ¼»¯RS485
+	RS485_Init(9600);	//åˆå§‹åŒ–RS485
 	
 	while(1)
 	{
@@ -45,10 +45,10 @@ int main(void)
 		}
 
 		RS485_Receive_Data(rs485buf,&key);
-		if(key)//½ÓÊÕµ½ÓÐÊý¾Ý
+		if(key)//æŽ¥æ”¶åˆ°æœ‰æ•°æ®
 		{
 			PRINTF_LOG("RS485 Recv Data Success\n");
-			if(key>DATA_LEN)key=DATA_LEN;//×î´óÊÇ5¸öÊý¾Ý.
+			if(key>DATA_LEN)key=DATA_LEN;//æœ€å¤§æ˜¯5ä¸ªæ•°æ®.
 			for(i = 0; i < DATA_LEN; i++)
 			{
 				PRINTF_LOG("rs485buf[%d] = 0x%x\n",i,rs485buf[i]);

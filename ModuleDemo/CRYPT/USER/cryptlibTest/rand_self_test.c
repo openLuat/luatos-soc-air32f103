@@ -73,7 +73,7 @@ double air_block_frequency(uint8_t *s, uint32_t n)
     if (n * 8 < 100)
         return 0.0;
 
-    //M ¡Ö 0.1n
+    //M Â¡Ã– 0.1n
     M = n * 8 / 10 / 8 * 8;
     //N = n / M
     N = n * 8 / M;

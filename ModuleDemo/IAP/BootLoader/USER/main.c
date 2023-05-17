@@ -3,22 +3,22 @@
 #include <stdio.h>
 #include "air32f10x.h"
 #include "common.h"
-//IAPÉý¼¶Ê¾Àý£¬Ê¹ÓÃ´®¿Ú1£¬²¨ÌØÂÊ115200
-//ÕâÊÇbootloader³ÌÐò£¬ÓÃÓÚ½ÓÊÕÉý¼¶ÎÄ¼þ£¬Éý¼¶Íê³ÉºóÌø×ªµ½IAP³ÌÐò
-//IAP³ÌÐòÔÚ0x08000000µØÖ·£¬´óÐ¡Îª12K
-//Éý¼¶ÎÄ¼þÔÚ0x08003000µØÖ·£¬´óÐ¡Îª128K-12K=116K
-//Éý¼¶ÎÄ¼þµÄ¸ñÊ½ÎªymodemÐ­Òé
-//ymodem²âÊÔ¹¤¾ßÍÆ¼ö£ºhttps://github.com/kingToolbox/WindTerm
-//Éý¼¶ÎÄ¼þµÄ´óÐ¡²»ÄÜ³¬¹ý115K£¬ÒòÎªIAP³ÌÐòÕ¼ÓÃÁË×îºó1KÐ´Éý¼¶±êÖ¾
+//IAPå‡çº§ç¤ºä¾‹ï¼Œä½¿ç”¨ä¸²å£1ï¼Œæ³¢ç‰¹çŽ‡115200
+//è¿™æ˜¯bootloaderç¨‹åºï¼Œç”¨äºŽæŽ¥æ”¶å‡çº§æ–‡ä»¶ï¼Œå‡çº§å®ŒæˆåŽè·³è½¬åˆ°IAPç¨‹åº
+//IAPç¨‹åºåœ¨0x08000000åœ°å€ï¼Œå¤§å°ä¸º12K
+//å‡çº§æ–‡ä»¶åœ¨0x08003000åœ°å€ï¼Œå¤§å°ä¸º128K-12K=116K
+//å‡çº§æ–‡ä»¶çš„æ ¼å¼ä¸ºymodemåè®®
+//ymodemæµ‹è¯•å·¥å…·æŽ¨èï¼šhttps://github.com/kingToolbox/WindTerm
+//å‡çº§æ–‡ä»¶çš„å¤§å°ä¸èƒ½è¶…è¿‡115Kï¼Œå› ä¸ºIAPç¨‹åºå ç”¨äº†æœ€åŽ1Kå†™å‡çº§æ ‡å¿—
 
 USART_TypeDef *USART_TEST = USART1;
 
 void UART_Configuration(uint32_t bound);
 int main(void)
 {
-	FLASH_Unlock();//½âËøFLASH
-	UART_Configuration(115200);//´®¿Ú³õÊ¼»¯
-	IAP();//Ìø×ªµ½IAP³ÌÐò
+	FLASH_Unlock();//è§£é”FLASH
+	UART_Configuration(115200);//ä¸²å£åˆå§‹åŒ–
+	IAP();//è·³è½¬åˆ°IAPç¨‹åº
 	while (1)
 	{
 	}

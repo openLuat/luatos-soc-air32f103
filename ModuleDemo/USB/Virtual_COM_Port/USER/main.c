@@ -21,7 +21,7 @@ int main()
 	
 	RCC_ClkConfiguration();
 	Delay_Init();
-	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);  //ÖĞ¶ÏÓÅÏÈ¼¶·Ö×é ·Ö2×é
+	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);  //ä¸­æ–­ä¼˜å…ˆçº§åˆ†ç»„ åˆ†2ç»„
 	UART_Configuration(115200);
 	RCC_GetClocksFreq(&clocks);
 	
@@ -32,40 +32,40 @@ int main()
 	(float)clocks.PCLK1_Frequency/1000000, (float)clocks.PCLK2_Frequency / 1000000, (float)clocks.ADCCLK_Frequency / 1000000);
 	
 	Delay_Ms(1800);
-	USB_Port_Set(0); 	//USBÏÈ¶Ï¿ª
+	USB_Port_Set(0); 	//USBå…ˆæ–­å¼€
 	Delay_Ms(700);
-	USB_Port_Set(1);	//USBÔÙ´ÎÁ¬½Ó
+	USB_Port_Set(1);	//USBå†æ¬¡è¿æ¥
  	Set_USBClock();   
  	USB_Interrupts_Config();    
  	USB_Init();	    
 	DP_PUUP = 1;
 	while(1)
 	{
-		if(usbstatus!=bDeviceState)//USBÁ¬½Ó×´Ì¬·¢ÉúÁË¸Ä±ä.
+		if(usbstatus!=bDeviceState)//USBè¿æ¥çŠ¶æ€å‘ç”Ÿäº†æ”¹å˜.
 		{
-			usbstatus=bDeviceState;//¼ÇÂ¼ĞÂµÄ×´Ì¬
+			usbstatus=bDeviceState;//è®°å½•æ–°çš„çŠ¶æ€
 			if(usbstatus==CONFIGURED)
 			{
-				printf("USBÁ¬½Ó³É¹¦\n");
+				printf("USBè¿æ¥æˆåŠŸ\n");
 			}else
 			{
-				printf("USB¶Ï¿ªÁ¬½Ó\n");
+				printf("USBæ–­å¼€è¿æ¥\n");
 			}
 		}
 		if(USB_USART_RX_STA&0x8000)
 		{					   
-			len=USB_USART_RX_STA&0x3FFF;//µÃµ½´Ë´Î½ÓÊÕµ½µÄÊı¾İ³¤¶È
-			usb_printf("\r\nÄú·¢ËÍµÄÏûÏ¢³¤¶ÈÎª:%d£¬ÏûÏ¢ÄÚÈİÎª£º\r\n",len);
+			len=USB_USART_RX_STA&0x3FFF;//å¾—åˆ°æ­¤æ¬¡æ¥æ”¶åˆ°çš„æ•°æ®é•¿åº¦
+			usb_printf("\r\næ‚¨å‘é€çš„æ¶ˆæ¯é•¿åº¦ä¸º:%dï¼Œæ¶ˆæ¯å†…å®¹ä¸ºï¼š\r\n",len);
 			for(t=0;t<len;t++)
 			{
-				USB_USART_SendData(USB_USART_RX_BUF[t]);//ÒÔ×Ö½Ú·½Ê½,·¢ËÍ¸øUSB 
+				USB_USART_SendData(USB_USART_RX_BUF[t]);//ä»¥å­—èŠ‚æ–¹å¼,å‘é€ç»™USB 
 			}
-			usb_printf("\r\n\r\n");//²åÈë»»ĞĞ
+			usb_printf("\r\n\r\n");//æ’å…¥æ¢è¡Œ
 			USB_USART_RX_STA=0;
 		}else
 		{
 			times++;
-			if(times%200==0)usb_printf("ÇëÊäÈëÊı¾İ,ÒÔ»Ø³µ¼ü½áÊø\r\n");  
+			if(times%200==0)usb_printf("è¯·è¾“å…¥æ•°æ®,ä»¥å›è½¦é”®ç»“æŸ\r\n");  
 			Delay_Ms(10);   
 		}	
 	}

@@ -33,8 +33,8 @@ int main(void)
 	
 	while(1)
 	{
-		DAC_SoftwareTriggerCmd(DAC_Channel_1, ENABLE);//´¥·¢DAC1
-		DAC_SoftwareTriggerCmd(DAC_Channel_2, ENABLE);//´¥·¢DAC2
+		DAC_SoftwareTriggerCmd(DAC_Channel_1, ENABLE);//è§¦å‘DAC1
+		DAC_SoftwareTriggerCmd(DAC_Channel_2, ENABLE);//è§¦å‘DAC2
 	}
 }
 
@@ -54,20 +54,20 @@ void DAC_Configuration(void)
 {
 	DAC_InitTypeDef	DAC_InitStructure;
 
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_DAC,ENABLE);//Ê¹ÄÜDACÊ±ÖÓ
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_DAC,ENABLE);//ä½¿èƒ½DACæ—¶é’Ÿ
 	
-	DAC_InitStructure.DAC_Trigger = DAC_Trigger_Software;//Èí¼ş´¥·¢
-	DAC_InitStructure.DAC_WaveGeneration = DAC_WaveGeneration_Triangle;//Èı½Ç²¨
-	DAC_InitStructure.DAC_LFSRUnmask_TriangleAmplitude = DAC_TriangleAmplitude_2047;//Èı½Ç²¨·ùÖµ
-	DAC_InitStructure.DAC_OutputBuffer = DAC_OutputBuffer_Enable;//DACÊä³ö»º³åÊ¹ÄÜ
-	DAC_Init(DAC_Channel_1, &DAC_InitStructure);//³õÊ¼»¯DAC1
-	DAC_Init(DAC_Channel_2, &DAC_InitStructure);//³õÊ¼»¯DAC2
+	DAC_InitStructure.DAC_Trigger = DAC_Trigger_Software;//è½¯ä»¶è§¦å‘
+	DAC_InitStructure.DAC_WaveGeneration = DAC_WaveGeneration_Triangle;//ä¸‰è§’æ³¢
+	DAC_InitStructure.DAC_LFSRUnmask_TriangleAmplitude = DAC_TriangleAmplitude_2047;//ä¸‰è§’æ³¢å¹…å€¼
+	DAC_InitStructure.DAC_OutputBuffer = DAC_OutputBuffer_Enable;//DACè¾“å‡ºç¼“å†²ä½¿èƒ½
+	DAC_Init(DAC_Channel_1, &DAC_InitStructure);//åˆå§‹åŒ–DAC1
+	DAC_Init(DAC_Channel_2, &DAC_InitStructure);//åˆå§‹åŒ–DAC2
 	
-	DAC_Cmd(DAC_Channel_1, ENABLE);//Ê¹ÄÜDAC1
-	DAC_Cmd(DAC_Channel_2, ENABLE);//Ê¹ÄÜDAC2
+	DAC_Cmd(DAC_Channel_1, ENABLE);//ä½¿èƒ½DAC1
+	DAC_Cmd(DAC_Channel_2, ENABLE);//ä½¿èƒ½DAC2
 	
-	DAC_SetChannel1Data(DAC_Align_12b_L, 0);//ÉèÖÃDAC1Êı¾İ
-	DAC_SetChannel2Data(DAC_Align_12b_L, 0);//ÉèÖÃDAC2Êı¾İ
+	DAC_SetChannel1Data(DAC_Align_12b_L, 0);//è®¾ç½®DAC1æ•°æ®
+	DAC_SetChannel2Data(DAC_Align_12b_L, 0);//è®¾ç½®DAC2æ•°æ®
 }
 
  void UART_Configuration(uint32_t bound)

@@ -33,8 +33,8 @@ int main(void)
 	
 	while(1)
 	{
-		DAC_SoftwareTriggerCmd(DAC_Channel_1, ENABLE);//Ê¹ÄÜDAC1Èí¼ş´¥·¢
-		DAC_SoftwareTriggerCmd(DAC_Channel_2, ENABLE);//Ê¹ÄÜDAC2Èí¼ş´¥·¢
+		DAC_SoftwareTriggerCmd(DAC_Channel_1, ENABLE);//ä½¿èƒ½DAC1è½¯ä»¶è§¦å‘
+		DAC_SoftwareTriggerCmd(DAC_Channel_2, ENABLE);//ä½¿èƒ½DAC2è½¯ä»¶è§¦å‘
 	}
 }
 
@@ -42,32 +42,32 @@ void GPIO_Configuration(void)
 {
 	GPIO_InitTypeDef GPIO_InitStructure;
 
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA,ENABLE);//Ê¹ÄÜGPIOAÊ±ÖÓ
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA,ENABLE);//ä½¿èƒ½GPIOAæ—¶é’Ÿ
 	
 	GPIO_InitStructure.GPIO_Pin =  GPIO_Pin_4|GPIO_Pin_5;//PA4,PA5
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;//Ä£ÄâÄ£Ê½
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;//ËÙ¶È50MHz
-	GPIO_Init(GPIOA, &GPIO_InitStructure);//³õÊ¼»¯GPIOA4,GPIOA5
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;//æ¨¡æ‹Ÿæ¨¡å¼
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;//é€Ÿåº¦50MHz
+	GPIO_Init(GPIOA, &GPIO_InitStructure);//åˆå§‹åŒ–GPIOA4,GPIOA5
 }
 
 void DAC_Configuration(void)
 {
 	DAC_InitTypeDef	DAC_InitStructure;
 
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_DAC,ENABLE);//Ê¹ÄÜDACÊ±ÖÓ
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_DAC,ENABLE);//ä½¿èƒ½DACæ—¶é’Ÿ
 	
-	DAC_InitStructure.DAC_Trigger = DAC_Trigger_Software;//Èí¼ş´¥·¢
-	DAC_InitStructure.DAC_WaveGeneration = DAC_WaveGeneration_Noise;//ÔëÉù²¨ĞÎ
-	DAC_InitStructure.DAC_LFSRUnmask_TriangleAmplitude = DAC_TriangleAmplitude_4095;//Èı½Ç²¨·ùÖµ
-	DAC_InitStructure.DAC_OutputBuffer = DAC_OutputBuffer_Enable;//Êä³ö»º³åÊ¹ÄÜ
-	DAC_Init(DAC_Channel_1, &DAC_InitStructure);//³õÊ¼»¯DACÍ¨µÀ1
-	DAC_Init(DAC_Channel_2, &DAC_InitStructure);//³õÊ¼»¯DACÍ¨µÀ2
+	DAC_InitStructure.DAC_Trigger = DAC_Trigger_Software;//è½¯ä»¶è§¦å‘
+	DAC_InitStructure.DAC_WaveGeneration = DAC_WaveGeneration_Noise;//å™ªå£°æ³¢å½¢
+	DAC_InitStructure.DAC_LFSRUnmask_TriangleAmplitude = DAC_TriangleAmplitude_4095;//ä¸‰è§’æ³¢å¹…å€¼
+	DAC_InitStructure.DAC_OutputBuffer = DAC_OutputBuffer_Enable;//è¾“å‡ºç¼“å†²ä½¿èƒ½
+	DAC_Init(DAC_Channel_1, &DAC_InitStructure);//åˆå§‹åŒ–DACé€šé“1
+	DAC_Init(DAC_Channel_2, &DAC_InitStructure);//åˆå§‹åŒ–DACé€šé“2
 	
-	DAC_Cmd(DAC_Channel_1, ENABLE);//Ê¹ÄÜDACÍ¨µÀ1
-	DAC_Cmd(DAC_Channel_2, ENABLE);//Ê¹ÄÜDACÍ¨µÀ2
+	DAC_Cmd(DAC_Channel_1, ENABLE);//ä½¿èƒ½DACé€šé“1
+	DAC_Cmd(DAC_Channel_2, ENABLE);//ä½¿èƒ½DACé€šé“2
 	
-	DAC_SetChannel1Data(DAC_Align_12b_L, 0x7FF0);//ÉèÖÃDACÍ¨µÀ1Êı¾İ
-	DAC_SetChannel2Data(DAC_Align_12b_L, 0x7FF0);//ÉèÖÃDACÍ¨µÀ2Êı¾İ
+	DAC_SetChannel1Data(DAC_Align_12b_L, 0x7FF0);//è®¾ç½®DACé€šé“1æ•°æ®
+	DAC_SetChannel2Data(DAC_Align_12b_L, 0x7FF0);//è®¾ç½®DACé€šé“2æ•°æ®
 }
 
  void UART_Configuration(uint32_t bound)

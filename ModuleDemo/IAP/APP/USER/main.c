@@ -5,9 +5,9 @@
 #include "air32f10x.h"
 
 #define PRINTF_LOG printf
-// IAPÉý¼¶Ê¾Àý£¬Ê¹ÓÃ´®¿Ú1£¬²¨ÌØÂÊ115200
-// ÕâÊÇAPP³ÌÐò£¬Í¨¹ýIAPÉÕÂ¼ºó»á×Ô¶¯Ìø×ªµ½0x08003000µØÖ·£¬Ö´ÐÐIAP³ÌÐò£¬ÐÞ¸Äkeil¹¤³ÌÅäÖÃÎÄ¼þ£¬½«IAP³ÌÐòµÄÆðÊ¼µØÖ·ÉèÖÃÎª0x08003000
-// ´®¿Ú1½ÓÊÕµ½1ºó£¬»á½âËøFLASH£¬Ð´ÈëÊý¾Ý£¬È»ºóÖØÆô£¬ÖØÆôºó»áÌø×ªµ½IAP³ÌÐò£¬IAP³ÌÐò»á¶ÁÈ¡FLASHÊý¾Ý£¬Èç¹ûÊÇ0x00£¬ËµÃ÷ÐèÒªÉý¼¶£¬·ñÔò²»Éý¼¶
+// IAPå‡çº§ç¤ºä¾‹ï¼Œä½¿ç”¨ä¸²å£1ï¼Œæ³¢ç‰¹çŽ‡115200
+// è¿™æ˜¯APPç¨‹åºï¼Œé€šè¿‡IAPçƒ§å½•åŽä¼šè‡ªåŠ¨è·³è½¬åˆ°0x08003000åœ°å€ï¼Œæ‰§è¡ŒIAPç¨‹åºï¼Œä¿®æ”¹keilå·¥ç¨‹é…ç½®æ–‡ä»¶ï¼Œå°†IAPç¨‹åºçš„èµ·å§‹åœ°å€è®¾ç½®ä¸º0x08003000
+// ä¸²å£1æŽ¥æ”¶åˆ°1åŽï¼Œä¼šè§£é”FLASHï¼Œå†™å…¥æ•°æ®ï¼Œç„¶åŽé‡å¯ï¼Œé‡å¯åŽä¼šè·³è½¬åˆ°IAPç¨‹åºï¼ŒIAPç¨‹åºä¼šè¯»å–FLASHæ•°æ®ï¼Œå¦‚æžœæ˜¯0x00ï¼Œè¯´æ˜Žéœ€è¦å‡çº§ï¼Œå¦åˆ™ä¸å‡çº§
 USART_TypeDef *USART_TEST = USART1;
 uint8_t GetCmd(void);
 void UART_Configuration(uint32_t bound);
@@ -28,12 +28,12 @@ int main(void)
 
 	PRINTF_LOG("AIR32F103 IAP Test.\n");
 
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE); // Ê¹ÄÜGPIOBÊ±ÖÓ
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE); // ä½¿èƒ½GPIOBæ—¶é’Ÿ
 
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz; // ËÙ¶È50MHz
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;  // Êä³öÄ£Ê½
-	GPIO_Init(GPIOB, &GPIO_InitStructure);			  // ³õÊ¼»¯GPIOB.2
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz; // é€Ÿåº¦50MHz
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;  // è¾“å‡ºæ¨¡å¼
+	GPIO_Init(GPIOB, &GPIO_InitStructure);			  // åˆå§‹åŒ–GPIOB.2
 	GPIO_SetBits(GPIOB, GPIO_Pin_2);
 	while (1)
 	{
@@ -41,13 +41,13 @@ int main(void)
 		if (cmd == '1')
 		{
 			PRINTF_LOG("1.--->>>IAPTest\r\n");
-			// ½âËøFLASH
+			// è§£é”FLASH
 			FLASH_Unlock();
-			// Ð´ÈëÊý¾Ý
+			// å†™å…¥æ•°æ®
 			FLASH_ProgramHalfWord(0x0801FC00, 0x00);
-			// Ëø¶¨FLASH
+			// é”å®šFLASH
 			FLASH_Lock();
-			// ÖØÆô
+			// é‡å¯
 			NVIC_SystemReset();
 		}
 	}

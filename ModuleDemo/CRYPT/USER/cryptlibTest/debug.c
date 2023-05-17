@@ -56,18 +56,18 @@ void timer_config(void)
 	uint16_t div, cnt;
     TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure_APB1;
 	
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE); //Ê±ÖÓÊ¹ÄÜ
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE); //æ—¶é’Ÿä½¿èƒ½
 
 	TIM_DeInit(TIM2);
 	
-	//1ms½øÒ»´ÎÖĞ¶Ï
+	//1msè¿›ä¸€æ¬¡ä¸­æ–­
 	div = cau32TimRefClk[0]/1000 - 1;
 	cnt = 999;
 
-	TIM_TimeBaseStructure_APB1.TIM_Period = cnt; //ÉèÖÃÔÚÏÂÒ»¸ö¸üĞÂÊÂ¼ş×°Èë»î¶¯µÄ×Ô¶¯ÖØ×°ÔØ¼Ä´æÆ÷ÖÜÆÚµÄÖµ	
-	TIM_TimeBaseStructure_APB1.TIM_Prescaler = div; //ÉèÖÃÓÃÀ´×÷ÎªTIMxÊ±ÖÓÆµÂÊ³ıÊıµÄÔ¤·ÖÆµÖµ
-	TIM_TimeBaseStructure_APB1.TIM_ClockDivision = TIM_CKD_DIV1; //ÉèÖÃÊ±ÖÓ·Ö¸î:TDTS = Tck_tim
-	TIM_TimeBaseStructure_APB1.TIM_CounterMode = TIM_CounterMode_Up;  //TIMÏòÉÏ¼ÆÊıÄ£Ê½
+	TIM_TimeBaseStructure_APB1.TIM_Period = cnt; //è®¾ç½®åœ¨ä¸‹ä¸€ä¸ªæ›´æ–°äº‹ä»¶è£…å…¥æ´»åŠ¨çš„è‡ªåŠ¨é‡è£…è½½å¯„å­˜å™¨å‘¨æœŸçš„å€¼	
+	TIM_TimeBaseStructure_APB1.TIM_Prescaler = div; //è®¾ç½®ç”¨æ¥ä½œä¸ºTIMxæ—¶é’Ÿé¢‘ç‡é™¤æ•°çš„é¢„åˆ†é¢‘å€¼
+	TIM_TimeBaseStructure_APB1.TIM_ClockDivision = TIM_CKD_DIV1; //è®¾ç½®æ—¶é’Ÿåˆ†å‰²:TDTS = Tck_tim
+	TIM_TimeBaseStructure_APB1.TIM_CounterMode = TIM_CounterMode_Up;  //TIMå‘ä¸Šè®¡æ•°æ¨¡å¼
 	
 	TIM_TimeBaseInit(TIM2, &TIM_TimeBaseStructure_APB1);
 }
@@ -98,9 +98,9 @@ void timer_init_ms(uint32_t ms)
 	TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
 	TIM_ITConfig(TIM2,TIM_IT_Update,ENABLE );
 	
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;  //ÏÈÕ¼ÓÅÏÈ¼¶0¼¶
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;  //´ÓÓÅÏÈ¼¶3¼¶
-	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE; //IRQÍ¨µÀ±»Ê¹ÄÜ
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;  //å…ˆå ä¼˜å…ˆçº§0çº§
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;  //ä»ä¼˜å…ˆçº§3çº§
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE; //IRQé€šé“è¢«ä½¿èƒ½
 	NVIC_InitStructure.NVIC_IRQChannel = TIM2_IRQn; 
 	NVIC_Init(&NVIC_InitStructure);  
 	
@@ -200,7 +200,7 @@ void TIM2_IRQHandler(void)
 {
 	if (TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET)
 	{
-		TIM_ClearITPendingBit(TIM2, TIM_IT_Update);  //Çå³ıTIMx¸üĞÂÖĞ¶Ï±êÖ¾ 
+		TIM_ClearITPendingBit(TIM2, TIM_IT_Update);  //æ¸…é™¤TIMxæ›´æ–°ä¸­æ–­æ ‡å¿— 
 		gu32Tick++;
 	}
 }

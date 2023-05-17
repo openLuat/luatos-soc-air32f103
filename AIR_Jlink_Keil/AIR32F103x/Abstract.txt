@@ -25,7 +25,7 @@ Note
   dialogs Project - Options for Target - C/C++ and
   Project - Options for Target - Asm.
 - The dialog Project - Options for Target - Linker defines the linker scatter
-  file Target.lin. The error L6305 is disabled with –diag_suppress L6305.
+  file Target.lin. The error L6305 is disabled with â€“diag_suppress L6305.
   
 For more information, refer to the documentation available at
 http://arm-software.github.io/CMSIS_5/Pack/html/flashAlgorithm.html

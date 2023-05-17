@@ -30,7 +30,7 @@ int main(void)
 	
 	PRINTF_LOG("AIR32F103 CAN Normal.\n");
 
-	CAN_Mode_Init(CAN_SJW_1tq,CAN_BS2_8tq,CAN_BS1_9tq,4,CAN_Mode_Normal);//²¨ÌØÂÊ500Kbps    
+	CAN_Mode_Init(CAN_SJW_1tq,CAN_BS2_8tq,CAN_BS1_9tq,4,CAN_Mode_Normal);//æ³¢ç‰¹ç‡500Kbps    
 	
 	while(1)
 	{
@@ -40,7 +40,7 @@ int main(void)
 			{
 				canbuf[i]=0x5A+i;
 			}
-			res=Can_Send_Msg(canbuf,8);//·¢ËÍ8¸ö×Ö½Ú 
+			res=Can_Send_Msg(canbuf,8);//å‘é€8ä¸ªå­—èŠ‚ 
 			if(res==0)PRINTF_LOG("Can Normal Send Data Success\n");
 			else PRINTF_LOG("Can Normal Send Data Fail\n");
 		}
