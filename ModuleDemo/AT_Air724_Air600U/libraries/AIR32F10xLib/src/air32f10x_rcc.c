@@ -89,7 +89,7 @@
 #define CFGR_PPRE2_Reset_Mask     ((uint32_t)0xFFFFC7FF)
 #define CFGR_PPRE2_Set_Mask       ((uint32_t)0x00003800)
 #define CFGR_ADCPRE_Reset_Mask    ((uint32_t)0x9FFF3FFF)
-#define CFGR_ADCPRE_Set_Mask      ((uint32_t)0x0000C000)
+#define CFGR_ADCPRE_Set_Mask      ((uint32_t)0x6000C000)
 
 /* CSR register bit mask */
 #define CSR_RMVF_Set              ((uint32_t)0x01000000)
@@ -682,7 +682,7 @@ void RCC_GetClocksFreq(RCC_ClocksTypeDef* RCC_Clocks)
   RCC_Clocks->PCLK2_Frequency = RCC_Clocks->HCLK_Frequency >> presc;
   /* Get ADCCLK prescaler */
   tmp = RCC->CFGR & CFGR_ADCPRE_Set_Mask;
-  tmp = tmp >> 14;
+  tmp = (tmp >> 27 | (tmp >> 14)) & 0x0F;
   presc = ADCPrescTable[tmp];
   /* ADCCLK clock frequency */
   RCC_Clocks->ADCCLK_Frequency = RCC_Clocks->PCLK2_Frequency / presc;
