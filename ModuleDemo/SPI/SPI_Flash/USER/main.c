@@ -34,7 +34,7 @@ int main(void)
 	PRINTF_LOG("AIR32F103 SPI FLAH Test.\n");
 	
 	W25QXX_Init();	
-	while(W25QXX_ReadID()!=W25Q64)								//检测不到W25Q128
+	while(W25QXX_ReadID()!=W25Q128)								//检测不到W25Q128
 	{
 		PRINTF_LOG("W25Q64 Check Failed!\n");
 		PRINTF_LOG("Read ID: 0x%x\n",W25QXX_ReadID());
