@@ -31,7 +31,7 @@ int main()
 	(float)clocks.SYSCLK_Frequency/1000000, (float)clocks.HCLK_Frequency/1000000, \
 	(float)clocks.PCLK1_Frequency/1000000, (float)clocks.PCLK2_Frequency / 1000000, (float)clocks.ADCCLK_Frequency / 1000000);
 	
-	Delay_Ms(1800);
+	Delay_Ms(1000);
 	USB_Port_Set(0); 	//USB先断开
 	Delay_Ms(700);
 	USB_Port_Set(1);	//USB再次连接

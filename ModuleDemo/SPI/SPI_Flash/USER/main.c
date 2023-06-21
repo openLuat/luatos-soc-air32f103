@@ -38,7 +38,7 @@ int main(void)
 	{
 		PRINTF_LOG("W25Q64 Check Failed!\n");
 		PRINTF_LOG("Read ID: 0x%x\n",W25QXX_ReadID());
-		Delay_Ms(2000);
+		Delay_S(2);
 	}
 	
 	PRINTF_LOG("W25Q64 Ready!\n");    
@@ -48,12 +48,12 @@ int main(void)
 		PRINTF_LOG("Start Write W25Q64....\n"); 
 		W25QXX_Write((u8*)TEXT_Buffer,FLASH_SIZE-100,SIZE);			//从倒数第100个地址处开始,写入SIZE长度的数据
 		PRINTF_LOG("W25Q128 Write Finished!\n");	//提示传送完成
-		Delay_Ms(2000);
+		Delay_S(2);
 		PRINTF_LOG("Start Read W25Q64.... \n");
 		W25QXX_Read(datatemp,FLASH_SIZE-100,SIZE);					//从倒数第100个地址处开始,读出SIZE个字节
 		PRINTF_LOG("The Data Readed Is:  \n");	//提示传送完成
 		PRINTF_LOG("%s\n",datatemp);
-		Delay_Ms(2000);
+		Delay_S(2);
 	}
 }
 
