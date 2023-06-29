@@ -33,11 +33,12 @@ ModuleDemo目录里有各种外设使用示例，结构如下
 │  ├─DAC_OutDMASineWave DAC的DMA模式
 │  ├─DAC_OutNoiseWave  	DAC白噪声输出
 │  └─DAC_OutTriangleWave DAC输出三角波
-├─FreeRTOS
-│  ├─FreeRTOS       FreeRTOS移植工程
 ├─FLASH
 │  ├─FLASH_Eeprom       EEPROM模拟
 │  └─FLASH_EraseProgram FLASH擦写
+├─FreeRTOS
+│  ├─FreeRTOS       FreeRTOS移植工程
+├─GCC_DEMO			GCC+xmake工程
 ├─GPIO
 │  ├─GPIO_IOInput       GPIO输入
 │  └─GPIO_IOOut         GPIO输出
@@ -58,6 +59,7 @@ ModuleDemo目录里有各种外设使用示例，结构如下
 │  └─MCO_PllDiv 		MCO输出，air32支持更多分频系数
 ├─MPU
 │  └─MPU_Test   		MPU测试
+├─NES					NES模拟器
 ├─OTP
 │  └─OTP_WriteRead  	OTP写读
 ├─PWR
@@ -69,6 +71,7 @@ ModuleDemo目录里有各种外设使用示例，结构如下
 ├─RTC
 │  ├─RTC_Calendar   	RTC日历
 │  └─RTC_LSICalib   	RTC LSI校准
+├─RT_Thread_Nano		RT_Thread_Nano
 ├─SDIO
 │  └─SDIO_SDCardFatfs   SD卡读写
 ├─SPI
@@ -91,6 +94,7 @@ ModuleDemo目录里有各种外设使用示例，结构如下
 ├─USB
 │  ├─Device_Firmware_Upgrade    USB DFU
 │  ├─Keyboard   				USB键盘
+│  ├─Mass_Storage   			USB 储存设备
 │  └─Virtual_COM_Port   		USB虚拟串口
 ├─WS2812    			WS2812驱动
 └─WWDG
