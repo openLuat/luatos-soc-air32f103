@@ -152,9 +152,6 @@
   * @{
   */ 
 
-static __I uint8_t APBAHBPrescTable[16] = {0, 0, 0, 0, 1, 2, 3, 4, 1, 2, 3, 4, 6, 7, 8, 9};
-static __I uint8_t ADCPrescTable[4] = {2, 4, 6, 8};
-
 #define SysFreq_Set		(*((void (*)(uint32_t, FlashClkDiv , uint8_t, uint8_t))(*(uint32_t *)0x1FFFD00C)))
 
 uint32_t AIR_RCC_PLLConfig(uint32_t RCC_PLLSource, uint32_t RCC_PLLMul, FlashClkDiv Latency)
