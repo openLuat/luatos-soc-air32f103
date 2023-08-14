@@ -662,7 +662,7 @@ void SetStrt(void)
     asm("NOP");
     asm("NOP");
     asm("NOP");
-    asm("FLAGLABLE");
+    asm("FLAGLABLE:");
     asm("LDR		R1, =0x4002200C");
     asm("LDR		R2, [R1]");
     asm("AND 		R2,	#0x01");
