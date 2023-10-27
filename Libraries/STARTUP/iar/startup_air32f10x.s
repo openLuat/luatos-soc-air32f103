@@ -1,14 +1,12 @@
 ;******************** (C) COPYRIGHT 2017 STMicroelectronics ********************
-;* File Name          : startup_stm32f103xb.s
+;* File Name          : startup_stm32f103xg.s
 ;* Author             : MCD Application Team
-;* Description        : STM32F103xB Performance Line Devices vector table for 
-;*                      EWARM toolchain.
+;* Description        : STM32F103xG Performances Line Devices vector table for EWARM
+;*                      toolchain.
 ;*                      This module performs:
 ;*                      - Set the initial SP
-;*                      - Configure the clock system
 ;*                      - Set the initial PC == __iar_program_start,
-;*                      - Set the vector table entries with the exceptions ISR 
-;*                        address.
+;*                      - Set the vector table entries with the exceptions ISR address,
 ;*                      After Reset the Cortex-M3 processor is in Thread mode,
 ;*                      priority is Privileged, and the Stack is set to Main.
 ;*******************************************************************************
@@ -40,7 +38,7 @@
 ; Cortex-M version
 ;
 
-        MODULE  ?cstartup
+    MODULE  ?cstartup
 
         ;; Forward declaration of sections.
         SECTION CSTACK:DATA:NOROOT(3)
@@ -48,10 +46,11 @@
         SECTION .intvec:CODE:NOROOT(2)
 
         EXTERN  __iar_program_start
-        EXTERN  SystemInit        
+        EXTERN  SystemInit
         PUBLIC  __vector_table
 
         DATA
+
 __vector_table
         DCD     sfe(CSTACK)
         DCD     Reset_Handler             ; Reset Handler
@@ -71,49 +70,77 @@ __vector_table
         DCD     SysTick_Handler           ; SysTick Handler
 
          ; External Interrupts
-        DCD     WWDG_IRQHandler           ; Window Watchdog
-        DCD     PVD_IRQHandler            ; PVD through EXTI Line detect
-        DCD     TAMPER_IRQHandler         ; Tamper
-        DCD     RTC_IRQHandler            ; RTC
-        DCD     FLASH_IRQHandler          ; Flash
-        DCD     RCC_IRQHandler            ; RCC
-        DCD     EXTI0_IRQHandler          ; EXTI Line 0
-        DCD     EXTI1_IRQHandler          ; EXTI Line 1
-        DCD     EXTI2_IRQHandler          ; EXTI Line 2
-        DCD     EXTI3_IRQHandler          ; EXTI Line 3
-        DCD     EXTI4_IRQHandler          ; EXTI Line 4
-        DCD     DMA1_Channel1_IRQHandler  ; DMA1 Channel 1
-        DCD     DMA1_Channel2_IRQHandler  ; DMA1 Channel 2
-        DCD     DMA1_Channel3_IRQHandler  ; DMA1 Channel 3
-        DCD     DMA1_Channel4_IRQHandler  ; DMA1 Channel 4
-        DCD     DMA1_Channel5_IRQHandler  ; DMA1 Channel 5
-        DCD     DMA1_Channel6_IRQHandler  ; DMA1 Channel 6
-        DCD     DMA1_Channel7_IRQHandler  ; DMA1 Channel 7
-        DCD     ADC1_2_IRQHandler         ; ADC1 & ADC2
-        DCD     USB_HP_CAN1_TX_IRQHandler  ; USB High Priority or CAN1 TX
-        DCD     USB_LP_CAN1_RX0_IRQHandler ; USB Low  Priority or CAN1 RX0
-        DCD     CAN1_RX1_IRQHandler       ; CAN1 RX1
-        DCD     CAN1_SCE_IRQHandler       ; CAN1 SCE
-        DCD     EXTI9_5_IRQHandler        ; EXTI Line 9..5
-        DCD     TIM1_BRK_IRQHandler       ; TIM1 Break
-        DCD     TIM1_UP_IRQHandler        ; TIM1 Update
-        DCD     TIM1_TRG_COM_IRQHandler   ; TIM1 Trigger and Commutation
-        DCD     TIM1_CC_IRQHandler        ; TIM1 Capture Compare
-        DCD     TIM2_IRQHandler           ; TIM2
-        DCD     TIM3_IRQHandler           ; TIM3
-        DCD     TIM4_IRQHandler           ; TIM4
-        DCD     I2C1_EV_IRQHandler        ; I2C1 Event
-        DCD     I2C1_ER_IRQHandler        ; I2C1 Error
-        DCD     I2C2_EV_IRQHandler        ; I2C2 Event
-        DCD     I2C2_ER_IRQHandler        ; I2C2 Error
-        DCD     SPI1_IRQHandler           ; SPI1
-        DCD     SPI2_IRQHandler           ; SPI2
-        DCD     USART1_IRQHandler         ; USART1
-        DCD     USART2_IRQHandler         ; USART2
-        DCD     USART3_IRQHandler         ; USART3
-        DCD     EXTI15_10_IRQHandler      ; EXTI Line 15..10
-        DCD     RTC_Alarm_IRQHandler       ; RTC Alarm through EXTI Line
-        DCD     USBWakeUp_IRQHandler      ; USB Wakeup from suspend
+        DCD     WWDG_IRQHandler               ; Window Watchdog
+        DCD     PVD_IRQHandler                ; PVD through EXTI Line detect
+        DCD     TAMPER_IRQHandler             ; Tamper
+        DCD     RTC_IRQHandler                ; RTC
+        DCD     FLASH_IRQHandler              ; Flash
+        DCD     RCC_IRQHandler                ; RCC
+        DCD     EXTI0_IRQHandler              ; EXTI Line 0
+        DCD     EXTI1_IRQHandler              ; EXTI Line 1
+        DCD     EXTI2_IRQHandler              ; EXTI Line 2
+        DCD     EXTI3_IRQHandler              ; EXTI Line 3
+        DCD     EXTI4_IRQHandler              ; EXTI Line 4
+        DCD     DMA1_Channel1_IRQHandler      ; DMA1 Channel 1
+        DCD     DMA1_Channel2_IRQHandler      ; DMA1 Channel 2
+        DCD     DMA1_Channel3_IRQHandler      ; DMA1 Channel 3
+        DCD     DMA1_Channel4_IRQHandler      ; DMA1 Channel 4
+        DCD     DMA1_Channel5_IRQHandler      ; DMA1 Channel 5
+        DCD     DMA1_Channel6_IRQHandler      ; DMA1 Channel 6
+        DCD     DMA1_Channel7_IRQHandler      ; DMA1 Channel 7
+        DCD     ADC1_2_IRQHandler             ; ADC1 & ADC2
+        DCD     USB_HP_CAN1_TX_IRQHandler     ; USB High Priority or CAN1 TX
+        DCD     USB_LP_CAN1_RX0_IRQHandler    ; USB Low  Priority or CAN1 RX0
+        DCD     CAN1_RX1_IRQHandler           ; CAN1 RX1
+        DCD     CAN1_SCE_IRQHandler           ; CAN1 SCE
+        DCD     EXTI9_5_IRQHandler            ; EXTI Line 9..5
+        DCD     TIM1_BRK_TIM9_IRQHandler      ; TIM1 Break and TIM9
+        DCD     TIM1_UP_TIM10_IRQHandler      ; TIM1 Update and TIM10
+        DCD     TIM1_TRG_COM_TIM11_IRQHandler ; TIM1 Trigger and Commutation and TIM11
+        DCD     TIM1_CC_IRQHandler            ; TIM1 Capture Compare
+        DCD     TIM2_IRQHandler               ; TIM2
+        DCD     TIM3_IRQHandler               ; TIM3
+        DCD     TIM4_IRQHandler               ; TIM4
+        DCD     I2C1_EV_IRQHandler            ; I2C1 Event
+        DCD     I2C1_ER_IRQHandler            ; I2C1 Error
+        DCD     I2C2_EV_IRQHandler            ; I2C2 Event
+        DCD     I2C2_ER_IRQHandler            ; I2C2 Error
+        DCD     SPI1_IRQHandler               ; SPI1
+        DCD     SPI2_IRQHandler               ; SPI2
+        DCD     USART1_IRQHandler             ; USART1
+        DCD     USART2_IRQHandler             ; USART2
+        DCD     USART3_IRQHandler             ; USART3
+        DCD     EXTI15_10_IRQHandler          ; EXTI Line 15..10
+        DCD     RTC_Alarm_IRQHandler           ; RTC Alarm through EXTI Line
+        DCD     USBWakeUp_IRQHandler          ; USB Wakeup from suspend
+        DCD     TIM8_BRK_TIM12_IRQHandler     ; TIM8 Break and TIM12
+        DCD     TIM8_UP_TIM13_IRQHandler      ; TIM8 Update and TIM13
+        DCD     TIM8_TRG_COM_TIM14_IRQHandler ; TIM8 Trigger and Commutation and TIM14
+        DCD     TIM8_CC_IRQHandler            ; TIM8 Capture Compare
+        DCD     ADC3_IRQHandler               ; ADC3
+        DCD     FSMC_IRQHandler               ; FSMC
+        DCD     SDIO_IRQHandler               ; SDIO
+        DCD     TIM5_IRQHandler               ; TIM5
+        DCD     SPI3_IRQHandler               ; SPI3
+        DCD     UART4_IRQHandler              ; UART4
+        DCD     UART5_IRQHandler              ; UART5
+        DCD     TIM6_IRQHandler               ; TIM6
+        DCD     TIM7_IRQHandler               ; TIM7
+        DCD     DMA2_Channel1_IRQHandler      ; DMA2 Channel1
+        DCD     DMA2_Channel2_IRQHandler      ; DMA2 Channel2
+        DCD     DMA2_Channel3_IRQHandler      ; DMA2 Channel3
+        DCD     DMA2_Channel4_5_IRQHandler    ; DMA2 Channel4 & Channel5
+        DCD     0                             ; Reserved
+        DCD     0                             ; Reserved
+        DCD     0                             ; Reserved
+        DCD     0                             ; Reserved
+        DCD     0                             ; Reserved
+        DCD     0                             ; Reserved
+        DCD     0                             ; Reserved
+        DCD     0                             ; Reserved
+        DCD     SYMC_IRQHandler
+        DCD     RNG_IRQHandler
+        DCD     SENSOR_IRQHandler
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -121,14 +148,45 @@ __vector_table
 ;;
         THUMB
 
+
         PUBWEAK Reset_Handler
         SECTION .text:CODE:REORDER:NOROOT(2)
 Reset_Handler
+		LDR  R0,=0x400210F0
+		MOV R1,#0x00000001
+		STR R1,[R0]
+		LDR R2,=0x40016C00
+		LDR R3,=0xa7d93a86
+		STR R3,[R2]
+		LDR R3,=0xab12dfcd
+		STR R3,[R2]
+		LDR R3,=0xcded3526
+		STR R3,[R2]
+		LDR R3,=0x200183FF
+		STR R3,[R2,#0x18]
+		LDR R4,=0x4002228c
+		LDR R5,=0xa5a5a5a5
+		STR R5,[R4]
+		;lock
+		LDR R2,=0x400210F0
+		LDR R3,=0x00000000
+		STR R3,[R2]
+		LDR R2,=0x40016C00
+		LDR R3,=0x5826c579
+		STR R3,[R2]
+		LDR R3,=0x54ed2032
+		STR R3,[R2]
+		LDR R3,=0x3212cad9
+		STR R3,[R2]
+		LDR R2,=0x4002228c
+		LDR R3,=0x5a5a5a5a
+		STR R3,[R2]
+		MOV R1,#0x00000000
         LDR     R0, =SystemInit
         BLX     R0
         LDR     R0, =__iar_program_start
         BX      R0
-        
+
         PUBWEAK NMI_Handler
         SECTION .text:CODE:REORDER:NOROOT(1)
 NMI_Handler
@@ -294,20 +352,20 @@ CAN1_SCE_IRQHandler
 EXTI9_5_IRQHandler
         B EXTI9_5_IRQHandler
 
-        PUBWEAK TIM1_BRK_IRQHandler
+        PUBWEAK TIM1_BRK_TIM9_IRQHandler
         SECTION .text:CODE:REORDER:NOROOT(1)
-TIM1_BRK_IRQHandler
-        B TIM1_BRK_IRQHandler
+TIM1_BRK_TIM9_IRQHandler
+        B TIM1_BRK_TIM9_IRQHandler
 
-        PUBWEAK TIM1_UP_IRQHandler
+        PUBWEAK TIM1_UP_TIM10_IRQHandler
         SECTION .text:CODE:REORDER:NOROOT(1)
-TIM1_UP_IRQHandler
-        B TIM1_UP_IRQHandler
+TIM1_UP_TIM10_IRQHandler
+        B TIM1_UP_TIM10_IRQHandler
 
-        PUBWEAK TIM1_TRG_COM_IRQHandler
+        PUBWEAK TIM1_TRG_COM_TIM11_IRQHandler
         SECTION .text:CODE:REORDER:NOROOT(1)
-TIM1_TRG_COM_IRQHandler
-        B TIM1_TRG_COM_IRQHandler
+TIM1_TRG_COM_TIM11_IRQHandler
+        B TIM1_TRG_COM_TIM11_IRQHandler
 
         PUBWEAK TIM1_CC_IRQHandler
         SECTION .text:CODE:REORDER:NOROOT(1)
@@ -389,5 +447,106 @@ RTC_Alarm_IRQHandler
 USBWakeUp_IRQHandler
         B USBWakeUp_IRQHandler
 
+        PUBWEAK TIM8_BRK_TIM12_IRQHandler
+        SECTION .text:CODE:REORDER:NOROOT(1)
+TIM8_BRK_TIM12_IRQHandler
+        B TIM8_BRK_TIM12_IRQHandler
+
+        PUBWEAK TIM8_UP_TIM13_IRQHandler
+        SECTION .text:CODE:REORDER:NOROOT(1)
+TIM8_UP_TIM13_IRQHandler
+        B TIM8_UP_TIM13_IRQHandler
+
+        PUBWEAK TIM8_TRG_COM_TIM14_IRQHandler
+        SECTION .text:CODE:REORDER:NOROOT(1)
+TIM8_TRG_COM_TIM14_IRQHandler
+        B TIM8_TRG_COM_TIM14_IRQHandler
+
+        PUBWEAK TIM8_CC_IRQHandler
+        SECTION .text:CODE:REORDER:NOROOT(1)
+TIM8_CC_IRQHandler
+        B TIM8_CC_IRQHandler
+
+        PUBWEAK ADC3_IRQHandler
+        SECTION .text:CODE:REORDER:NOROOT(1)
+ADC3_IRQHandler
+        B ADC3_IRQHandler
+
+        PUBWEAK FSMC_IRQHandler
+        SECTION .text:CODE:REORDER:NOROOT(1)
+FSMC_IRQHandler
+        B FSMC_IRQHandler
+
+        PUBWEAK SDIO_IRQHandler
+        SECTION .text:CODE:REORDER:NOROOT(1)
+SDIO_IRQHandler
+        B SDIO_IRQHandler
+
+        PUBWEAK TIM5_IRQHandler
+        SECTION .text:CODE:REORDER:NOROOT(1)
+TIM5_IRQHandler
+        B TIM5_IRQHandler
+
+        PUBWEAK SPI3_IRQHandler
+        SECTION .text:CODE:REORDER:NOROOT(1)
+SPI3_IRQHandler
+        B SPI3_IRQHandler
+
+        PUBWEAK UART4_IRQHandler
+        SECTION .text:CODE:REORDER:NOROOT(1)
+UART4_IRQHandler
+        B UART4_IRQHandler
+
+        PUBWEAK UART5_IRQHandler
+        SECTION .text:CODE:REORDER:NOROOT(1)
+UART5_IRQHandler
+        B UART5_IRQHandler
+
+        PUBWEAK TIM6_IRQHandler
+        SECTION .text:CODE:REORDER:NOROOT(1)
+TIM6_IRQHandler
+        B TIM6_IRQHandler
+
+        PUBWEAK TIM7_IRQHandler
+        SECTION .text:CODE:REORDER:NOROOT(1)
+TIM7_IRQHandler
+        B TIM7_IRQHandler
+
+        PUBWEAK DMA2_Channel1_IRQHandler
+        SECTION .text:CODE:REORDER:NOROOT(1)
+DMA2_Channel1_IRQHandler
+        B DMA2_Channel1_IRQHandler
+
+        PUBWEAK DMA2_Channel2_IRQHandler
+        SECTION .text:CODE:REORDER:NOROOT(1)
+DMA2_Channel2_IRQHandler
+        B DMA2_Channel2_IRQHandler
+
+        PUBWEAK DMA2_Channel3_IRQHandler
+        SECTION .text:CODE:REORDER:NOROOT(1)
+DMA2_Channel3_IRQHandler
+        B DMA2_Channel3_IRQHandler
+
+        PUBWEAK DMA2_Channel4_5_IRQHandler
+        SECTION .text:CODE:REORDER:NOROOT(1)
+DMA2_Channel4_5_IRQHandler
+        B DMA2_Channel4_5_IRQHandler
+
+        PUBWEAK SYMC_IRQHandler
+        SECTION .text:CODE:REORDER:NOROOT(1)
+SYMC_IRQHandler
+        B SYMC_IRQHandler
+
+        PUBWEAK RNG_IRQHandler
+        SECTION .text:CODE:REORDER:NOROOT(1)
+RNG_IRQHandler
+        B RNG_IRQHandler
+
+        PUBWEAK SENSOR_IRQHandler
+        SECTION .text:CODE:REORDER:NOROOT(1)
+SENSOR_IRQHandler
+        B SENSOR_IRQHandler
+
         END
+
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
