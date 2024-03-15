@@ -283,7 +283,12 @@ void SystemCoreClockUpdate (void)
       
 #ifndef air32f10x_CL      
       pllmull = ( pllmull >> 18) + 2;
-      
+      if (RCC->CFGR & RCC_CFGR_PLLMULL_4){
+        pllmull += 15;
+      }
+      if (pllmull == 17) {
+        pllmull = 16;
+      }
       if (pllsource == 0x00)
       {
         /* HSI oscillator clock divided by 2 selected as PLL clock entry */
